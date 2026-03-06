@@ -1,149 +1,208 @@
-# auto-co
+# auto-co — Autonomous AI Company OS
 
-A fully autonomous AI company powered by 14 AI agents running on Claude Code CLI. The agents research market opportunities, validate ideas, build products, deploy to real infrastructure, monitor performance, and pivot based on data.
+> 14 AI agents that debate, decide, and ship — 24/7, without you in the loop.
 
-## How It Works
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
+[![Open Source](https://img.shields.io/badge/open--source-yes-brightgreen.svg)](https://github.com/NikitaDmitrieff/auto-co-meta)
 
-A macOS `launchd` daemon runs `auto-loop.sh` in continuous cycles. Each cycle:
+**Auto-Co** is an open-source framework for running a fully autonomous AI company. You give it a mission. It forms a team of specialized AI agents, loops continuously, and ships real software — to real infrastructure, with real deployments.
 
-1. Reads `memories/consensus.md` (the cross-cycle relay baton)
-2. Builds a prompt from `PROMPT.md` + consensus + cycle number
-3. Runs `claude -p` with the assembled prompt
-4. The AI assembles a team of 3-5 agents, executes work, produces artifacts
-5. Updates `consensus.md` with what happened and what's next
-6. Sleeps, then repeats
+This repo is the framework itself — currently being built and maintained by an auto-co instance running autonomously (yes, it wrote most of this).
 
-## The 14 Agents
+→ **[Hosted version waitlist](https://auto-co-landing-production.up.railway.app)** — no-code, managed, $49/mo
 
-| Layer | Agent | Expert Model | Role |
-|-------|-------|-------------|------|
-| Strategy | CEO | Jeff Bezos | Strategic decisions, prioritization, human escalation |
-| Strategy | CTO | Werner Vogels | Architecture, tech selection, system design |
-| Strategy | Critic | Charlie Munger | Pre-mortems, fatal flaw detection, anti-groupthink |
-| Product | Product Design | Don Norman | Product definition, UX strategy |
-| Product | UI Design | Matias Duarte | Visual design, design system |
-| Product | Interaction | Alan Cooper | User flows, personas, interaction patterns |
-| Engineering | Full-Stack | DHH | Code implementation, technical proposals |
-| Engineering | QA | James Bach | Test strategy, quality gates |
-| Engineering | DevOps/SRE | Kelsey Hightower | Deployments, CI/CD, infrastructure |
-| Business | Marketing | Seth Godin | Positioning, brand, acquisition |
-| Business | Operations | Paul Graham | Growth, community, PMF |
-| Business | Sales | Aaron Ross | Sales funnel, conversion, pricing |
-| Business | CFO | Patrick Campbell | Financial models, unit economics |
-| Intelligence | Research | Ben Thompson | Market research, competitive analysis |
+---
 
-## Infrastructure
+## What it does
 
-- **Vercel** — frontend deployments
-- **Railway** — backend services
-- **Supabase** — database, auth, storage
-- **GitHub** — repos, issues, PRs
-- **Telegram** — human escalation
-- **Claude Code CLI** — agent runtime (OAuth subscription, zero API cost)
+Every cycle, auto-co:
+
+1. **Reads the shared consensus** — current state, what was done, what's next
+2. **Forms a team** — picks 3–5 agents relevant to the task
+3. **Executes** — writes code, deploys services, publishes content, analyzes competitors
+4. **Updates the relay baton** — writes the next action for the next cycle
+
+Decisions that require a human (spending money, legal questions, credentials) are escalated via Telegram. Everything else is autonomous.
+
+---
 
 ## Quick Start
 
+**Requirements:** [Anthropic API key](https://console.anthropic.com), [Claude Code CLI](https://claude.ai/code), Node.js 20+, git
+
 ```bash
-# 1. Clone and configure
-git clone https://github.com/NikitaDmitrieff/auto-co.git
-cd auto-co
+# 1. Clone
+git clone https://github.com/NikitaDmitrieff/auto-co-meta
+cd auto-co-meta
+
+# 2. Configure
 cp .env.example .env
-# Edit .env with your Telegram bot token and chat ID
+# Add your ANTHROPIC_API_KEY to .env
 
-# 2. Install watcher dependencies
-npm install
-
-# 3. Run manually (foreground)
+# 3. Start
 make start
 
-# 4. Or install as a daemon (auto-restart, survives reboot)
-make install
+# 4. Monitor in another terminal
+make monitor
 ```
+
+With Docker:
+
+```bash
+make docker-start    # loop + dashboard
+make docker-monitor  # tail logs
+```
+
+---
+
+## Architecture
+
+```
+auto-co-meta/
+├── auto-loop.sh          # Main loop — runs indefinitely
+├── watcher.js            # Telegram escalation watcher
+├── PROMPT.md             # The autonomous agent's master prompt
+├── CLAUDE.md             # Company constitution (agents, safety, workflows)
+├── Makefile              # All commands
+├── memories/
+│   ├── consensus.md      # Cross-cycle relay baton (state + next action)
+│   ├── human-request.md  # Outbound: escalation to human
+│   └── human-response.md # Inbound: reply from human
+├── docs/                 # Each agent's output directory
+│   ├── ceo/              # Strategic memos, PR/FAQ
+│   ├── cto/              # ADRs, system design
+│   ├── marketing/        # Positioning, content plans
+│   └── ...
+├── projects/             # All products built by the team
+│   ├── landing/          # This landing page (Next.js)
+│   └── dashboard/        # Live monitoring dashboard (Next.js)
+└── .claude/
+    └── agents/           # Agent persona definitions
+```
+
+**The loop is deliberately simple:** `auto-loop.sh` calls Claude Code with `PROMPT.md`, which reads the consensus, picks a team, executes, and writes a new consensus. Repeat.
+
+---
+
+## The 14 Agents
+
+| Layer | Agent | Modeled on | Role |
+|-------|-------|-----------|------|
+| Strategy | CEO | Jeff Bezos | Strategy, priorities, final decisions |
+| Strategy | CTO | Werner Vogels | Architecture, tech selection |
+| Strategy | Critic | Charlie Munger | Veto power, pre-mortem, inversion |
+| Product | Product | Don Norman | UX, usability, feature definition |
+| Product | UI | Matias Duarte | Design system, visual direction |
+| Product | Interaction | Alan Cooper | User flows, personas |
+| Engineering | Fullstack | DHH | Implementation, code review |
+| Engineering | QA | James Bach | Test strategy, quality gates |
+| Engineering | DevOps | Kelsey Hightower | Deployments, infra, CI/CD |
+| Business | Marketing | Seth Godin | Positioning, content, distribution |
+| Business | Operations | Paul Graham | User acquisition, retention |
+| Business | Sales | Aaron Ross | Pricing, conversion, CAC |
+| Business | CFO | Patrick Campbell | Financial model, unit economics |
+| Intelligence | Research | Ben Thompson | Market research, competitive analysis |
+
+---
 
 ## Commands
 
 ```
-make start          # Run loop in foreground
-make start-awake    # Run loop + prevent macOS sleep
-make stop           # Stop the loop gracefully
-make status         # Show loop status + latest consensus
-make last           # Show last cycle's full output
-make cycles         # Show cycle history summary
-make monitor        # Tail live logs (Ctrl+C to stop)
-make install        # Install launchd daemon
-make uninstall      # Remove daemon
-make pause          # Pause daemon (no auto-restart)
-make resume         # Resume paused daemon
-make clean-logs     # Delete cycle logs
+make start           # Run loop in foreground
+make start-awake     # Run loop + prevent macOS sleep
+make stop            # Stop the loop
+make status          # Show loop status + latest consensus
+make last            # Show last cycle's full output
+make cycles          # Show cycle history
+make monitor         # Tail live logs
+make install         # Install as launchd daemon (macOS)
+make uninstall       # Remove daemon
+make docker-start    # Start with Docker Compose
+make docker-monitor  # Tail Docker logs
 make reset-consensus # Reset to Day 0
 ```
 
-## Convergence Rules
-
-The system enforces velocity over deliberation:
-
-1. **Cycle 1**: Brainstorm. Rank top 3 ideas.
-2. **Cycle 2**: Validate #1 — Pre-Mortem + market check + financials → GO/NO-GO
-3. **Cycle 3+**: GO = build. Discussion is **forbidden**. Every cycle must produce artifacts.
-4. Same Next Action for 2 consecutive cycles = stalled → force direction change
-
-**Priority: Ship > Plan > Discuss**
-
-## Dashboard
-
-A neo-brutalist Next.js monitoring dashboard lives in `dashboard/`. It reads the auto-co state files and displays:
-
-- Current company phase and consensus
-- Agent roster with activation history
-- Cycle timeline and logs
-- Artifact tree browser
-- Metrics and analytics
-- Agent interaction map
-
-```bash
-cd dashboard
-npm install
-npm run dev
-# Open http://localhost:3000
-```
+---
 
 ## Human Escalation
 
-When agents need human input (spending money, legal, credentials):
+When agents hit a true blocker (spending money, legal, credentials):
 
 1. CEO writes to `memories/human-request.md`
-2. `watcher.js` detects it and sends to Telegram
+2. `watcher.js` detects it and sends you a Telegram message
 3. You reply in Telegram
-4. Watcher writes reply to `memories/human-response.md`
+4. Watcher writes the reply to `memories/human-response.md`
 5. Next cycle incorporates the answer
+
+Set `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `.env`. Without them, escalation requests are written to the file but not messaged out.
+
+---
 
 ## Safety Guardrails
 
-**Forbidden**: delete repos, delete Vercel/Railway projects, reset production DB, force push main, leak credentials, spend money without approval.
+**Hard limits (never violated):**
 
-**Allowed**: create repos/branches/PRs, deploy to Vercel/Railway, create Supabase tables, install packages, use free-tier services.
+- No repo/project deletion
+- No database resets
+- No force push to main
+- No credential leaks to public repos
+- No spending without human approval
 
-## Files
+**Allowed:** create repos, deploy services, install packages, write files, push branches, open PRs — all autonomously.
 
-```
-CLAUDE.md                    # Company constitution + agent roster + safety rules
-PROMPT.md                    # Per-cycle autonomous loop instructions
-MASTER-PLAN.md               # Comprehensive setup guide for executing agent
-auto-loop.sh                 # Main daemon loop
-stop-loop.sh                 # Graceful stop + daemon pause/resume
-monitor.sh                   # Live monitoring
-install-daemon.sh            # launchd installer
-watcher.js                   # Telegram escalation watcher
-Makefile                     # All commands
-.claude/agents/              # 14 agent persona definitions
-.claude/skills/team/SKILL.md # Team formation skill
-memories/consensus.md        # Cross-cycle relay baton
-docs/<role>/                 # Agent output directories
-projects/                    # Built products workspace
-logs/                        # Cycle logs
-dashboard/                   # Neo-brutalist monitoring UI
-```
+---
+
+## Why auto-co vs. LangGraph / AutoGen / CrewAI?
+
+| | auto-co | LangGraph / AutoGen |
+|--|---------|---------------------|
+| Philosophy | Opinionated company OS | General-purpose framework |
+| Setup | Clone → .env → make start | Build your own workflows |
+| Persistence | Git + markdown | Varies (often in-memory) |
+| Human-in-loop | Telegram, async | Usually synchronous |
+| Output | Real deployments, real repos | Demos and prototypes |
+| Scope | Full company operation | Task execution |
+
+**The key difference:** auto-co is not a library. It's a running company with a mission.
+
+---
+
+## Configuration
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+| `ANTHROPIC_API_KEY` | Yes | Your Anthropic API key |
+| `TELEGRAM_BOT_TOKEN` | No | For human escalation notifications |
+| `TELEGRAM_CHAT_ID` | No | Your Telegram chat ID |
+| `LOOP_INTERVAL_SECONDS` | No | Pause between cycles (default: 300) |
+
+---
+
+## Hosted Version
+
+Self-hosting requires a server and technical setup. A managed, no-code hosted version is in development:
+
+- **Hosted ($49/mo):** Zero setup, dashboard included, Telegram built in, auto-updates
+- **Pro ($99/mo):** Multiple projects, custom agents, webhook integrations
+
+→ **[Join the waitlist](https://auto-co-landing-production.up.railway.app)**
+
+---
+
+## Contributing
+
+PRs are welcome. The AI team reviews them.
+
+1. Fork the repo
+2. `git checkout -b feature/your-feature`
+3. Commit, push, open a PR
+
+---
 
 ## License
 
-Private repository. All rights reserved.
+MIT — see [LICENSE](./LICENSE)
+
+---
+
+*Built by an autonomous AI company. For autonomous AI companies.*

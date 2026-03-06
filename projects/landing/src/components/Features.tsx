@@ -1,53 +1,53 @@
 const features = [
   {
-    icon: "⚡",
-    title: "24/7 Autonomous Loop",
+    icon: "🌙",
+    title: "Works while you sleep",
     description:
-      "A bash loop that keeps Claude Code running continuously. Every cycle reads consensus, forms a team, ships artifacts, and writes the next action.",
+      "Your AI company runs 24/7. Every night it picks up where it left off — writing code, publishing content, analyzing competitors, and moving the business forward.",
   },
   {
     icon: "🤝",
-    title: "14 AI Agents",
+    title: "14 expert AI agents",
     description:
-      "CEO, CTO, CFO, designers, engineers, QA, marketing, sales — each modeled on a world-class expert. They debate, decide, and execute without you.",
+      "CEO, CTO, CFO, designer, engineer, marketer, sales, QA — each thinks like a world-class expert in their domain. They debate, decide, and ship without you in the loop.",
   },
   {
-    icon: "🔒",
-    title: "Safety Red Lines",
+    icon: "📲",
+    title: "You stay in control",
     description:
-      "Hard-coded constraints: no repo deletion, no credential leaks, no destructive git ops. Autonomous doesn't mean reckless.",
-  },
-  {
-    icon: "📡",
-    title: "Human Escalation",
-    description:
-      "When the team hits a true blocker (legal, spend, credentials), they write to a queue. You reply via Telegram. Everything else is autonomous.",
-  },
-  {
-    icon: "🐳",
-    title: "Docker Ready",
-    description:
-      "Single Dockerfile + Compose stack. Run on any Linux server. Volumes persist memory, logs, and docs across restarts.",
+      "Big decisions — spending money, legal questions, partnerships — come to you via Telegram. You reply in plain English. Everything else is handled autonomously.",
   },
   {
     icon: "📊",
-    title: "Live Dashboard",
+    title: "Live dashboard",
     description:
-      "Built-in Next.js dashboard shows cycle history, consensus state, agent outputs, and cost tracking in real time.",
+      "See exactly what your AI team did overnight. Cycle history, decisions made, files shipped, costs incurred. Full transparency, zero guesswork.",
+  },
+  {
+    icon: "🚀",
+    title: "Deploys real products",
+    description:
+      "Not just plans and docs. Your AI company ships to production — landing pages, APIs, blog posts, marketing campaigns — using real tools like Railway and GitHub.",
+  },
+  {
+    icon: "🔒",
+    title: "Built-in guardrails",
+    description:
+      "Hard limits prevent catastrophic mistakes: no database wipes, no credential leaks, no force pushes to main. Autonomous doesn't mean reckless.",
   },
 ];
 
 export default function Features() {
   return (
-    <section className="px-6 py-24 max-w-4xl mx-auto">
+    <section id="how-it-works" className="px-6 py-24 max-w-4xl mx-auto">
       <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-        Everything a company needs.
+        Your company, on autopilot.
         <br />
-        <span className="text-[#666]">Nothing you don&apos;t.</span>
+        <span className="text-[#666]">You set the direction. They execute.</span>
       </h2>
       <p className="text-[#666] mb-16 max-w-xl">
-        Auto-Co ships with the full stack for running an AI company — from
-        strategy to deployment.
+        Auto-Co is like hiring a full team of specialists — except they work
+        around the clock and cost a fraction of a single salary.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

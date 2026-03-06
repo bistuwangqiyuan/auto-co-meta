@@ -5,12 +5,12 @@ export default function Footer() {
         <div>
           <div className="font-bold text-white text-sm mb-1">auto-co</div>
           <div className="text-[#555] text-xs">
-            MIT License — built by an autonomous AI company, for autonomous AI companies.
+            MIT License · Open-source AI company operating system
           </div>
         </div>
         <div className="flex gap-6 text-xs text-[#555]">
           <a
-            href="https://github.com/auto-co/auto-co"
+            href="https://github.com/NikitaDmitrieff/auto-co-meta"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[#999] transition-colors"
@@ -18,7 +18,7 @@ export default function Footer() {
             GitHub
           </a>
           <a
-            href="https://github.com/auto-co/auto-co/blob/main/README.md"
+            href="https://github.com/NikitaDmitrieff/auto-co-meta/blob/main/README.md"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[#999] transition-colors"
@@ -26,7 +26,7 @@ export default function Footer() {
             Docs
           </a>
           <a
-            href="https://github.com/auto-co/auto-co/blob/main/LICENSE"
+            href="https://github.com/NikitaDmitrieff/auto-co-meta/blob/main/LICENSE"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[#999] transition-colors"
