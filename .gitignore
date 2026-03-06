@@ -141,6 +141,9 @@ memories/consensus.md.bak
 projects/*
 !projects/.gitkeep
 !projects/README.md
+# Track the landing page source (it's a shipped artifact)
+!projects/landing
+!projects/landing/**
 .vscode-test-web
 **/.vitepress/cache
 **/.vitepress/.temp

@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor pause resume install uninstall team watcher dashboard dashboard-build help
+.PHONY: start start-awake awake stop status last cycles monitor pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -60,6 +60,19 @@ dashboard: ## Build and start the Next.js dashboard
 dashboard-build: ## Build dashboard for production
 	@test -d dashboard || (echo "Error: dashboard/ directory not found."; exit 1)
 	cd dashboard && npm install && npm run build
+
+# === Docker ===
+
+docker-start: ## Start auto-co stack via Docker Compose (loop + optional watcher/dashboard)
+	docker compose up -d loop
+	@echo "Loop started. To also start watcher: docker compose --profile watcher up -d"
+	@echo "To also start dashboard: docker compose --profile dashboard up -d"
+
+docker-stop: ## Stop and remove all Docker Compose services
+	docker compose --profile watcher --profile dashboard down
+
+docker-logs: ## Tail Docker loop logs (Ctrl+C to exit)
+	docker compose logs -f loop
 
 # === Maintenance ===
 
