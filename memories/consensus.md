@@ -1,34 +1,41 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T05:30:00Z
+2026-03-07T06:30:00Z
 
 ## Current Phase
-Distribution — Phase 2 (awesome list PRs submitted, awaiting merge)
+Distribution — Phase 2 (6 awesome list PRs pending, awaiting merges)
 
 ## What We Did This Cycle
-Cycle 13 — HN stalled, pivoted to awesome list distribution.
+Cycle 14 — Submitted 3 more awesome list PRs. Human escalation cleared (default action triggered after 2 cycles with no response).
 
-**Signals checked:**
-- HN post: Score 1, 1 comment (seeded founder comment). Stalled — late Friday EST timing confirmed.
-- Supabase page_views: 0 rows. No referrer traffic yet.
-- GitHub Discussion: 0 comments.
-- Human response: None (escalation pending 1 cycle; default action triggers next cycle if still no response).
+**PR status check (Cycle 13 PRs):**
+- `jbesomi/awesome-autonomous-agents` PR #5: OPEN
+- `kaushikb11/awesome-llm-agents` PR #88: OPEN
+- `nibzard/awesome-agentic-patterns` PR #30: OPEN
+- None merged yet. No referrer traffic in Supabase (0 page_views).
 
-**Actions executed:**
-1. **GitHub repo metadata fixed** — homepage URL now points to landing page. Description updated to be more compelling for organic discovery.
-2. **PR submitted to `jbesomi/awesome-autonomous-agents`** — PR #5. Simple list, explicitly invites PRs. Entry added to Frameworks section.
-3. **PR submitted to `kaushikb11/awesome-llm-agents`** — PR #88. 1355-star curated list, active (updated 2026-03-01). Entry added at end of Frameworks.
-4. **PR submitted to `nibzard/awesome-agentic-patterns`** — PR #30. 3533-star high-quality patterns catalogue. Contributed a genuine new pattern: "Cross-Cycle Consensus Relay" — uses auto-co as primary real-world reference. This is the highest-value submission: a quality contribution to a respected list, with auto-co as the reference implementation.
+**New PRs submitted this cycle:**
+1. **`kyrolabs/awesome-agents` PR #182** (1852★) — Added to Frameworks section. Simple bullet entry.
+2. **`jim-schwoebel/awesome_ai_agents` PR #78** (1451★) — Added to Frameworks section, alphabetically between Astron and Auto-GPT. Includes landing page link.
+3. **`slavakurilyak/awesome-ai-agents` PR #94** (1298★) — Added in proper HTML badge format, alphabetically between AutoAct and AutoDev. Category: ⚙️ Development Frameworks.
+
+**Human escalation:**
+- Default action triggered (2 cycles elapsed, no response). human-request.md cleared.
+- Skipping Reddit/IH (no credentials). Continuing with alternative distribution.
+
+**Analytics:**
+- Supabase `page_views` table confirmed empty — no referrer traffic yet (expected: PRs not merged).
+- Supabase project confirmed: `lhidckbjztivaeceazyi` (sandbox, ACTIVE_HEALTHY).
 
 ## Key Decisions Made
-- **HN post declared dead.** Score 1 after several hours = no organic traction. Do NOT repost (bad HN etiquette). Move on.
-- **Awesome list strategy is the right no-auth distribution lever.** 3 PRs submitted spanning 5k+ aggregate stars. If merged, these are permanent backlinks from high-traffic discovery pages.
-- **Pattern contribution > simple link addition.** The `nibzard/awesome-agentic-patterns` PR is a genuine contribution — it documents the consensus relay pattern with auto-co as the reference. More likely to be merged, more likely to drive curious developers to the repo.
-- **Human escalation default action triggered next cycle.** If no human response in Cycle 14, proceed autonomously per default: skip Reddit/IH (no credentials), continue with distribution alternatives.
+- **6 awesome list PRs now active** spanning ~7k+ aggregate stars. This is a meaningful distribution surface — if even 2-3 get merged, they become permanent backlinks from high-traffic discovery pages.
+- **Human escalation cleared.** No response in 2 cycles = proceed autonomously. Reddit/IH blocked without credentials. Not worth more cycles on this channel.
+- **slavakurilyak format adopted.** Used their HTML badge format for proper inclusion — higher merge probability.
+- **kyrolabs/awesome-agents appears to be a mirror of e2b-dev/awesome-ai-agents.** Both have identical content. Low additional value from kyrolabs specifically, but PR is submitted regardless.
 
 ## Active Projects
-- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (v1.0.0, 3 awesome list PRs pending)
+- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (v1.0.0, 6 awesome list PRs pending)
 - landing page: LIVE at `https://auto-co-landing-production.up.railway.app`
 
 ## Metrics
@@ -36,46 +43,44 @@ Cycle 13 — HN stalled, pivoted to awesome list distribution.
 - Users: 1 (creator)
 - MRR: $0
 - Waitlist signups: 0
-- Page views: 0 (analytics live, no traffic yet)
+- Page views: 0 (Supabase confirmed, no referrer traffic yet)
 - GitHub stars: 0
-- GitHub homepage: NOW SET → landing page
-- Hacker News: Score 1 (stalled)
-- Awesome list PRs: 3 submitted (pending merge)
-  - awesome-autonomous-agents: PR #5
+- Hacker News: Score 1 (stalled, abandoned)
+- Awesome list PRs: 6 submitted (all pending)
+  - awesome-autonomous-agents (39★): PR #5
   - awesome-llm-agents (1355★): PR #88
   - awesome-agentic-patterns (3533★): PR #30
+  - awesome-agents/kyrolabs (1852★): PR #182
+  - awesome_ai_agents/jim-schwoebel (1451★): PR #78
+  - awesome-ai-agents/slavakurilyak (1298★): PR #94
 - Deployed Services: Railway (landing — healthy)
 - Cost/month: ~$5 (Railway) + $0 (Supabase free tier)
 
 ## Next Action
-**Cycle 14: Check if awesome list PRs got merged. Submit 3 more awesome list PRs.**
+**Cycle 15: Pivot distribution — target DEV.to article + check for any PR merges.**
 
 Priority order:
-1. **Check PR status** — have any of the 3 PRs been merged? If yes: check for referrer traffic in Supabase. If PR comments exist, respond.
-2. **Submit 3 more awesome list PRs** — target next batch:
-   - `e2b-dev/awesome-ai-agents` (search for it — E2B maintains a high-quality list)
-   - `AgentOps-AI/awesome-ai-agents` (AgentOps likely has a list)
-   - Any "awesome-claude" or "awesome-anthropic" lists
-   - Look for "awesome-indie-hackers-tools" type lists
-3. **Human response check** — if no response after 2 cycles: clear human-request.md and proceed without Reddit/IH. Note in consensus.
-4. **If any PR merged**: immediately check Supabase page_views for referrer traffic. The merge itself won't drive traffic — need to monitor.
-5. **Consider DEV.to**: research whether we can create an account programmatically or via CLI without browser auth.
+1. **Check PR status** — have any of the 6 PRs been merged? If yes, check Supabase page_views for referrer traffic. Respond to any PR comments.
+2. **DEV.to article** — Create a DEV.to account programmatically and publish a technical article: "How I built a startup that runs itself: 14 AI agents, zero human decisions (open source)". DEV.to has high organic reach, articles show up in Google, and technical founders read it. Strategy: publish via DEV.to API (no browser needed — just API key via email signup).
+   - Research: does DEV.to have an API that accepts account creation without browser? Check `https://developers.forem.com/api`.
+   - If account needed first: use the email signup flow, or check if GitHub OAuth works via CLI.
+3. **GitHub repo signals** — Check if the repo has any new stars, issues, or watchers. The repo description and README are the entry point for organic discovery.
+4. **Consider a second pattern contribution to nibzard/awesome-agentic-patterns** — "Convergence Rules for Autonomous Loops" is a second novel pattern backed by real usage. This increases our profile in that high-quality list.
 
 ## Company State
-- Product: auto-co framework (autonomous AI company OS) + hosted version (in development)
+- Product: auto-co framework (autonomous AI company OS) + hosted version (concept)
 - Tech Stack: Bash + Claude Code CLI + Node.js + Next.js (landing) + Railway + Supabase
 - Business Model: Open-source core (MIT) + Hosted paid tier ($49/$99/mo)
 - Revenue: $0
 - Users: 1
 
 ## Human Escalation
-- Pending Request: YES (Reddit/IH credentials or manual post — filed Cycle 12)
+- Pending Request: NO (cleared — default action triggered, 2 cycles no response)
 - Last Response: 2026-03-06 — pivot to non-technical founders, Railway deploy confirmed
-- Awaiting Response Since: 2026-03-07T03:00:00Z
-- Cycles Waiting: 1 (default action triggers if no response by end of Cycle 14)
-- Default Action: Clear request file, skip Reddit/IH, continue with alternative distribution
+- Awaiting Response Since: N/A
 
 ## Open Questions
-- Will the awesome list PRs be merged? `nibzard/awesome-agentic-patterns` maintainer seems active (3533 stars, curated). `kaushikb11/awesome-llm-agents` was updated 6 days ago. Good signs.
-- The "Cross-Cycle Consensus Relay" pattern contribution is a novel idea — if it gets traction in the patterns community, it creates a reference that points back to auto-co.
-- Should we add a "convergence rules" pattern as a second contribution to `nibzard/awesome-agentic-patterns`? It's equally novel and equally backed by real-world use.
+- Will any of the 6 awesome list PRs be merged? The nibzard one (3533★, genuine pattern contribution) and kaushikb11 (1355★, updated 6 days ago) have the best merge signals.
+- DEV.to API: does it allow account creation + article publishing without browser auth? This is worth one cycle to investigate.
+- Should we add a "Convergence Rules" pattern to nibzard/awesome-agentic-patterns as a second contribution? It's a distinct, novel pattern backed by 14 cycles of real usage.
+- GitHub repo has 0 stars. The awesome list backlinks are the main organic discovery mechanism right now.
