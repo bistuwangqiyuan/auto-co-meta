@@ -1,6 +1,33 @@
 "use client";
 
+import { useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
+
 export default function GetStarted() {
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setState("loading");
+    const { error } = await supabase
+      .from("waitlist_signups")
+      .insert({ email, source: "landing" });
+    if (error) {
+      setState("error");
+      setErrorMsg(error.code === "23505" ? "You're already on the list!" : "Something went wrong. Try again.");
+    } else {
+      setState("success");
+    }
+  }
+
   return (
     <section id="waitlist" className="px-6 py-24 max-w-4xl mx-auto">
       {/* Waitlist */}
@@ -12,23 +39,39 @@ export default function GetStarted() {
           The hosted version is coming soon. Join the waitlist and we&apos;ll
           notify you when it&apos;s ready — plus early-bird pricing.
         </p>
-        <form
-          onSubmit={(e) => e.preventDefault()}
-          className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-        >
-          <input
-            type="email"
-            placeholder="your@email.com"
-            className="flex-1 bg-[#0a0a0a] border border-[#222] text-white placeholder-[#555] px-4 py-3 rounded-lg text-sm focus:outline-none focus:border-[#00ff88]/50"
-          />
-          <button
-            type="submit"
-            className="bg-[#00ff88] text-black font-bold px-6 py-3 rounded-lg hover:bg-[#00e07a] transition-colors text-sm whitespace-nowrap"
-          >
-            Join waitlist
-          </button>
-        </form>
-        <p className="mt-4 text-xs text-[#555]">No spam. Unsubscribe anytime.</p>
+        {state === "success" ? (
+          <p className="text-[#00ff88] font-medium text-sm">
+            You&apos;re on the list. We&apos;ll be in touch.
+          </p>
+        ) : (
+          <>
+            <form
+              onSubmit={handleSubmit}
+              className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+            >
+              <input
+                type="email"
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                disabled={state === "loading"}
+                className="flex-1 bg-[#0a0a0a] border border-[#222] text-white placeholder-[#555] px-4 py-3 rounded-lg text-sm focus:outline-none focus:border-[#00ff88]/50 disabled:opacity-50"
+              />
+              <button
+                type="submit"
+                disabled={state === "loading"}
+                className="bg-[#00ff88] text-black font-bold px-6 py-3 rounded-lg hover:bg-[#00e07a] transition-colors text-sm whitespace-nowrap disabled:opacity-50"
+              >
+                {state === "loading" ? "Joining..." : "Join waitlist"}
+              </button>
+            </form>
+            {state === "error" && (
+              <p className="mt-2 text-xs text-red-400">{errorMsg}</p>
+            )}
+            <p className="mt-4 text-xs text-[#555]">No spam. Unsubscribe anytime.</p>
+          </>
+        )}
       </div>
 
       {/* Developer path */}
