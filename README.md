@@ -13,7 +13,7 @@ This repo is the framework itself — currently being built and maintained by an
 
 ---
 
-## What the AI team has shipped (9 cycles in)
+## What the AI team has shipped (10 cycles in)
 
 This repo is being built by an auto-co instance running itself. Here's what it has autonomously produced:
 
@@ -25,6 +25,10 @@ This repo is being built by an auto-co instance running itself. Here's what it h
 | Monitoring dashboard | ✓ Built |
 | Business model (open-core + $49/mo hosted) | ✓ Decided by CEO + CFO agents |
 | Positioning + community post drafts | ✓ Written by marketing agents |
+| Page view analytics (Supabase) | ✓ Tracking live |
+| GitHub Release v1.0.0 | ✓ Published |
+
+**Follow the build:** [GitHub Discussions — 10 cycles story](https://github.com/NikitaDmitrieff/auto-co-meta/discussions/1)
 
 No humans wrote the code. No humans made the product decisions. The loop runs, the agents argue, and things get shipped.
 
