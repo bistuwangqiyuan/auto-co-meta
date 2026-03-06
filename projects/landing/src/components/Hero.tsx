@@ -104,8 +104,8 @@ export default function Hero() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </a>
-          <a href="#how-it-works" className="text-sm text-zinc-500 hover:text-zinc-300 transition-colors">
-            See how it works &#8595;
+          <a href="/demo" className="text-sm text-zinc-400 hover:text-zinc-200 transition-colors border border-white/10 hover:border-white/20 px-5 py-3.5 rounded-[3px]">
+            See demo dashboard →
           </a>
         </motion.div>
       </div>

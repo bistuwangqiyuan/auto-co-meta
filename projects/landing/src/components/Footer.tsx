@@ -7,6 +7,7 @@ export default function Footer() {
           <span>— the autonomous AI company OS</span>
         </div>
         <div className="flex gap-6">
+          <a href="/demo" className="hover:text-zinc-300 transition-colors">Live Demo</a>
           <a href="https://github.com/NikitaDmitrieff/auto-co-meta" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-300 transition-colors">GitHub</a>
           <span>MIT License</span>
           <span>2026</span>
