@@ -277,7 +277,7 @@ function Sandbox() {
           className="inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/5 px-4 py-1.5 mb-5"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
-          <span className="text-xs text-orange-300 font-medium">Interactive demo \u2014 no signup required</span>
+          <span className="text-xs text-orange-300 font-medium">Interactive demo — no signup required</span>
         </motion.div>
         <motion.h1
           initial={{ opacity: 0, y: 10 }}
@@ -288,7 +288,7 @@ function Sandbox() {
           Launch your AI company in 60 seconds
         </motion.h1>
         <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="text-zinc-400 max-w-lg mx-auto">
-          Type an idea. Watch 14 AI agents debate, plan, and decide \u2014 just like a real startup team.
+          Type an idea. Watch 14 AI agents debate, plan, and decide — just like a real startup team.
         </motion.p>
       </div>
 
@@ -300,7 +300,7 @@ function Sandbox() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleStart()}
-              placeholder="e.g. PetTracker \u2014 GPS collars for dogs"
+              placeholder="e.g. PetTracker — GPS collars for dogs"
               className="input-field flex-1"
               autoFocus
             />
@@ -337,7 +337,7 @@ function Sandbox() {
             >
               <div ref={chatRef} className="overflow-y-auto max-h-[420px] divide-y divide-white/[0.04]">
                 <div className="px-4 py-3 bg-orange-500/[0.04] border-l-2 border-orange-500/30">
-                  <div className="text-xs text-orange-400 font-medium mb-0.5">Cycle 1 \u2014 Strategy Meeting</div>
+                  <div className="text-xs text-orange-400 font-medium mb-0.5">Cycle 1 — Strategy Meeting</div>
                   <div className="text-sm text-zinc-300">
                     Building: <span className="text-white font-semibold">{input}</span>
                   </div>
