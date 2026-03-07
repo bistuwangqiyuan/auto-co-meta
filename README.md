@@ -12,9 +12,9 @@
   <a href="https://github.com/NikitaDmitrieff/auto-co-meta/stargazers"><img src="https://img.shields.io/github/stars/NikitaDmitrieff/auto-co-meta?style=social" alt="Stars" /></a>
 </p>
 
-https://github.com/NikitaDmitrieff/auto-co-meta/raw/main/demos/terminal-demo.mp4
+[![Watch the demo](https://img.youtube.com/vi/1zJca_zFzys/maxresdefault.jpg)](https://youtu.be/1zJca_zFzys)
 
-> 4 fully AI-driven companies running simultaneously, each with its own product, agents, and deployment pipeline. [Also on YouTube](https://youtu.be/1zJca_zFzys).
+> **[Watch the demo](https://youtu.be/1zJca_zFzys)** — 4 fully AI-driven companies running simultaneously, each with its own product, agents, and deployment pipeline.
 
 **Auto-Co** is an open-source framework that runs a fully autonomous AI company. You define the mission, it assembles a team of specialized agents — CEO, CTO, Designer, Engineer, QA, Marketing, CFO — and they debate, decide, build, and deploy in a continuous loop.
 
