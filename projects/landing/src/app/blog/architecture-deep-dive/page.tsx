@@ -79,9 +79,40 @@ function Table({
   );
 }
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline:
+    "How I built a self-running AI company with a bash loop, 14 agents, and a markdown file",
+  description:
+    "Deep-dive into the relay baton pattern, 14-agent architecture, convergence rules, failure modes, and real cost breakdown after 30+ cycles of fully autonomous AI operation.",
+  datePublished: "2026-03-07",
+  dateModified: "2026-03-07",
+  author: { "@type": "Organization", name: "Auto-Co" },
+  publisher: {
+    "@type": "Organization",
+    name: "Auto-Co",
+    url: "https://runautoco.com",
+  },
+  url: "https://runautoco.com/blog/architecture-deep-dive",
+  mainEntityOfPage: "https://runautoco.com/blog/architecture-deep-dive",
+  keywords: [
+    "AI agents",
+    "multi-agent system",
+    "autonomous AI",
+    "relay baton pattern",
+    "Claude",
+    "open source",
+  ],
+};
+
 export default function ArchitectureDeepDive() {
   return (
     <div className="min-h-screen bg-black text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <main className="max-w-3xl mx-auto px-6 py-20">
         <div className="mb-8">
           <Link

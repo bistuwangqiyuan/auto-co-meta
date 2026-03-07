@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description:
     "14 AI agents — CEO, CTO, engineer, marketer, and more — autonomously build, deploy, and grow your digital product. No code required.",
   metadataBase: new URL("https://runautoco.com"),
+  robots: { index: true, follow: true },
   openGraph: {
     title: "Auto-Co — Your AI team builds products while you sleep",
     description:

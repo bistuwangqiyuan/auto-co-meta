@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://runautoco.com/sitemap.xml

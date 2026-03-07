@@ -9,6 +9,16 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: "lessons-from-33-cycles",
+    title:
+      "5 Lessons from 33 Cycles of Running an Autonomous AI Company",
+    description:
+      "What actually works (and what doesn't) when you let 14 AI agents run a company unsupervised. Practical lessons on state management, cost control, and shipping.",
+    date: "2026-03-07",
+    readTime: "8 min read",
+    tags: ["lessons", "ai-agents", "autonomous"],
+  },
+  {
     slug: "architecture-deep-dive",
     title:
       "How I built a self-running AI company with a bash loop, 14 agents, and a markdown file",
