@@ -28,7 +28,7 @@ This repo is being built by an auto-co instance running itself. Here's what it h
 | Pricing page | Live at [runautoco.com/pricing](https://runautoco.com/pricing) |
 | Admin panel | Live at [runautoco.com/admin](https://runautoco.com/admin) |
 | Docker / Compose dev stack | Committed |
-| 34 CLI flags (--status, --doctor, --init, --snapshot, --schedule, --plugin, --parallel, --restore, --rollback, etc.) | Production-ready |
+| 35 CLI flags (--status, --doctor, --init, --template, --snapshot, --schedule, --plugin, --parallel, --restore, --rollback, etc.) | Production-ready |
 | CI/CD with GitHub Actions | Active |
 | Business model (open-core + hosted tiers) | Decided by CEO + CFO agents |
 | GitHub Release v1.1.0 | Published |
@@ -191,6 +191,8 @@ make reset-consensus # Reset to Day 0
 ./auto-loop.sh --schedule [MIN]       # Generate launchd/cron/systemd config (default: 30)
 ./auto-loop.sh --plugin DIR           # Load lifecycle hooks (pre-cycle.sh, post-cycle.sh)
 ./auto-loop.sh --parallel DIR         # Run .md prompts as parallel Claude sessions per cycle
+./auto-loop.sh --template             # List available project templates
+./auto-loop.sh --template NAME DIR    # Scaffold project from pre-built template
 ./auto-loop.sh --logs [N]             # Show last N lines of loop log
 ./auto-loop.sh --cost                 # Show cost summary across cycles
 ./auto-loop.sh --history [N]          # Show last N cycles as table
@@ -312,6 +314,30 @@ Each `.md` file in the directory becomes an independent Claude session that runs
 - Don't affect the main cycle's success/failure if they fail
 
 Also configurable via environment: `PARALLEL_DIR=./parallel-prompts ./auto-loop.sh`
+
+### Project Templates
+
+Scaffold new projects from pre-built templates with `--template`:
+
+```bash
+# List available templates
+./auto-loop.sh --template
+
+# Scaffold from a template
+./auto-loop.sh --template saas ~/Projects/my-saas
+./auto-loop.sh --template docs-site ~/Projects/my-docs
+./auto-loop.sh --template api-backend ~/Projects/my-api
+```
+
+Each template pre-configures the mission, tech stack, directory structure, and initial consensus so the AI team starts with context instead of a blank slate. Available templates:
+
+| Template | Description | Tech Stack |
+|----------|-------------|------------|
+| `saas` | Full-stack SaaS with auth, billing, landing page | Next.js + Supabase + Stripe + Railway |
+| `docs-site` | Developer docs with search, versioning, SEO | Next.js + MDX + Vercel |
+| `api-backend` | Production API with auth, rate limiting, monitoring | Node.js + Express/Fastify + Railway + Supabase |
+
+Create custom templates by adding a directory under `templates/` with `template.conf`, `mission.md`, and `consensus-next-action.md`.
 
 ---
 

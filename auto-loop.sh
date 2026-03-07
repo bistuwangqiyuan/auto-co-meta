@@ -37,6 +37,7 @@
 #   ./auto-loop.sh --schedule [MIN] # Generate launchd/cron/systemd config (default: 30min)
 #   ./auto-loop.sh --plugin DIR # Load lifecycle hooks from DIR (pre-cycle.sh, post-cycle.sh)
 #   ./auto-loop.sh --parallel DIR # Run .md prompt files from DIR as parallel Claude sessions
+#   ./auto-loop.sh --template [NAME] [DIR] # Scaffold from pre-built template (saas, docs-site, api-backend)
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -494,6 +495,8 @@ USAGE:
   ./auto-loop.sh --schedule 15 --systemd  Force systemd output
   ./auto-loop.sh --plugin DIR Load lifecycle hooks from DIR (pre-cycle.sh, post-cycle.sh)
   ./auto-loop.sh --parallel DIR  Run .md prompts from DIR as parallel Claude sessions
+  ./auto-loop.sh --template      List available project templates
+  ./auto-loop.sh --template NAME DIR  Scaffold project from template
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -803,6 +806,360 @@ GITIGNORE_EOF
     echo ""
     echo "The AI team will hold a strategy meeting in Cycle 1"
     echo "and start building by Cycle 3."
+    exit 0
+fi
+
+# === Template flag (scaffold from pre-built templates) ===
+
+if [ "${1:-}" = "--template" ]; then
+    TEMPLATES_DIR="$PROJECT_DIR/templates"
+
+    # List available templates
+    if [ -z "${2:-}" ] || [ "${2:-}" = "list" ]; then
+        echo "=== Available Templates ==="
+        echo ""
+        if [ ! -d "$TEMPLATES_DIR" ] || [ -z "$(ls -d "$TEMPLATES_DIR"/*/ 2>/dev/null)" ]; then
+            echo "No templates found in $TEMPLATES_DIR"
+            echo ""
+            echo "Create a template by adding a directory under templates/ with:"
+            echo "  template.conf        -- NAME, DESCRIPTION, TECH_STACK, EXTRA_DIRS"
+            echo "  mission.md           -- Mission statement for CLAUDE.md"
+            echo "  consensus-next-action.md  -- Initial Next Action for consensus"
+            exit 1
+        fi
+        for tpl_dir in "$TEMPLATES_DIR"/*/; do
+            tpl_name="$(basename "$tpl_dir")"
+            if [ -f "$tpl_dir/template.conf" ]; then
+                # shellcheck source=/dev/null
+                source "$tpl_dir/template.conf"
+                printf "  %-16s %s\n" "$tpl_name" "${DESCRIPTION:-No description}"
+                printf "  %-16s Tech: %s\n" "" "${TECH_STACK:-unspecified}"
+                echo ""
+            else
+                printf "  %-16s (no template.conf)\n" "$tpl_name"
+                echo ""
+            fi
+        done
+        echo "Usage: ./auto-loop.sh --template <name> <project-directory>"
+        echo "Example: ./auto-loop.sh --template saas ~/Projects/my-saas"
+        exit 0
+    fi
+
+    TPL_NAME="${2:-}"
+    TARGET_DIR="${3:-}"
+
+    # Validate template exists
+    TPL_DIR="$TEMPLATES_DIR/$TPL_NAME"
+    if [ ! -d "$TPL_DIR" ] || [ ! -f "$TPL_DIR/template.conf" ]; then
+        echo "Error: Template '$TPL_NAME' not found."
+        echo ""
+        echo "Available templates:"
+        for tpl_dir in "$TEMPLATES_DIR"/*/; do
+            [ -f "$tpl_dir/template.conf" ] && echo "  $(basename "$tpl_dir")"
+        done
+        echo ""
+        echo "Usage: ./auto-loop.sh --template <name> <project-directory>"
+        exit 1
+    fi
+
+    # Validate target directory
+    if [ -z "$TARGET_DIR" ]; then
+        echo "Usage: ./auto-loop.sh --template <name> <project-directory>"
+        echo ""
+        echo "Example: ./auto-loop.sh --template $TPL_NAME ~/Projects/my-project"
+        exit 1
+    fi
+
+    # Resolve to absolute path
+    if [[ "$TARGET_DIR" != /* ]]; then
+        TARGET_DIR="$(pwd)/$TARGET_DIR"
+    fi
+
+    if [ -f "$TARGET_DIR/auto-loop.sh" ]; then
+        echo "Error: $TARGET_DIR already contains an auto-co project (auto-loop.sh exists)."
+        exit 1
+    fi
+
+    # Load template config
+    # shellcheck source=/dev/null
+    source "$TPL_DIR/template.conf"
+
+    echo "=== Scaffolding from template: ${NAME:-$TPL_NAME} ==="
+    echo "Description: ${DESCRIPTION:-none}"
+    echo "Tech stack:  ${TECH_STACK:-unspecified}"
+    echo "Target:      $TARGET_DIR"
+    echo ""
+
+    # Create base directory structure (same as --init)
+    mkdir -p "$TARGET_DIR"/{memories,logs,docs,projects}
+    mkdir -p "$TARGET_DIR/docs"/{ceo,cto,critic,product,ui,interaction,fullstack,qa,devops,marketing,operations,sales,cfo,research}
+    mkdir -p "$TARGET_DIR/.claude/agents"
+    mkdir -p "$TARGET_DIR/.claude/skills/team"
+
+    # Create template-specific extra directories
+    if [ -n "${EXTRA_DIRS:-}" ]; then
+        for dir in $EXTRA_DIRS; do
+            mkdir -p "$TARGET_DIR/$dir"
+            echo "  created $dir/"
+        done
+    fi
+
+    # Copy core scripts
+    for script in auto-loop.sh stop-loop.sh monitor.sh; do
+        if [ -f "$PROJECT_DIR/$script" ]; then
+            cp "$PROJECT_DIR/$script" "$TARGET_DIR/$script"
+            chmod +x "$TARGET_DIR/$script"
+            echo "  copied $script"
+        fi
+    done
+
+    # Copy agent definitions
+    if [ -d "$PROJECT_DIR/.claude/agents" ]; then
+        cp "$PROJECT_DIR/.claude/agents/"*.md "$TARGET_DIR/.claude/agents/" 2>/dev/null || true
+        agent_count=$(ls "$TARGET_DIR/.claude/agents/"*.md 2>/dev/null | wc -l | tr -d ' ')
+        echo "  copied $agent_count agent definitions"
+    fi
+
+    # Copy team skill
+    if [ -f "$PROJECT_DIR/.claude/skills/team/SKILL.md" ]; then
+        cp "$PROJECT_DIR/.claude/skills/team/SKILL.md" "$TARGET_DIR/.claude/skills/team/SKILL.md"
+        echo "  copied team skill"
+    fi
+
+    # Copy templates directory so the new project can also scaffold
+    if [ -d "$TEMPLATES_DIR" ]; then
+        cp -r "$TEMPLATES_DIR" "$TARGET_DIR/templates"
+        echo "  copied templates/"
+    fi
+
+    # Copy VERSION
+    cp "$PROJECT_DIR/VERSION" "$TARGET_DIR/VERSION" 2>/dev/null || echo "1.0.1" > "$TARGET_DIR/VERSION"
+
+    # Read template mission
+    TPL_MISSION="**Define your mission here.**"
+    if [ -f "$TPL_DIR/mission.md" ]; then
+        TPL_MISSION="$(cat "$TPL_DIR/mission.md")"
+    fi
+
+    # Read template next action
+    TPL_NEXT_ACTION="**Cycle 1: CEO calls a strategy meeting to decide what to build.**"
+    if [ -f "$TPL_DIR/consensus-next-action.md" ]; then
+        TPL_NEXT_ACTION="$(cat "$TPL_DIR/consensus-next-action.md")"
+    fi
+
+    # Create consensus with template-specific next action
+    cat > "$TARGET_DIR/memories/consensus.md" << CONSENSUS_EOF
+# Auto Company Consensus
+
+## Last Updated
+(not yet started)
+
+## Current Phase
+Day 0
+
+## What We Did This Cycle
+Nothing yet -- this is a fresh auto-co project (template: ${TPL_NAME}).
+
+## Key Decisions Made
+(none)
+
+## Active Projects
+(none)
+
+## Metrics
+- Revenue: \$0
+- Users: 0
+- MRR: \$0
+- Deployed Services: (none)
+- Cost/month: \$0
+
+## Next Action
+${TPL_NEXT_ACTION}
+
+## Company State
+- Product: TBD (template: ${TPL_NAME})
+- Tech Stack: ${TECH_STACK:-TBD}
+- Revenue: \$0
+- Users: 0
+
+## Human Escalation
+- Pending Request: NO
+- Last Response: N/A
+- Awaiting Response Since: N/A
+
+## Open Questions
+- What specific product should we build within the ${NAME:-$TPL_NAME} space?
+- What market should we target?
+CONSENSUS_EOF
+    echo "  created memories/consensus.md (template: $TPL_NAME)"
+
+    # Create empty escalation files
+    echo "" > "$TARGET_DIR/memories/human-request.md"
+    echo "" > "$TARGET_DIR/memories/human-response.md"
+    echo "  created escalation files"
+
+    # Create PROMPT.md (same as --init)
+    cat > "$TARGET_DIR/PROMPT.md" << 'PROMPT_EOF'
+# Auto-Co -- Autonomous Loop Prompt
+
+You are Auto-Co's autonomous operating coordinator. Each time you are invoked, you drive one work cycle. No supervision, autonomous decisions, bold action.
+
+## Work Cycle
+
+### 1. Read Consensus
+
+The current consensus is pre-loaded at the end of this prompt. If it's missing, read `memories/consensus.md`.
+
+### 2. Check for Human Escalation Response
+
+Before deciding on the cycle's action, check `memories/human-response.md`. If it contains a response:
+- Read and incorporate the human's answer into your decision-making
+- Clear the file after processing (write an empty string)
+- Note in consensus that a human response was received and acted upon
+
+### 3. Decide
+
+- Clear Next Action exists -> execute it
+- Active project in progress -> continue pushing forward (check `docs/*/` for outputs)
+- Day 0, no direction -> CEO calls a strategy meeting
+- Stuck -> change angle, narrow scope, or just ship it
+
+Priority: **Ship > Plan > Discuss**
+
+### 4. Form Team and Execute
+
+Read `.claude/skills/team/SKILL.md` and follow the process to assemble a team for the task. Select 3-5 of the most relevant agents per cycle -- do not pull everyone in.
+
+### 5. Update Consensus (Mandatory)
+
+Before ending, you **must** update `memories/consensus.md`.
+
+**Atomic write protocol:** Write to `memories/.consensus.tmp` first, then rename to `memories/consensus.md`.
+
+## Convergence Rules (Mandatory)
+
+1. **Cycle 1**: Brainstorm. Each agent proposes one idea. End by ranking top 3.
+2. **Cycle 2**: Select #1. Critic runs Pre-Mortem, Research validates the market, CFO runs the numbers. Deliver a **GO / NO-GO** verdict.
+3. **Cycle 3+**: GO -> create repo, start writing code. Discussion is **FORBIDDEN**. NO-GO -> try #2. If all fail, force-pick one and build it.
+4. **Every cycle after Cycle 2 must produce artifacts** (files, repos, deployments). Pure discussion is forbidden.
+5. **Same Next Action appearing 2 consecutive cycles** -> you are stalled. Change direction or narrow scope and ship immediately.
+
+## Anti-Patterns (Never Do These)
+
+- Endless brainstorming past Cycle 1
+- "Let's research more" after Cycle 2
+- Producing only documents with no code or deployments
+- Waiting for perfect information
+- Asking the human for routine decisions
+- Repeating the same Next Action without progress
+PROMPT_EOF
+    echo "  created PROMPT.md"
+
+    # Create CLAUDE.md with template-specific mission
+    cat > "$TARGET_DIR/CLAUDE.md" << CLAUDE_EOF
+# Auto-Co -- Fully Autonomous AI Company
+
+## Mission
+
+${TPL_MISSION}
+
+## Operating Mode
+
+This is a **fully autonomous AI company** with no human involvement in daily decisions.
+
+- **Do NOT wait for human approval** -- you are the decision-maker
+- **Do NOT ask for human opinions** -- discuss internally as a team, then act
+- **CEO (Bezos) is the ultimate decision-maker** -- when the team disagrees, CEO has final say
+- **Munger is the only brake** -- every major decision must pass through him
+
+## Safety Red Lines (Absolute -- Never Violate)
+
+| Forbidden | Specifics |
+|-----------|-----------|
+| Delete GitHub repos | \`gh repo delete\` and any repo-deletion operations |
+| Delete Vercel projects | \`vercel remove\` -- never delete projects/deployments |
+| Delete Railway services | \`railway delete\` -- never delete services/projects |
+| Reset Supabase databases | \`supabase db reset\` -- never wipe production data |
+| Delete system files | \`rm -rf /\`, do not touch \`~/.ssh/\`, \`~/.config/\`, \`~/.claude/\` |
+| Illegal activity | Fraud, copyright infringement, data theft, unauthorized access |
+| Leak credentials | API keys/tokens/passwords must never enter public repos or logs |
+| Force push main | \`git push --force\` to main/master |
+| Destructive git ops | \`git reset --hard\` only on temporary branches |
+
+## Team Architecture
+
+14 AI Agents defined in \`.claude/agents/\`. See agent files for full role definitions.
+
+## Decision Principles
+
+1. **Ship > Plan > Discuss** -- if you can ship it, don't discuss it
+2. **Act on 70% information** -- waiting for 90% means you're already too slow
+3. **Customer obsession** -- start from real needs
+4. **Simplicity first** -- if one person can do it, don't split it
+5. **Ramen profitability** -- the first goal is revenue, not users
+6. **Boring technology** -- mature, stable tech unless new tech offers 10x advantage
+7. **Monolith first** -- get it running, split when needed
+
+## Shared Memory
+
+- **\`memories/consensus.md\`** -- cross-cycle relay baton
+- **\`memories/human-request.md\`** -- outbound escalation requests
+- **\`memories/human-response.md\`** -- inbound responses from the human
+- **\`docs/<role>/\`** -- each Agent's work output
+- **\`projects/\`** -- all new projects
+
+## Human Escalation Protocol
+
+When truly necessary (spending money, legal questions, credentials):
+1. CEO writes request to \`memories/human-request.md\`
+2. If no response within 2 cycles, make autonomous decision and note it
+CLAUDE_EOF
+    echo "  created CLAUDE.md (template: $TPL_NAME)"
+
+    # Create .gitignore
+    cat > "$TARGET_DIR/.gitignore" << 'GITIGNORE_EOF'
+# Auto-Co
+.auto-loop.pid
+.auto-loop-stop
+.auto-loop-paused
+.auto-loop-state
+logs/cycle-*.log
+logs/auto-loop.log*
+memories/.consensus.tmp
+
+# Dependencies
+node_modules/
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
+GITIGNORE_EOF
+    echo "  created .gitignore"
+
+    # Init git repo if not already one
+    if [ ! -d "$TARGET_DIR/.git" ]; then
+        (cd "$TARGET_DIR" && git init -q && git add -A && git commit -q -m "chore: scaffold auto-co project from template '$TPL_NAME'")
+        echo "  initialized git repository"
+    fi
+
+    echo ""
+    echo "=== Auto-Co project scaffolded from '$TPL_NAME' template! ==="
+    echo ""
+    echo "Next steps:"
+    echo "  1. cd $TARGET_DIR"
+    echo "  2. Review CLAUDE.md -- customize the mission if needed"
+    echo "  3. Run: ./auto-loop.sh --selftest"
+    echo "  4. Run: ./auto-loop.sh"
+    echo ""
+    echo "The AI team will start working from the $TPL_NAME template"
+    echo "and begin building by Cycle 3."
     exit 0
 fi
 
