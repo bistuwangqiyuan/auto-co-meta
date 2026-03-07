@@ -17,6 +17,7 @@
 #   ./monitor.sh --compare   # Compare cost/duration across models
 #   ./monitor.sh --health    # Combined health check (status + alerts + uptime)
 #   ./monitor.sh --trend [N] # Cost & duration trend over last N cycles (default 20)
+#   ./monitor.sh --version   # Show version
 # ============================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -26,6 +27,12 @@ STATE_FILE="$PROJECT_DIR/.auto-loop-state"
 PID_FILE="$PROJECT_DIR/.auto-loop.pid"
 PAUSE_FLAG="$PROJECT_DIR/.auto-loop-paused"
 LABEL="com.auto-co.loop"
+
+if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-V" ]; then
+    version=$(cat "$PROJECT_DIR/VERSION" 2>/dev/null || echo "unknown")
+    echo "monitor.sh v${version}"
+    exit 0
+fi
 
 case "${1:-}" in
     --status)

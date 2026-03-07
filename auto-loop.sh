@@ -9,6 +9,7 @@
 #   ./auto-loop.sh              # Run in foreground
 #   ./auto-loop.sh --daemon     # Run via launchd (no tty)
 #   ./auto-loop.sh --selftest   # Validate environment without running
+#   ./auto-loop.sh --version    # Show version
 #
 # Stop:
 #   ./stop-loop.sh              # Graceful stop
@@ -285,6 +286,14 @@ extract_cycle_metadata() {
     fi
 }
 
+# === Version flag ===
+
+if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-V" ]; then
+    version=$(cat "$PROJECT_DIR/VERSION" 2>/dev/null || echo "unknown")
+    echo "auto-loop.sh v${version}"
+    exit 0
+fi
+
 # === Self-test mode ===
 
 if [ "${1:-}" = "--selftest" ]; then
@@ -423,6 +432,23 @@ if [ -f "$PID_FILE" ]; then
         exit 1
     fi
 fi
+
+# Validate numeric config values
+validate_numeric() {
+    local name="$1" value="$2"
+    if ! echo "$value" | grep -qE '^[0-9]+$'; then
+        echo "Error: $name='$value' is not a valid integer."
+        exit 1
+    fi
+}
+validate_numeric "LOOP_INTERVAL" "$LOOP_INTERVAL"
+validate_numeric "CYCLE_TIMEOUT_SECONDS" "$CYCLE_TIMEOUT_SECONDS"
+validate_numeric "MAX_CONSECUTIVE_ERRORS" "$MAX_CONSECUTIVE_ERRORS"
+validate_numeric "COOLDOWN_SECONDS" "$COOLDOWN_SECONDS"
+validate_numeric "LIMIT_WAIT_SECONDS" "$LIMIT_WAIT_SECONDS"
+validate_numeric "MAX_LOGS" "$MAX_LOGS"
+validate_numeric "RETRY_BASE_SECONDS" "$RETRY_BASE_SECONDS"
+validate_numeric "RETRY_MAX_SECONDS" "$RETRY_MAX_SECONDS"
 
 # Check dependencies
 if ! command -v claude &>/dev/null; then

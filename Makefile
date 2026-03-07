@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -45,6 +45,9 @@ trend: ## Cost & duration trend with sparklines
 
 selftest: ## Run self-test (verify loop, monitor, consensus integrity)
 	./auto-loop.sh --selftest
+
+version: ## Show auto-co version
+	@cat VERSION
 
 # === Daemon (launchd) ===
 
