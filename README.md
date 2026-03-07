@@ -148,6 +148,30 @@ make docker-monitor  # Tail Docker logs
 make reset-consensus # Reset to Day 0
 ```
 
+### Monitor flags
+
+```
+./monitor.sh                # Tail the main log (live)
+./monitor.sh --status       # Loop status + latest consensus
+./monitor.sh --last         # Last cycle's result
+./monitor.sh --cycles       # Summary of all cycles
+./monitor.sh --costs        # Cost analytics breakdown
+./monitor.sh --history      # Tabular cycle history
+./monitor.sh --dashboard    # Live-updating compact dashboard (10s refresh)
+./monitor.sh --export       # Export cycle history as CSV
+./monitor.sh --alerts       # Check for failures, cost spikes, stalls
+./monitor.sh --compare      # Compare cost/duration/success across models
+./monitor.sh --health       # Combined health check (status + env + alerts + stats)
+```
+
+### Selftest
+
+```
+./auto-loop.sh --selftest   # Validate 10 environment checks before running
+```
+
+Selftest checks: Claude CLI, PROMPT.md, memories/, consensus validity, jq, git repo, stale PID, .env, log directory, agent definitions.
+
 ---
 
 ## Human Escalation

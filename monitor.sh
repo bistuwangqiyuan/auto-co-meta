@@ -15,6 +15,7 @@
 #   ./monitor.sh --export    # Export cycle history as CSV
 #   ./monitor.sh --alerts    # Check for failures, cost spikes, stalls
 #   ./monitor.sh --compare   # Compare cost/duration across models
+#   ./monitor.sh --health    # Combined health check (status + alerts + uptime)
 # ============================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -379,6 +380,147 @@ case "${1:-}" in
             } |
             "  \(.model): $\(.cost_per_ok) per successful cycle"
         ' -r "$HISTORY_FILE"
+        ;;
+
+    --health)
+        HISTORY_FILE="$LOG_DIR/cycle-history.jsonl"
+        echo "=== Auto-Co Health Report ==="
+        echo ""
+
+        # 1. Loop status
+        printf "Loop: "
+        if [ -f "$PID_FILE" ]; then
+            pid=$(cat "$PID_FILE")
+            if kill -0 "$pid" 2>/dev/null; then
+                printf "RUNNING (PID $pid)"
+            else
+                printf "STOPPED (stale PID $pid)"
+            fi
+        else
+            printf "NOT RUNNING"
+        fi
+
+        if [ -f "$PAUSE_FLAG" ]; then
+            printf "  |  Daemon: PAUSED"
+        fi
+        echo ""
+
+        # 2. Uptime / idle time
+        if [ -f "$STATE_FILE" ]; then
+            last_run=$(grep '^LAST_RUN=' "$STATE_FILE" | cut -d= -f2-)
+            model=$(grep '^MODEL=' "$STATE_FILE" | cut -d= -f2)
+            loop_count=$(grep '^LOOP_COUNT=' "$STATE_FILE" | cut -d= -f2)
+            total_cost=$(grep '^TOTAL_COST=' "$STATE_FILE" | cut -d= -f2)
+            if [ -n "$last_run" ]; then
+                last_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run" +%s 2>/dev/null || echo 0)
+                now_epoch=$(date +%s)
+                idle_minutes=$(( (now_epoch - last_epoch) / 60 ))
+                echo "Last run: $last_run (${idle_minutes}m ago)"
+            fi
+            echo "Model: ${model:-unknown}  |  Internal cycles: ${loop_count:-0}  |  Total cost: \$${total_cost:-0}"
+        fi
+
+        echo ""
+
+        # 3. Selftest summary (inline, no subprocess)
+        echo "--- Environment ---"
+        st_pass=0
+        st_fail=0
+        st_check() {
+            if [ "$2" -eq 1 ]; then
+                st_pass=$((st_pass + 1))
+            else
+                printf "  [FAIL] %s -- %s\n" "$1" "$3"
+                st_fail=$((st_fail + 1))
+            fi
+        }
+        command -v claude &>/dev/null && st_check "Claude CLI" 1 || st_check "Claude CLI" 0 "not found"
+        [ -f "$PROJECT_DIR/PROMPT.md" ] && st_check "PROMPT.md" 1 || st_check "PROMPT.md" 0 "missing"
+        [ -d "$PROJECT_DIR/memories" ] && st_check "memories/" 1 || st_check "memories/" 0 "missing"
+        command -v jq &>/dev/null && st_check "jq" 1 || st_check "jq" 0 "not installed"
+        git -C "$PROJECT_DIR" rev-parse --is-inside-work-tree &>/dev/null && st_check "git repo" 1 || st_check "git repo" 0 "not a repo"
+        [ -d "$PROJECT_DIR/.claude/agents" ] && st_check "agents" 1 || st_check "agents" 0 "missing"
+
+        if [ "$st_fail" -eq 0 ]; then
+            echo "  All $st_pass checks passed."
+        else
+            echo "  $st_pass passed, $st_fail failed."
+        fi
+
+        echo ""
+
+        # 4. Alerts (inline version of --alerts)
+        echo "--- Alerts ---"
+        alerts=0
+        if [ -f "$HISTORY_FILE" ] && [ -s "$HISTORY_FILE" ] && command -v jq &>/dev/null; then
+            total_cycles=$(jq -s 'length' "$HISTORY_FILE")
+
+            # Recent failures
+            recent_fails=$(jq -s '[.[-10:] | .[] | select(.status=="fail")] | length' "$HISTORY_FILE")
+            if [ "$recent_fails" -gt 0 ]; then
+                echo "  [WARN] $recent_fails failures in last 10 cycles"
+                alerts=$((alerts + 1))
+            fi
+
+            # Cost spike
+            if [ "$total_cycles" -ge 3 ]; then
+                cost_alert=$(jq -s '
+                    if length < 3 then empty
+                    else
+                        (.[:-1] | [.[].cost] | add / length) as $avg |
+                        (.[-1].cost) as $last |
+                        if $last > ($avg * 2) then
+                            "  [WARN] Last cycle cost $\($last) is >2x average ($\($avg | . * 100 | floor / 100))"
+                        else empty end
+                    end
+                ' -r "$HISTORY_FILE")
+                if [ -n "$cost_alert" ]; then
+                    echo "$cost_alert"
+                    alerts=$((alerts + 1))
+                fi
+            fi
+
+            # Consecutive failure streak
+            streak=$(jq -s '[foreach .[] as $x (0; if $x.status == "fail" then . + 1 else 0 end)] | max' "$HISTORY_FILE")
+            if [ "$streak" -ge 3 ]; then
+                echo "  [CRIT] Worst consecutive failure streak: $streak cycles"
+                alerts=$((alerts + 1))
+            fi
+
+            # Stall detection
+            if [ -f "$STATE_FILE" ]; then
+                last_run_ts=$(grep '^LAST_RUN=' "$STATE_FILE" | cut -d= -f2-)
+                if [ -n "$last_run_ts" ]; then
+                    lr_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run_ts" +%s 2>/dev/null || echo 0)
+                    n_epoch=$(date +%s)
+                    idle_m=$(( (n_epoch - lr_epoch) / 60 ))
+                    if [ "$idle_m" -gt 60 ]; then
+                        echo "  [WARN] Loop idle for ${idle_m}m"
+                        alerts=$((alerts + 1))
+                    fi
+                fi
+            fi
+
+            if [ "$alerts" -eq 0 ]; then
+                echo "  All clear across $total_cycles cycles."
+            else
+                echo "  $alerts alert(s) found."
+            fi
+        else
+            echo "  No cycle history available."
+        fi
+
+        echo ""
+
+        # 5. Quick stats
+        if [ -f "$HISTORY_FILE" ] && [ -s "$HISTORY_FILE" ] && command -v jq &>/dev/null; then
+            echo "--- Stats ---"
+            ok=$(jq -s '[.[] | select(.status=="ok")] | length' "$HISTORY_FILE")
+            fail=$(jq -s '[.[] | select(.status=="fail")] | length' "$HISTORY_FILE")
+            total=$(jq -s '[.[].cost] | add' "$HISTORY_FILE")
+            rate=$(jq -s '([.[] | select(.status=="ok")] | length) * 100 / length | floor' "$HISTORY_FILE")
+            echo "  Cycles: $total_cycles ($ok ok, $fail failed)  |  Success rate: ${rate}%  |  Total cost: \$$total"
+        fi
         ;;
 
     *)
