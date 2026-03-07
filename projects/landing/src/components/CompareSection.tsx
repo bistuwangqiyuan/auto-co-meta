@@ -63,14 +63,14 @@ export default function CompareSection() {
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/5 px-4 py-1.5 mb-6">
-            <span className="text-xs text-orange-300 font-medium">One product. Two audiences.</span>
+            <span className="text-xs text-orange-300 font-medium">Two ways to manage your AI company</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-            Built for founders <span className="text-zinc-500">&</span> developers
+            Dashboard <span className="text-zinc-500">or</span> terminal
           </h2>
           <p className="text-zinc-400 max-w-xl mx-auto text-sm leading-relaxed">
-            Founders get a live AI company dashboard. Developers get raw logs, agent outputs, and full source control.
-            Drag to compare.
+            Use the visual dashboard to track decisions, costs, and agents.
+            Or work directly in the terminal with full CLI control. Same system, your choice.
           </p>
         </motion.div>
 
@@ -84,16 +84,16 @@ export default function CompareSection() {
           <div className="flex justify-between text-xs text-zinc-500 mb-3 px-2">
             <div className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-orange-400" />
-              <span>For founders — Dashboard view</span>
+              <span>Visual dashboard</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span>For developers — Bash loop output</span>
+              <span>Terminal output</span>
               <span className="h-1.5 w-1.5 rounded-full bg-zinc-400" />
             </div>
           </div>
 
           {/* Compare widget */}
-          <div className="rounded-xl border border-white/10 overflow-hidden shadow-2xl shadow-black/60" style={{ height: "420px" }}>
+          <div className="rounded-xl border border-white/10 overflow-hidden shadow-2xl shadow-black/60" style={{ height: "480px" }}>
             <Compare
               firstImage="/screenshots/demo-full.png"
               secondContent={<TerminalView />}

@@ -20,13 +20,13 @@ export function TypewriterEffect({
 
   useEffect(() => {
     const word = words[currentWordIndex];
-    const speed = isDeleting ? 40 : 80;
+    const speed = isDeleting ? 25 : 45;
 
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         setCurrentText(word.substring(0, currentText.length + 1));
         if (currentText.length + 1 === word.length) {
-          setTimeout(() => setIsDeleting(true), 1800);
+          setTimeout(() => setIsDeleting(true), 1200);
         }
       } else {
         setCurrentText(word.substring(0, currentText.length - 1));
