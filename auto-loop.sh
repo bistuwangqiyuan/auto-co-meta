@@ -21,6 +21,8 @@
 #   COOLDOWN_SECONDS=300        # Cooldown after circuit break
 #   LIMIT_WAIT_SECONDS=3600     # Wait on usage limit
 #   MAX_LOGS=200                # Max cycle logs to keep
+#   RETRY_BASE_SECONDS=30       # Initial backoff on transient failure
+#   RETRY_MAX_SECONDS=600       # Max backoff cap
 # ============================================================
 
 set -euo pipefail
@@ -51,6 +53,8 @@ MAX_CONSECUTIVE_ERRORS="${MAX_CONSECUTIVE_ERRORS:-3}"
 COOLDOWN_SECONDS="${COOLDOWN_SECONDS:-300}"
 LIMIT_WAIT_SECONDS="${LIMIT_WAIT_SECONDS:-3600}"
 MAX_LOGS="${MAX_LOGS:-200}"
+RETRY_BASE_SECONDS="${RETRY_BASE_SECONDS:-30}"
+RETRY_MAX_SECONDS="${RETRY_MAX_SECONDS:-600}"
 
 # Ensure Agent Teams is available
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
@@ -432,6 +436,13 @@ This is Cycle #$loop_count. Act decisively."
             sleep $COOLDOWN_SECONDS
             error_count=0
             log "Circuit breaker reset. Resuming..."
+        else
+            # Exponential backoff for transient failures: 30s, 60s, 120s... capped at RETRY_MAX_SECONDS
+            backoff=$(awk "BEGIN {v=$RETRY_BASE_SECONDS * 2^($error_count - 1); print (v > $RETRY_MAX_SECONDS ? $RETRY_MAX_SECONDS : v)}")
+            log_cycle $loop_count "RETRY" "Backoff ${backoff}s before retry (error $error_count/$MAX_CONSECUTIVE_ERRORS)"
+            save_state "backoff"
+            sleep "$backoff"
+            continue
         fi
     fi
 
