@@ -162,6 +162,8 @@ make reset-consensus # Reset to Day 0
 ./monitor.sh --alerts       # Check for failures, cost spikes, stalls
 ./monitor.sh --compare      # Compare cost/duration/success across models
 ./monitor.sh --health       # Combined health check (status + env + alerts + stats)
+./monitor.sh --trend        # Cost & duration trend with sparklines (last 20)
+./monitor.sh --trend 10     # Trend for last N cycles
 ```
 
 ### Selftest

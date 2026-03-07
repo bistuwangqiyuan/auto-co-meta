@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -30,6 +30,18 @@ cycles: ## Show cycle history summary
 
 monitor: ## Tail live logs (Ctrl+C to exit)
 	./monitor.sh
+
+health: ## Combined health check (status + alerts + uptime)
+	./monitor.sh --health
+
+alerts: ## Check for failures, cost spikes, stalls
+	./monitor.sh --alerts
+
+compare: ## Compare cost/duration across models
+	./monitor.sh --compare
+
+trend: ## Cost & duration trend with sparklines
+	./monitor.sh --trend
 
 # === Daemon (launchd) ===
 

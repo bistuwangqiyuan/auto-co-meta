@@ -16,6 +16,7 @@
 #   ./monitor.sh --alerts    # Check for failures, cost spikes, stalls
 #   ./monitor.sh --compare   # Compare cost/duration across models
 #   ./monitor.sh --health    # Combined health check (status + alerts + uptime)
+#   ./monitor.sh --trend [N] # Cost & duration trend over last N cycles (default 20)
 # ============================================================
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -380,6 +381,55 @@ case "${1:-}" in
             } |
             "  \(.model): $\(.cost_per_ok) per successful cycle"
         ' -r "$HISTORY_FILE"
+        ;;
+
+    --trend)
+        HISTORY_FILE="$LOG_DIR/cycle-history.jsonl"
+        N="${2:-20}"
+        if [ ! -f "$HISTORY_FILE" ] || [ ! -s "$HISTORY_FILE" ] || ! command -v jq &>/dev/null; then
+            echo "No cycle history or jq not installed."
+            exit 1
+        fi
+
+        total_cycles=$(jq -s 'length' "$HISTORY_FILE")
+        shown=$((total_cycles < N ? total_cycles : N))
+
+        echo "=== Cost & Duration Trend (last $shown of $total_cycles cycles) ==="
+        echo ""
+
+        # Cost sparkline
+        cost_spark=$(jq -s "[ .[-${N}:][].cost ] | [ range(length) as \$i | {v: .[\$i], min: min, max: max} ] | [.[] | if .max == .min then 4 else (((.v - .min) / (.max - .min) * 7) | floor) end] | map([\"▁\",\"▂\",\"▃\",\"▄\",\"▅\",\"▆\",\"▇\",\"█\"][.]) | join(\"\")" "$HISTORY_FILE" 2>/dev/null | tr -d '"')
+        cost_min=$(jq -s "[ .[-${N}:][].cost ] | min | . * 100 | floor / 100" "$HISTORY_FILE")
+        cost_max=$(jq -s "[ .[-${N}:][].cost ] | max | . * 100 | floor / 100" "$HISTORY_FILE")
+        cost_avg=$(jq -s "[ .[-${N}:][].cost ] | add / length | . * 100 | floor / 100" "$HISTORY_FILE")
+
+        printf "  Cost:     %s\n" "$cost_spark"
+        printf "            min: \$%-8s  avg: \$%-8s  max: \$%-8s\n" "$cost_min" "$cost_avg" "$cost_max"
+        echo ""
+
+        # Duration sparkline
+        dur_spark=$(jq -s "[ .[-${N}:][].duration_s ] | [ range(length) as \$i | {v: .[\$i], min: min, max: max} ] | [.[] | if .max == .min then 4 else (((.v - .min) / (.max - .min) * 7) | floor) end] | map([\"▁\",\"▂\",\"▃\",\"▄\",\"▅\",\"▆\",\"▇\",\"█\"][.]) | join(\"\")" "$HISTORY_FILE" 2>/dev/null | tr -d '"')
+        dur_min=$(jq -s "[ .[-${N}:][].duration_s ] | min" "$HISTORY_FILE")
+        dur_max=$(jq -s "[ .[-${N}:][].duration_s ] | max" "$HISTORY_FILE")
+        dur_avg=$(jq -s "[ .[-${N}:][].duration_s ] | add / length | floor" "$HISTORY_FILE")
+
+        printf "  Duration: %s\n" "$dur_spark"
+        printf "            min: %-8ss  avg: %-8ss  max: %-8ss\n" "$dur_min" "$dur_avg" "$dur_max"
+        echo ""
+
+        # Per-cycle detail table
+        echo "  Details:"
+        printf "  %-7s %-9s %-9s %-10s %s\n" "Cycle" "Cost" "Duration" "Status" "Model"
+        echo "  ------- --------- --------- ---------- ------"
+        jq -s ".[-${N}:][] | \"\(.cycle)\t\$\(.cost)\t\(.duration_s)s\t\(.status)\t\(.model)\"" -r "$HISTORY_FILE" \
+            | while IFS=$'\t' read -r cyc cost dur st model; do
+                printf "  %-7s %-9s %-9s %-10s %s\n" "$cyc" "$cost" "$dur" "$st" "$model"
+            done
+
+        # Running total trend
+        echo ""
+        total=$(jq -s '[.[].cost] | add | . * 100 | floor / 100' "$HISTORY_FILE")
+        echo "  Cumulative cost: \$$total across $total_cycles cycles"
         ;;
 
     --health)
