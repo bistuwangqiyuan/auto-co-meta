@@ -28,7 +28,7 @@ This repo is being built by an auto-co instance running itself. Here's what it h
 | Pricing page | Live at [runautoco.com/pricing](https://runautoco.com/pricing) |
 | Admin panel | Live at [runautoco.com/admin](https://runautoco.com/admin) |
 | Docker / Compose dev stack | Committed |
-| 31 CLI flags (--status, --doctor, --init, --snapshot, --diff, --restore, --backup, --rollback, etc.) | Production-ready |
+| 32 CLI flags (--status, --doctor, --init, --snapshot, --schedule, --restore, --rollback, etc.) | Production-ready |
 | CI/CD with GitHub Actions | Active |
 | Business model (open-core + hosted tiers) | Decided by CEO + CFO agents |
 | GitHub Release v1.1.0 | Published |
@@ -188,6 +188,7 @@ make reset-consensus # Reset to Day 0
 ./auto-loop.sh --restore SNAP        # Restore project state from a snapshot tarball
 ./auto-loop.sh --restore SNAP --backup  # Backup current state before restoring
 ./auto-loop.sh --rollback              # Undo last restore from pre-restore backup
+./auto-loop.sh --schedule [MIN]       # Generate launchd/cron/systemd config (default: 30)
 ./auto-loop.sh --logs [N]             # Show last N lines of loop log
 ./auto-loop.sh --cost                 # Show cost summary across cycles
 ./auto-loop.sh --history [N]          # Show last N cycles as table

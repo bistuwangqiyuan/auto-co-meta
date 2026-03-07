@@ -34,6 +34,7 @@
 #   ./auto-loop.sh --env        # Generate .env.example with all config options
 #   ./auto-loop.sh --snapshot   # Create timestamped tarball of project state
 #   ./auto-loop.sh --rollback   # Undo last restore from pre-restore backup
+#   ./auto-loop.sh --schedule [MIN] # Generate launchd/cron/systemd config (default: 30min)
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -375,6 +376,9 @@ USAGE:
   ./auto-loop.sh --restore SNAP --backup --force  Backup + restore without confirmation
   ./auto-loop.sh --rollback   Restore from most recent pre-restore backup (quick undo)
   ./auto-loop.sh --rollback --force  Rollback without confirmation prompt
+  ./auto-loop.sh --schedule [MIN]  Generate launchd/cron/systemd config (default: 30)
+  ./auto-loop.sh --schedule 60 --cron  Force crontab output
+  ./auto-loop.sh --schedule 15 --systemd  Force systemd output
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -711,6 +715,168 @@ if [ "${1:-}" = "--resume" ]; then
     else
         echo "Loop is not paused."
     fi
+    exit 0
+fi
+
+# === Schedule flag (generate launchd plist or crontab entry) ===
+
+if [ "${1:-}" = "--schedule" ]; then
+    INTERVAL_MINUTES="${2:-30}"
+    # Validate interval
+    if ! echo "$INTERVAL_MINUTES" | grep -qE '^[0-9]+$' || [ "$INTERVAL_MINUTES" -lt 1 ]; then
+        echo "Error: interval must be a positive integer (minutes)."
+        echo "Usage: ./auto-loop.sh --schedule [MINUTES] [--cron|--launchd|--systemd]"
+        echo "  Default: 30 minutes, auto-detects platform"
+        exit 1
+    fi
+
+    MODE="${3:-auto}"
+    if [ "$MODE" = "auto" ]; then
+        case "$(uname -s)" in
+            Darwin) MODE="--launchd" ;;
+            Linux)
+                if command -v systemctl &>/dev/null; then
+                    MODE="--systemd"
+                else
+                    MODE="--cron"
+                fi
+                ;;
+            *) MODE="--cron" ;;
+        esac
+    fi
+
+    PLIST_LABEL="com.auto-co.loop"
+    PLIST_PATH="$HOME/Library/LaunchAgents/${PLIST_LABEL}.plist"
+    INTERVAL_SECONDS=$((INTERVAL_MINUTES * 60))
+
+    case "$MODE" in
+        --launchd)
+            cat <<LAUNCHD_EOF
+=== launchd plist (macOS) ===
+
+Save to: $PLIST_PATH
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>${PLIST_LABEL}</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>${PROJECT_DIR}/auto-loop.sh</string>
+        <string>--cycles</string>
+        <string>1</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>${INTERVAL_SECONDS}</integer>
+    <key>WorkingDirectory</key>
+    <string>${PROJECT_DIR}</string>
+    <key>StandardOutPath</key>
+    <string>${LOG_DIR}/launchd-stdout.log</string>
+    <key>StandardErrorPath</key>
+    <string>${LOG_DIR}/launchd-stderr.log</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/opt/homebrew/bin</string>
+    </dict>
+</dict>
+</plist>
+
+Install:
+  mkdir -p ~/Library/LaunchAgents
+  cp <saved-file> $PLIST_PATH
+  launchctl load $PLIST_PATH
+
+Uninstall:
+  launchctl unload $PLIST_PATH
+  rm $PLIST_PATH
+LAUNCHD_EOF
+            ;;
+
+        --cron)
+            # Convert minutes to cron expression
+            if [ "$INTERVAL_MINUTES" -lt 60 ]; then
+                CRON_EXPR="*/${INTERVAL_MINUTES} * * * *"
+            else
+                HOURS=$((INTERVAL_MINUTES / 60))
+                CRON_EXPR="0 */${HOURS} * * *"
+            fi
+            cat <<CRON_EOF
+=== crontab entry (Linux/macOS) ===
+
+Add with: crontab -e
+
+${CRON_EXPR} cd ${PROJECT_DIR} && ./auto-loop.sh --cycles 1 >> ${LOG_DIR}/cron.log 2>&1
+
+To install automatically:
+  (crontab -l 2>/dev/null; echo "${CRON_EXPR} cd ${PROJECT_DIR} && ./auto-loop.sh --cycles 1 >> ${LOG_DIR}/cron.log 2>&1") | crontab -
+
+To remove:
+  crontab -l | grep -v 'auto-loop.sh' | crontab -
+CRON_EOF
+            ;;
+
+        --systemd)
+            UNIT_NAME="auto-co-loop"
+            cat <<SYSTEMD_EOF
+=== systemd timer (Linux) ===
+
+Save service to: /etc/systemd/system/${UNIT_NAME}.service
+
+[Unit]
+Description=Auto-Co autonomous loop (single cycle)
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=${PROJECT_DIR}
+ExecStart=${PROJECT_DIR}/auto-loop.sh --cycles 1
+User=$(whoami)
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+
+[Install]
+WantedBy=multi-user.target
+
+---
+
+Save timer to: /etc/systemd/system/${UNIT_NAME}.timer
+
+[Unit]
+Description=Run Auto-Co every ${INTERVAL_MINUTES} minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitActiveSec=${INTERVAL_MINUTES}min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+
+---
+
+Install:
+  sudo systemctl daemon-reload
+  sudo systemctl enable --now ${UNIT_NAME}.timer
+
+Check status:
+  systemctl status ${UNIT_NAME}.timer
+  journalctl -u ${UNIT_NAME}.service -f
+
+Uninstall:
+  sudo systemctl disable --now ${UNIT_NAME}.timer
+  sudo rm /etc/systemd/system/${UNIT_NAME}.{service,timer}
+  sudo systemctl daemon-reload
+SYSTEMD_EOF
+            ;;
+
+        *)
+            echo "Unknown mode: $MODE"
+            echo "Usage: ./auto-loop.sh --schedule [MINUTES] [--cron|--launchd|--systemd]"
+            exit 1
+            ;;
+    esac
     exit 0
 fi
 
