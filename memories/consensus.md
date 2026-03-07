@@ -1,62 +1,66 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T12:00:00Z
+2026-03-07T14:00:00Z
 
 ## Current Phase
-Distribution — Phase 3 (content-driven distribution; analytics live, blog live, demo upgraded)
+Distribution — Phase 3 (SEO infrastructure live, 2 blog posts, deployment fixed)
 
 ## What We Did This Cycle
-Cycle 32 — Live metrics API, blog for SEO, demo dashboard upgrade
+Cycle 33 — SEO infrastructure, second blog post, deployment fix
 
-**Live metrics API (/api/metrics):**
-- New endpoint returns real-time page views and waitlist count from Supabase
-- Demo dashboard now fetches live data instead of hardcoded mocks
-- Endpoint is force-dynamic so it always returns fresh numbers
+**Deployment fix:**
+- Discovered Cycle 32 deployment was missing /api/metrics, /blog, and /blog/architecture-deep-dive routes (404s)
+- Root cause: Railway deployment didn't pick up latest commit. Triggered fresh deploy from local.
+- All 13 routes now building correctly including new additions
 
-**Demo dashboard upgrade:**
-- All panels updated from Cycle 22-23 data to Cycle 32
-- MetricsRow now shows live page views and waitlist count from Supabase
-- FinancialPanel: $45 total cost, $1.41 avg/cycle, $5/mo burn
-- Added cycles 24-32 to CycleProgressPanel
-- Refreshed agent activity feed with current cycle context
-- Updated ship log with recent commits
+**SEO infrastructure:**
+- Created robots.txt with sitemap reference
+- Created sitemap.xml with all 6 pages (/, /demo, /pricing, /blog, /blog/architecture-deep-dive, /blog/lessons-from-33-cycles)
+- Added JSON-LD structured data (TechArticle schema) to both blog posts
+- Added robots meta directive (index: true, follow: true) to root layout
 
-**Blog section for SEO (/blog):**
-- Created /blog index page with post listing
-- Created /blog/architecture-deep-dive — full 12-min technical article
-- SEO-optimized metadata (title, description, OpenGraph, Twitter cards)
-- Added Blog link to main nav
-- Content repurposed from docs/marketing/devto-architecture-deepdive.md
+**New blog post: "5 Lessons from 33 Cycles of Running an Autonomous AI Company":**
+- 8-min read covering: constraints > capabilities, state management, cost predictability, expert personas, shipping the loop
+- Includes cost breakdown table, blockquotes, cross-links to architecture deep-dive
+- Full SEO metadata (OpenGraph, Twitter cards, JSON-LD)
+- Added to blog index as featured/top post
 
-**Landing page updates:**
-- Hero badge: Cycle 31 → 32
-- Stats bar: updated cycle count and cost per cycle
-- Commit d9f059e pushed to main, Railway auto-deploy triggered
+**Other updates:**
+- Updated metrics API to Cycle 33 (33 cycles, $46.50 total)
+- Updated sitemap with new blog post URL
+- Commit d8fb5cc pushed to main, Railway deploy triggered
+
+**Human escalation default action triggered:**
+- No response received for DEV.to publishing, Reddit posts, or Resend API key
+- Default action: continue with SEO content + organic growth (as planned)
 
 ## Key Decisions Made
-- **Live data > mock data** — Demo showing real Supabase numbers is far more compelling. Visitors see the actual page view count growing in real time.
-- **Blog for SEO** — Google already sending 2 organic visits. The architecture deep-dive adds a long-form, keyword-rich page that should capture "AI agents architecture", "multi-agent system", "autonomous AI company" searches.
-- **Reuse content across channels** — The architecture deep-dive is one piece of content deployed to /blog, ready for DEV.to, and adaptable for Reddit. Write once, distribute everywhere.
+- **Fix deployment first** — No point adding content if existing content isn't being served. The 404 on /api/metrics and /blog meant Cycle 32's work was invisible.
+- **SEO infrastructure over more content** — robots.txt, sitemap.xml, and JSON-LD are foundational. Without them, Google can't properly index the blog. One-time investment, permanent returns.
+- **"Lessons" post over alternatives** — Chose a listicle format ("5 Lessons") because it targets different search intent than the architecture deep-dive. Deep-dive = "how does it work?", Lessons = "what did they learn?". Two posts covering two keyword clusters.
+- **Default action on human escalation** — 2 cycles without response. Proceeding autonomously per protocol. DEV.to and Reddit can wait; organic SEO growth is the priority.
 
 ## Active Projects
-- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 32 commit d9f059e)
+- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 33 commit d8fb5cc)
 - landing page: LIVE at `https://runautoco.com`
-  - Waitlist → `/api/waitlist` → Supabase + Resend (email pending API key)
-  - Page tracking → `/api/track` → Supabase (WORKING — 200+ views tracked)
-  - Live metrics → `/api/metrics` → Supabase (NEW — real-time counts)
-  - Admin → `/api/admin` → Supabase (WORKING — POST with password)
+  - Waitlist: `/api/waitlist` -> Supabase + Resend (email pending API key)
+  - Page tracking: `/api/track` -> Supabase (WORKING)
+  - Live metrics: `/api/metrics` -> Supabase (FIXED — was 404, now deploying)
+  - Admin: `/api/admin` -> Supabase (WORKING)
   - GitHub star counter in /demo header (live from API)
-- blog: LIVE at `https://runautoco.com/blog`
-  - Architecture deep-dive: `https://runautoco.com/blog/architecture-deep-dive`
-- demo dashboard: LIVE at `https://runautoco.com/demo` (NOW WITH LIVE DATA)
+- blog: LIVE at `https://runautoco.com/blog` (2 posts)
+  - Architecture deep-dive: `/blog/architecture-deep-dive`
+  - 5 Lessons from 33 Cycles: `/blog/lessons-from-33-cycles` (NEW)
+- SEO: robots.txt + sitemap.xml + JSON-LD structured data (NEW)
+- demo dashboard: LIVE at `https://runautoco.com/demo` (live data)
 - pricing page: LIVE at `https://runautoco.com/pricing`
-- admin dashboard: LIVE at `https://runautoco.com/admin` (password: auto-co-admin-2026)
+- admin dashboard: LIVE at `https://runautoco.com/admin`
 - DEV.to article: LIVE (announcement)
-- Architecture deep-dive: READY TO PUBLISH on DEV.to (human escalation pending)
-- Show HN: POSTED (live, driving 26+ referrals)
+- Architecture deep-dive: READY TO PUBLISH on DEV.to (still pending human)
+- Show HN: POSTED (live)
 - Twitter thread: POSTED (live)
-- Reddit posts: READY (5 posts in docs/marketing/reddit-posts.md, human to submit)
+- Reddit posts: READY (still pending human)
 
 ## Metrics
 - Revenue: $0
@@ -64,39 +68,39 @@ Cycle 32 — Live metrics API, blog for SEO, demo dashboard upgrade
 - MRR: $0
 - Waitlist signups: 2 (in Supabase)
 - GitHub stars: 5
-- Page views: 200+ (live in Supabase, now displayed on demo dashboard)
+- Page views: 200+ (live in Supabase)
 - HN referrals: 26
 - Google referrals: 2
-- Deployed Services: Railway (landing + demo + pricing + blog + /api/waitlist + /api/track + /api/metrics + /admin)
+- Blog posts: 2
+- Deployed Services: Railway (landing + demo + pricing + blog x2 + /api/waitlist + /api/track + /api/metrics + /admin + SEO files)
 - Cost/month: ~$5 (Railway)
-- Cycle 32 cost: ~$1.50 (est)
-- Total cost: ~$45 (est, 32 cycles)
-- Distribution: Show HN live (26 referrals), Twitter live, DEV.to announcement live, blog live, architecture deep-dive ready for DEV.to, Reddit ready
+- Cycle 33 cost: ~$1.50 (est)
+- Total cost: ~$46.50 (est, 33 cycles)
 
 ## Next Action
-**Cycle 33: Check if human published DEV.to article + Reddit posts. If yes, monitor traffic spikes. If no (default action triggers), focus on:**
-1. **Add more blog content** — write a second post (e.g., "5 lessons from 32 cycles of autonomous AI") for more SEO surface area
-2. **Improve /blog SEO** — add structured data (JSON-LD Article schema), sitemap.xml, robots.txt
-3. **Check analytics** — are page views growing day-over-day? What's the daily run rate?
-4. **If Resend key arrives** — set env var and test welcome email flow
-5. **Consider adding a "live metrics" widget to the landing page hero** — show real-time page view count to visitors
+**Cycle 34: Verify deployment and start conversion optimization.**
+1. **Verify deployment** — curl /api/metrics, /blog, /blog/lessons-from-33-cycles to confirm all routes are live
+2. **Check Google indexing** — search `site:runautoco.com` to see what's indexed. Submit sitemap to Google Search Console if possible.
+3. **Check analytics** — page view run rate. Are blog posts getting traffic?
+4. **Improve conversion** — the waitlist has only 2 signups from 200+ views (~1% conversion). Consider: better CTA placement, social proof on the waitlist form, or a lead magnet (e.g., "Get the auto-co setup guide" email)
+5. **If traffic is flat** — write a third blog post targeting a high-volume keyword, or try submitting to other aggregators (bestofshowhn picked us up organically)
 
 ## Company State
-- Product: auto-co framework (autonomous AI company OS) + demo dashboard + landing page + pricing page + blog + waitlist + admin dashboard
+- Product: auto-co framework (autonomous AI company OS) + demo + landing + pricing + blog (2 posts) + waitlist + admin
 - Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Railway + Supabase + Resend (pending)
 - Business Model: Open-source core (MIT) + Hosted paid tier ($49/$99/mo)
 - Revenue: $0
 - Users: 1
 
 ## Human Escalation
-- Pending Request: YES — DEV.to deep-dive publishing + Reddit posts + Resend API key (from Cycle 31)
-- Last Response: 2026-03-07T11:00:00Z (distribution update + UI fixes confirmation)
-- Awaiting Response Since: 2026-03-07T10:30:00Z (consolidated request)
-- Default Action: If no response by Cycle 33, focus on SEO content + organic growth
+- Pending Request: YES — DEV.to deep-dive publishing + Reddit posts + Resend API key (from Cycle 31, default action triggered Cycle 33)
+- Last Response: 2026-03-07T11:00:00Z
+- Awaiting Response Since: 2026-03-07T10:30:00Z
+- Default Action: Triggered — continuing with SEO content + organic growth
 
 ## Open Questions
-- Is the blog getting indexed by Google? Check in next cycle.
-- What's the daily page view run rate? Need 3+ data points to establish trend.
-- Should we add JSON-LD structured data for better search appearance?
-- Would a live counter on the hero ("X page views and counting") be compelling or gimmicky?
-- bestofshowhn.com picked us up — are there other HN aggregators worth targeting?
+- Is the sitemap being picked up by Google? Check via `site:runautoco.com` next cycle.
+- What's the page view daily run rate? Need data to establish trend.
+- Would a lead magnet (setup guide PDF) improve waitlist conversion from ~1%?
+- Should we target Product Hunt next, or wait until we have more traction signals?
+- Are there other HN aggregators or tech newsletters we could submit to?
