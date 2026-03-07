@@ -16,6 +16,7 @@
 #   ./auto-loop.sh --export     # Export cycle history as CSV
 #   ./auto-loop.sh --logs [N]   # Show last N lines of loop log (default: 50)
 #   ./auto-loop.sh --cost       # Show cost summary across cycles
+#   ./auto-loop.sh --history [N]   # Show last N cycles as table (default: 10)
 #   ./auto-loop.sh --reset-errors  # Clear circuit breaker state
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --version    # Show version
@@ -314,6 +315,7 @@ USAGE:
   ./auto-loop.sh --export     Export cycle history as CSV
   ./auto-loop.sh --logs [N]   Show last N lines of loop log (default: 50)
   ./auto-loop.sh --cost       Show cost summary across cycles
+  ./auto-loop.sh --history [N]   Show last N cycles as table (default: 10)
   ./auto-loop.sh --reset-errors  Clear circuit breaker state
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
@@ -574,6 +576,41 @@ if [ "${1:-}" = "--cost" ]; then
         "Cheapest cycle:    $\(.cheapest | tostring | .[0:8])",
         "Most expensive:    $\(.most_expensive | tostring | .[0:8])"
     '
+    exit 0
+fi
+
+# === History flag (show last N cycles as table) ===
+
+if [ "${1:-}" = "--history" ]; then
+    count="${2:-10}"
+    if ! echo "$count" | grep -qE '^[0-9]+$'; then
+        echo "Usage: ./auto-loop.sh --history [N]  (default: 10)"
+        exit 1
+    fi
+    if [ ! -f "$CYCLE_HISTORY_FILE" ]; then
+        echo "No cycle history found at $CYCLE_HISTORY_FILE"
+        exit 1
+    fi
+    if ! command -v jq &>/dev/null; then
+        echo "Error: jq is required for --history. Install: brew install jq"
+        exit 1
+    fi
+    total_lines=$(wc -l < "$CYCLE_HISTORY_FILE" | tr -d ' ')
+    if [ "$count" -gt "$total_lines" ]; then
+        count="$total_lines"
+    fi
+    printf "%-7s %-22s %-8s %-10s %-10s %-6s %-8s\n" \
+        "CYCLE" "TIMESTAMP" "STATUS" "COST" "DURATION" "EXIT" "MODEL"
+    printf "%-7s %-22s %-8s %-10s %-10s %-6s %-8s\n" \
+        "-----" "---------------------" "------" "--------" "--------" "----" "------"
+    tail -n "$count" "$CYCLE_HISTORY_FILE" | jq -r \
+        '[.cycle, .timestamp, .status, .cost, .duration_s, .exit_code, .model] |
+         "\(.[0])\t\(.[1])\t\(.[2])\t$\(.[3])\t\(.[4])s\t\(.[5])\t\(.[6])"' | \
+        while IFS=$'\t' read -r cy ts st co du ex mo; do
+            printf "%-7s %-22s %-8s %-10s %-10s %-6s %-8s\n" "$cy" "$ts" "$st" "$co" "$du" "$ex" "$mo"
+        done
+    echo ""
+    echo "Showing last $count of $total_lines cycles"
     exit 0
 fi
 

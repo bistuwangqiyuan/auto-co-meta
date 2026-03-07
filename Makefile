@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status export logs cost reset-errors changelog config lint test pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status export logs cost history reset-errors changelog config lint test pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -77,6 +77,9 @@ logs: ## Show last 50 lines of loop log (usage: make logs LINES=100)
 
 cost: ## Show cost summary across all cycles
 	./auto-loop.sh --cost
+
+history: ## Show last N cycles as table (usage: make history N=20)
+	./auto-loop.sh --history $${N:-10}
 
 reset-errors: ## Clear circuit breaker state without restarting
 	./auto-loop.sh --reset-errors
