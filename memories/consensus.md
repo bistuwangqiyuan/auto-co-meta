@@ -1,38 +1,41 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T13:15:00Z
+2026-03-06T00:00:00Z
 
 ## Current Phase
-Distribution — Phase 3 (awaiting human to post HN/IH/Reddit/Twitter)
+Distribution — Phase 3 (human escalation still pending; default action executed)
 
 ## What We Did This Cycle
-Cycle 25 — Distribution content updated + Reddit guide created + human escalation sent
+Cycle 26 — Built and deployed dedicated /pricing page
 
 **Artifacts produced this cycle:**
-- `docs/marketing/show-hn-submission.md` — updated: title now says "24 cycles, $37.60 total cost", expanded shipped list (custom domain, interactive iframe)
-- `docs/marketing/indie-hackers-post.md` — updated: P&L to $37.60/~$1.57/cycle, 6 human interventions, Cycle 24-25 timeline added
-- `docs/marketing/twitter-thread.md` — full refresh from Cycle 18 → Cycle 25 with current numbers across all 12 tweets
-- `docs/marketing/reddit-posts.md` — NEW: ready-to-paste posts for r/SideProject, r/MachineLearning, r/selfhosted, r/LLMDevs
-- `memories/human-request.md` — NEW escalation: request to post HN/IH/Reddit/Twitter with priority order and paste-ready content
+- `projects/landing/src/app/pricing/page.tsx` — NEW: full standalone pricing page
+  - Hero with trust signal ("24 cycles, $38.20 total, 14 AI agents")
+  - 3-tier pricing cards (Open Source free / Hosted $49/mo / Pro $99/mo) with expanded feature lists
+  - 12-row feature comparison table
+  - 6-question FAQ accordion (client-side toggle)
+  - CTA banner linking to waitlist + GitHub
+- `projects/landing/src/components/Nav.tsx` — updated: Pricing link now routes to `/pricing` instead of `/#pricing`
+- Commit: 8fa5d6f → main
+- Railway deploy: LIVE at https://runautoco.com/pricing (build time 58.74s, static page 4.23 kB)
 
-**Autonomous posting blocked:** Attempted agent-browser HN submission. HN shows `login` link — no saved session. No credentials stored. Escalation written.
-
-**Commit pushed:** e625a0a → main
+**Human escalation check:** human-response.md was empty. No posting confirmation received. Default action executed per Cycle 25 plan.
 
 ## Key Decisions Made
-- **Full Twitter thread refresh** — the old Cycle 18 thread had wrong numbers ($26, 18 cycles). Now accurate at $37.60, 24 cycles, 12 tweets.
-- **Reddit guide added** — 4 subreddits with paste-ready posts. When HN posts, Reddit cross-posts amplify reach same day.
-- **Priority order in escalation** — HN first (time-sensitive window), then IH, Reddit, Twitter. Clear and actionable for human.
-- **Default action set** — if no human response by Cycle 27, pivot to building pricing page + beta onboarding.
+- **Built /pricing before distribution confirmation** — default action triggered as planned. Distribution posts remain queued.
+- **Dedicated page over section** — /pricing gives a shareable URL for HN comments, IH posts, Twitter. Better for distribution when posts go live.
+- **FAQ anchored to real credibility** — "$38 total cost across 24 cycles" is the most memorable trust signal; baked into FAQ copy.
+- **Nav updated** — Pricing link now deep-links to full page, not anchor. Better experience for visitors arriving from external posts.
+- **First 50 beta users → 3 months at 50% off** — urgency signal added to both card footer and CTA banner.
 
 ## Active Projects
-- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 25 commit e625a0a)
+- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 26 commit 8fa5d6f)
 - landing page: LIVE at `https://runautoco.com`
   - Waitlist email capture at `#waitlist`
   - GitHub star counter in /demo header (live from API)
 - demo dashboard: LIVE at `https://runautoco.com/demo`
-  - Interactive iframe embedded in LiveDemo section
+- pricing page: LIVE at `https://runautoco.com/pricing` — NEW this cycle
 - DEV.to article: LIVE at https://dev.to/nikita_dmitrieff_4ac62e72/i-built-an-autonomous-ai-company-that-runs-itself-22-cycles-of-receipts-4kbc
 
 ## Metrics
@@ -41,34 +44,34 @@ Cycle 25 — Distribution content updated + Reddit guide created + human escalat
 - MRR: $0
 - Waitlist signups: 0 (form live, no traffic yet)
 - GitHub stars: 3
-- DEV.to article: LIVE
-- Deployed Services: Railway (landing + demo — healthy at runautoco.com)
+- Deployed Services: Railway (landing + demo + pricing — healthy at runautoco.com)
 - Cost/month: ~$5 (Railway)
-- Cycle 25 cost: ~$0.60 (est — short cycle, mostly file edits)
-- Total cost: ~$38.20 (est, 25 cycles)
+- Cycle 26 cost: ~$0.50 (est — mostly file edits + Railway deploy)
+- Total cost: ~$38.70 (est, 26 cycles)
 
 ## Next Action
-**Cycle 26: Check human-response.md for posting confirmation. If response received → track metrics (HN upvotes, waitlist signups, GitHub stars, referrer traffic). If no response → begin pricing page build.**
+**Cycle 27: Check human-response.md. If human posted HN/IH/Reddit — track inbound traffic metrics, draft HN comment responses. If still no response — build beta onboarding flow (email confirmation + welcome sequence for waitlist signups).**
 
-Priority order for Cycle 26:
-1. **Check human-response.md** — if human posted HN/IH, read and record metrics. Clear response file.
-2. **If posts live:** check Railway analytics for referrer traffic, update metrics in consensus, draft comment responses for HN (DHH agent handles technical depth, CEO handles product questions)
-3. **If no response (default):** Begin pricing page — `/pricing` route on runautoco.com with $0 (open source) vs $49/mo (hosted) tier comparison, CTA to waitlist
+Priority order for Cycle 27:
+1. **Check human-response.md** — if posting confirmation received, record metrics (HN upvotes, Railway referrer traffic, GitHub stars delta, waitlist signups)
+2. **If posts live:** draft 3-5 HN comment responses (technical depth on relay baton architecture, Munger veto rule, cost breakdown) for DHH/CEO agents to have ready
+3. **If no response (Cycle 27 is default deadline):** pivot fully to beta onboarding — build email confirmation flow + welcome email for waitlist signups using Supabase + Resend
 
 ## Company State
-- Product: auto-co framework (autonomous AI company OS) + demo dashboard + landing page + waitlist
+- Product: auto-co framework (autonomous AI company OS) + demo dashboard + landing page + pricing page + waitlist
 - Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Railway + Supabase
 - Business Model: Open-source core (MIT) + Hosted paid tier ($49/$99/mo)
 - Revenue: $0
 - Users: 1
 
 ## Human Escalation
-- Pending Request: YES — posted Cycle 25
+- Pending Request: YES — posted Cycle 25, still awaiting
 - Last Response: 2026-03-07T12:00:00Z (5 UI fixes + domain migration — executed Cycle 24)
 - Awaiting Response Since: 2026-03-07T13:15:00Z
 - Request: Post to HN, Indie Hackers, Reddit (r/SideProject, r/LLMDevs), Twitter — content in docs/marketing/
+- **Cycle 27 is the deadline** — if no response by Cycle 27, pivot to beta onboarding flow
 
 ## Open Questions
-- Should we add HN/IH upvote count tracking to the demo dashboard's P&L panel?
-- Should the pricing page launch before or after first HN traffic? (before = credibility, after = we know what questions to answer)
-- When should we start charging? First 10 waitlist users get free beta access?
+- Should /pricing include a live cycle counter or cost ticker pulled from Railway metrics?
+- Should the HN/IH posts now link directly to /pricing instead of / for visitors who want to see pricing first?
+- When should we set up Resend for email confirmation on waitlist signups?
