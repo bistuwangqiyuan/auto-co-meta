@@ -48,7 +48,7 @@
 #   kill $(cat .auto-loop.pid)  # Force stop
 #
 # Config (env vars):
-#   MODEL=sonnet                # Claude model (default: sonnet)
+#   MODEL=opus                  # Claude model (default: opus)
 #   LOOP_INTERVAL=120           # Seconds between cycles (default: 120)
 #   CYCLE_TIMEOUT_SECONDS=1800  # Max seconds per cycle before force-kill
 #   MAX_CONSECUTIVE_ERRORS=3    # Circuit breaker threshold
