@@ -175,7 +175,7 @@ rotate_logs() {
 
     # Rotate main log if over 10MB
     local log_size
-    log_size=$(stat -f%z "$LOG_DIR/auto-loop.log" 2>/dev/null || echo 0)
+    log_size=$(stat -f%z "$LOG_DIR/auto-loop.log" 2>/dev/null || stat -c%s "$LOG_DIR/auto-loop.log" 2>/dev/null || echo 0)
     if [ "$log_size" -gt 10485760 ]; then
         mv "$LOG_DIR/auto-loop.log" "$LOG_DIR/auto-loop.log.old"
         log "Main log rotated (was ${log_size} bytes)"
@@ -2375,7 +2375,7 @@ fi
 
 # === Webhook flag (event-based notifications) ===
 
-if [ "${1:-}" = "--webhook" ] || [ "${1:-}" = "-w" ]; then
+if [ "${1:-}" = "--webhook" ]; then
     if [ -z "${2:-}" ]; then
         echo "Usage: ./auto-loop.sh --webhook URL"
         echo ""
@@ -2590,7 +2590,7 @@ if [ "${1:-}" = "--purge-logs" ]; then
     fi
     # Rotate main log if over 10MB
     if [ -f "$LOG_DIR/auto-loop.log" ]; then
-        log_size=$(stat -f%z "$LOG_DIR/auto-loop.log" 2>/dev/null || echo 0)
+        log_size=$(stat -f%z "$LOG_DIR/auto-loop.log" 2>/dev/null || stat -c%s "$LOG_DIR/auto-loop.log" 2>/dev/null || echo 0)
         if [ "$log_size" -gt 10485760 ]; then
             mv "$LOG_DIR/auto-loop.log" "$LOG_DIR/auto-loop.log.old"
             echo "Main log rotated (was $(( log_size / 1024 / 1024 ))MB)"
@@ -2818,7 +2818,6 @@ This is Cycle #1. Act decisively."
     echo "Timeout: ${CYCLE_TIMEOUT_SECONDS}s"
     echo "Prompt length: $(echo "$FULL_PROMPT" | wc -c | tr -d ' ') bytes"
     if [ -n "$PARALLEL_DIR" ]; then
-        local pcount
         pcount=$(find "$PARALLEL_DIR" -maxdepth 1 -name '*.md' -type f 2>/dev/null | wc -l | tr -d ' ')
         echo "Parallel dir: $PARALLEL_DIR ($pcount prompt files)"
     fi
@@ -3188,7 +3187,7 @@ This is Cycle #$loop_count. Act decisively."
     fi
 
     # Run post-cycle plugin hook
-    local post_status="ok"
+    post_status="ok"
     [ -n "$cycle_failed_reason" ] && post_status="fail"
     run_plugin_hook "post-cycle" "$loop_count" "$post_status" "${CYCLE_COST:-0}" "$cycle_duration"
 

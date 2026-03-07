@@ -308,7 +308,7 @@ case "${1:-}" in
         if [ -f "$STATE_FILE" ]; then
             last_run=$(grep '^LAST_RUN=' "$STATE_FILE" | cut -d= -f2-)
             if [ -n "$last_run" ]; then
-                last_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run" +%s 2>/dev/null || echo 0)
+                last_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run" +%s 2>/dev/null || date -d "$last_run" +%s 2>/dev/null || echo 0)
                 now_epoch=$(date +%s)
                 idle_minutes=$(( (now_epoch - last_epoch) / 60 ))
                 if [ "$idle_minutes" -gt 60 ]; then
@@ -469,7 +469,7 @@ case "${1:-}" in
             loop_count=$(grep '^LOOP_COUNT=' "$STATE_FILE" | cut -d= -f2)
             total_cost=$(grep '^TOTAL_COST=' "$STATE_FILE" | cut -d= -f2)
             if [ -n "$last_run" ]; then
-                last_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run" +%s 2>/dev/null || echo 0)
+                last_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run" +%s 2>/dev/null || date -d "$last_run" +%s 2>/dev/null || echo 0)
                 now_epoch=$(date +%s)
                 idle_minutes=$(( (now_epoch - last_epoch) / 60 ))
                 echo "Last run: $last_run (${idle_minutes}m ago)"
@@ -548,7 +548,7 @@ case "${1:-}" in
             if [ -f "$STATE_FILE" ]; then
                 last_run_ts=$(grep '^LAST_RUN=' "$STATE_FILE" | cut -d= -f2-)
                 if [ -n "$last_run_ts" ]; then
-                    lr_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run_ts" +%s 2>/dev/null || echo 0)
+                    lr_epoch=$(date -j -f "%Y-%m-%d %H:%M:%S" "$last_run_ts" +%s 2>/dev/null || date -d "$last_run_ts" +%s 2>/dev/null || echo 0)
                     n_epoch=$(date +%s)
                     idle_m=$(( (n_epoch - lr_epoch) / 60 ))
                     if [ "$idle_m" -gt 60 ]; then
