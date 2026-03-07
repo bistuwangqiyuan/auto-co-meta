@@ -28,6 +28,7 @@
 #   ./auto-loop.sh --resume     # Resume a paused loop
 #   ./auto-loop.sh --tail       # Follow main loop log in real-time
 #   ./auto-loop.sh --cycles N   # Run at most N cycles, then exit cleanly
+#   ./auto-loop.sh --notify URL # POST JSON notification to webhook after each cycle
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --metrics    # Quick KPI dashboard from cycle history
 #   ./auto-loop.sh --version    # Show version
@@ -47,6 +48,7 @@
 #   RETRY_BASE_SECONDS=30       # Initial backoff on transient failure
 #   RETRY_MAX_SECONDS=600       # Max backoff cap
 #   MAX_CYCLES=0                # Max cycles before exit (0 = unlimited)
+#   NOTIFY_URL=                 # Webhook URL for cycle notifications (empty = disabled)
 # ============================================================
 
 set -euo pipefail
@@ -82,6 +84,7 @@ MAX_LOGS="${MAX_LOGS:-200}"
 RETRY_BASE_SECONDS="${RETRY_BASE_SECONDS:-30}"
 RETRY_MAX_SECONDS="${RETRY_MAX_SECONDS:-600}"
 MAX_CYCLES="${MAX_CYCLES:-0}"  # 0 = unlimited
+NOTIFY_URL="${NOTIFY_URL:-}"  # Webhook URL for notifications (empty = disabled)
 
 # Ensure Agent Teams is available
 export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
@@ -204,6 +207,21 @@ validate_consensus() {
         return 1
     fi
     return 0
+}
+
+send_notification() {
+    [ -z "$NOTIFY_URL" ] && return 0
+    local cycle_num=$1
+    local status=$2
+    local cost=${3:-0}
+    local duration=${4:-0}
+    local timestamp
+    timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+    local payload
+    payload=$(printf '{"cycle":%d,"status":"%s","cost":%s,"duration_s":%d,"model":"%s","total_cost":%s,"timestamp":"%s"}' \
+        "$cycle_num" "$status" "${cost}" "${duration}" "$MODEL" "$total_cost" "$timestamp")
+    # Fire-and-forget: don't block the loop if the webhook is slow or down
+    curl -s -o /dev/null -X POST -H "Content-Type: application/json" -d "$payload" "$NOTIFY_URL" --max-time 10 &
 }
 
 kill_process_tree() {
@@ -341,6 +359,7 @@ USAGE:
   ./auto-loop.sh --resume     Resume a paused loop
   ./auto-loop.sh --tail       Follow main loop log in real-time
   ./auto-loop.sh --cycles N   Run at most N cycles, then exit cleanly
+  ./auto-loop.sh --notify URL POST JSON notifications to webhook after each cycle
   ./auto-loop.sh --metrics    Quick KPI dashboard (cycles, cost, duration)
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
@@ -968,6 +987,23 @@ if [ "${1:-}" = "--cycles" ] || [ "${1:-}" = "-c" ]; then
     shift 2
 fi
 
+# === Notify flag (webhook URL for cycle notifications) ===
+
+if [ "${1:-}" = "--notify" ] || [ "${1:-}" = "-n" ]; then
+    if [ -z "${2:-}" ]; then
+        echo "Usage: ./auto-loop.sh --notify URL"
+        echo ""
+        echo "POST a JSON payload to URL after each cycle."
+        echo "Payload: {cycle, status, cost, duration_s, model, total_cost, timestamp}"
+        echo ""
+        echo "Example: ./auto-loop.sh --notify https://hooks.example.com/auto-co"
+        echo "Also: NOTIFY_URL=https://... ./auto-loop.sh"
+        exit 1
+    fi
+    NOTIFY_URL="$2"
+    shift 2
+fi
+
 # === Cost flag (cost summary from cycle history) ===
 
 if [ "${1:-}" = "--cost" ]; then
@@ -1543,7 +1579,7 @@ fi
 
 log "=== Auto-Co Loop Started (PID $$) ==="
 log "Project: $PROJECT_DIR"
-log "Model: $MODEL | Interval: ${LOOP_INTERVAL}s | Timeout: ${CYCLE_TIMEOUT_SECONDS}s | Breaker: ${MAX_CONSECUTIVE_ERRORS} errors | Max cycles: ${MAX_CYCLES:-unlimited}"
+log "Model: $MODEL | Interval: ${LOOP_INTERVAL}s | Timeout: ${CYCLE_TIMEOUT_SECONDS}s | Breaker: ${MAX_CONSECUTIVE_ERRORS} errors | Max cycles: ${MAX_CYCLES:-unlimited}${NOTIFY_URL:+ | Notify: $NOTIFY_URL}"
 
 # === Main Loop ===
 
@@ -1635,11 +1671,13 @@ This is Cycle #$loop_count. Act decisively."
             log_cycle $loop_count "DIFF" "Consensus unchanged"
         fi
         append_cycle_history "$loop_count" "ok" "${CYCLE_COST:-0}" "$cycle_duration" "$EXIT_CODE"
+        send_notification "$loop_count" "ok" "${CYCLE_COST:-0}" "$cycle_duration"
         error_count=0
     else
         error_count=$((error_count + 1))
         log_cycle $loop_count "FAIL" "$cycle_failed_reason (cost: \$${CYCLE_COST:-unknown}, subtype: ${CYCLE_SUBTYPE:-unknown}, ${cycle_duration}s, errors: $error_count/$MAX_CONSECUTIVE_ERRORS)"
         append_cycle_history "$loop_count" "fail" "${CYCLE_COST:-0}" "$cycle_duration" "$EXIT_CODE"
+        send_notification "$loop_count" "fail" "${CYCLE_COST:-0}" "$cycle_duration"
 
         # Restore consensus on failure
         restore_consensus
