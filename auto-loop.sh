@@ -718,6 +718,8 @@ if [ "${1:-}" = "--config" ]; then
     echo "MAX_LOGS:               $MAX_LOGS"
     echo "RETRY_BASE_SECONDS:     ${RETRY_BASE_SECONDS}s"
     echo "RETRY_MAX_SECONDS:      ${RETRY_MAX_SECONDS}s"
+    echo "MAX_CYCLES:             ${MAX_CYCLES:-0} (0 = unlimited)"
+    echo "NOTIFY_URL:             ${NOTIFY_URL:-disabled}"
     echo ""
     echo "--- Paths ---"
     echo "PROMPT_FILE:            $PROMPT_FILE"
