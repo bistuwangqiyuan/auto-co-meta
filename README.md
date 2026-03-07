@@ -183,6 +183,7 @@ make reset-consensus # Reset to Day 0
 ./auto-loop.sh --cycles N             # Run at most N cycles, then exit cleanly
 ./auto-loop.sh --notify URL           # POST JSON notifications to webhook after each cycle
 ./auto-loop.sh --env                  # Generate .env.example with all config options
+./auto-loop.sh --snapshot             # Create timestamped tarball of project state
 ./auto-loop.sh --logs [N]             # Show last N lines of loop log
 ./auto-loop.sh --cost                 # Show cost summary across cycles
 ./auto-loop.sh --history [N]          # Show last N cycles as table

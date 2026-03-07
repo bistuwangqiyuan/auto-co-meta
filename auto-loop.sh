@@ -32,6 +32,7 @@
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --metrics    # Quick KPI dashboard from cycle history
 #   ./auto-loop.sh --env        # Generate .env.example with all config options
+#   ./auto-loop.sh --snapshot   # Create timestamped tarball of project state
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -364,6 +365,8 @@ USAGE:
   ./auto-loop.sh --metrics    Quick KPI dashboard (cycles, cost, duration)
   ./auto-loop.sh --env        Generate .env.example with all config options
   ./auto-loop.sh --env FILE   Write template to custom path
+  ./auto-loop.sh --snapshot   Create timestamped tarball of project state
+  ./auto-loop.sh --snapshot PATH  Write snapshot to custom path
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -803,6 +806,54 @@ if [ "${1:-}" = "--env" ] || [ "${1:-}" = "-e" ]; then
 ENVEOF
     echo "Generated $TARGET with all configuration options."
     echo "Copy to .env and uncomment the values you want to change."
+    exit 0
+fi
+
+# === Snapshot flag (create timestamped tarball of project state) ===
+
+if [ "${1:-}" = "--snapshot" ] || [ "${1:-}" = "-S" ]; then
+    SNAP_DIR="snapshots"
+    TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+    VERSION_STR="$(cat VERSION 2>/dev/null || echo 'unknown')"
+    SNAP_NAME="auto-co-snapshot-${VERSION_STR}-${TIMESTAMP}.tar.gz"
+    SNAP_PATH="${2:-${SNAP_DIR}/${SNAP_NAME}}"
+
+    # If user gave a directory (ends with /), append default filename
+    if [ "${SNAP_PATH: -1}" = "/" ]; then
+        SNAP_PATH="${SNAP_PATH}${SNAP_NAME}"
+    fi
+
+    # Create parent directory if needed
+    mkdir -p "$(dirname "$SNAP_PATH")"
+
+    # Files and directories to include (only those that exist)
+    INCLUDE_LIST=()
+    for item in memories/ docs/ .claude/agents/ CLAUDE.md PROMPT.md auto-loop.sh monitor.sh stop-loop.sh watcher.js Makefile VERSION README.md package.json .env.example; do
+        [ -e "$item" ] && INCLUDE_LIST+=("$item")
+    done
+
+    if [ ${#INCLUDE_LIST[@]} -eq 0 ]; then
+        echo "Error: No project files found to snapshot."
+        exit 1
+    fi
+
+    tar -czf "$SNAP_PATH" \
+        --exclude='logs/' \
+        --exclude='.git/' \
+        --exclude='node_modules/' \
+        --exclude='.next/' \
+        --exclude='out/' \
+        --exclude='*.tar.gz' \
+        "${INCLUDE_LIST[@]}" 2>/dev/null
+
+    SIZE="$(du -h "$SNAP_PATH" | cut -f1)"
+    echo "Snapshot created: $SNAP_PATH ($SIZE)"
+    echo "Contents:"
+    tar -tzf "$SNAP_PATH" | head -20
+    TOTAL="$(tar -tzf "$SNAP_PATH" | wc -l | tr -d ' ')"
+    if [ "$TOTAL" -gt 20 ]; then
+        echo "... and $((TOTAL - 20)) more files"
+    fi
     exit 0
 fi
 
