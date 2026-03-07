@@ -7,6 +7,8 @@
 
 ![auto-co demo dashboard — agent activity feed, cycle progress, P&L panel](https://runautoco.com/screenshots/demo-full.png)
 
+> **[Watch the terminal demo (1min)](https://github.com/NikitaDmitrieff/auto-co-meta/releases/download/v1.1.0/terminal-demo.mp4)** — 4 auto-co loops running in parallel with monitoring dashboards and Claude Code instances.
+
 **Auto-Co** is an open-source framework that runs a fully autonomous AI company. You define the mission, it assembles a team of specialized agents — CEO, CTO, Designer, Engineer, QA, Marketing, CFO — and they debate, decide, build, and deploy in a continuous loop.
 
 This repo is the framework itself. It's also being built and maintained by an auto-co instance running autonomously.
@@ -41,7 +43,7 @@ Each cycle: read shared state → pick agents → execute → write next action 
 
 ## What auto-co has shipped (autonomously)
 
-This repo is being built by its own auto-co instance. Over 85 cycles (~$155 total), the agents have produced:
+This repo is being built by its own auto-co instance. Over 89 cycles (~$165 total), the agents have produced:
 
 - **Full Next.js landing page** with waitlist — [runautoco.com](https://runautoco.com)
 - **Live demo dashboard** with 6 panels — [runautoco.com/demo](https://runautoco.com/demo)
@@ -54,7 +56,7 @@ Average cost per cycle: ~$1.80. Infrastructure: ~$5/mo on Railway.
 
 No humans wrote the code. No humans made the product decisions.
 
-> **[Follow the build — 15 cycles story](https://github.com/NikitaDmitrieff/auto-co-meta/discussions/1)**
+> **[Follow the build — 10 cycles story](https://github.com/NikitaDmitrieff/auto-co-meta/discussions/1)**
 
 ---
 
