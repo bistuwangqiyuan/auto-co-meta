@@ -370,6 +370,8 @@ USAGE:
   ./auto-loop.sh --diff A B  Compare two snapshots (show added/removed/changed files)
   ./auto-loop.sh --restore SNAP  Restore project state from a snapshot tarball
   ./auto-loop.sh --restore SNAP --force  Restore without confirmation prompt
+  ./auto-loop.sh --restore SNAP --backup  Snapshot current state before restoring
+  ./auto-loop.sh --restore SNAP --backup --force  Backup + restore without confirmation
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -947,15 +949,26 @@ fi
 
 if [ "${1:-}" = "--restore" ]; then
     if [ -z "${2:-}" ]; then
-        echo "Usage: ./auto-loop.sh --restore <snapshot.tar.gz> [--force]"
+        echo "Usage: ./auto-loop.sh --restore <snapshot.tar.gz> [--backup] [--force]"
         echo "Restore project state from a snapshot tarball."
         echo ""
         echo "Options:"
+        echo "  --backup   Create a snapshot of current state before restoring"
         echo "  --force    Skip confirmation prompt"
         exit 1
     fi
     SNAP_FILE="$2"
-    FORCE_RESTORE="${3:-}"
+    DO_BACKUP=false
+    FORCE_RESTORE=false
+    shift 2
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            --backup) DO_BACKUP=true ;;
+            --force)  FORCE_RESTORE=true ;;
+            *) echo "Unknown option: $1"; exit 1 ;;
+        esac
+        shift
+    done
 
     if [ ! -f "$SNAP_FILE" ]; then
         echo "Error: Snapshot not found: $SNAP_FILE"
@@ -991,13 +1004,44 @@ if [ "${1:-}" = "--restore" ]; then
     echo ""
     echo "Summary: ${OVERWRITE_COUNT} files to overwrite, ${NEW_COUNT} new files"
 
-    if [ "$FORCE_RESTORE" != "--force" ]; then
+    if [ "$FORCE_RESTORE" != true ]; then
         echo ""
         printf "Proceed with restore? [y/N] "
         read -r CONFIRM
         if [ "$CONFIRM" != "y" ] && [ "$CONFIRM" != "Y" ]; then
             echo "Restore cancelled."
             exit 0
+        fi
+    fi
+
+    # Backup current state before restoring (if requested)
+    if [ "$DO_BACKUP" = true ]; then
+        BACKUP_DIR="snapshots"
+        BACKUP_TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
+        BACKUP_VERSION="$(cat VERSION 2>/dev/null || echo 'unknown')"
+        BACKUP_NAME="auto-co-pre-restore-${BACKUP_VERSION}-${BACKUP_TIMESTAMP}.tar.gz"
+        BACKUP_PATH="${BACKUP_DIR}/${BACKUP_NAME}"
+        mkdir -p "$BACKUP_DIR"
+
+        BACKUP_LIST=()
+        for item in memories/ docs/ .claude/agents/ CLAUDE.md PROMPT.md auto-loop.sh monitor.sh stop-loop.sh watcher.js Makefile VERSION README.md package.json .env.example; do
+            [ -e "$item" ] && BACKUP_LIST+=("$item")
+        done
+
+        if [ ${#BACKUP_LIST[@]} -gt 0 ]; then
+            tar -czf "$BACKUP_PATH" \
+                --exclude='logs/' \
+                --exclude='.git/' \
+                --exclude='node_modules/' \
+                --exclude='.next/' \
+                --exclude='out/' \
+                --exclude='*.tar.gz' \
+                "${BACKUP_LIST[@]}" 2>/dev/null
+            BACKUP_SIZE="$(du -h "$BACKUP_PATH" | cut -f1)"
+            echo "Backup created: $BACKUP_PATH ($BACKUP_SIZE)"
+            echo ""
+        else
+            echo "Warning: No project files found to backup."
         fi
     fi
 
