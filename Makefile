@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status changelog config lint test pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status export reset-errors changelog config lint test pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -68,6 +68,12 @@ dry-run: ## Build and preview the prompt without running Claude
 
 quick-status: ## Quick status from state file (no monitor.sh needed)
 	./auto-loop.sh --status
+
+export: ## Export cycle history as CSV
+	./auto-loop.sh --export
+
+reset-errors: ## Clear circuit breaker state without restarting
+	./auto-loop.sh --reset-errors
 
 config: ## Print all loop configuration values
 	./auto-loop.sh --config

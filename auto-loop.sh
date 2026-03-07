@@ -13,6 +13,8 @@
 #   ./auto-loop.sh --dry-run    # Build prompt + show preview, don't run
 #   ./auto-loop.sh --status     # Quick status from state file
 #   ./auto-loop.sh --status --json  # Machine-readable JSON status
+#   ./auto-loop.sh --export     # Export cycle history as CSV
+#   ./auto-loop.sh --reset-errors  # Clear circuit breaker state
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --version    # Show version
 #
@@ -307,6 +309,8 @@ USAGE:
   ./auto-loop.sh --config     Print all config values
   ./auto-loop.sh --status     Quick status check (with cycle stats)
   ./auto-loop.sh --status --json  Machine-readable JSON output
+  ./auto-loop.sh --export     Export cycle history as CSV
+  ./auto-loop.sh --reset-errors  Clear circuit breaker state
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -490,6 +494,50 @@ if [ "${1:-}" = "--status" ]; then
     exit 0
 fi
 
+# === Export flag (cycle history as CSV) ===
+
+if [ "${1:-}" = "--export" ]; then
+    if [ ! -f "$CYCLE_HISTORY_FILE" ]; then
+        echo "No cycle history found at $CYCLE_HISTORY_FILE"
+        exit 1
+    fi
+    if ! command -v jq &>/dev/null; then
+        echo "Error: jq is required for --export. Install: brew install jq"
+        exit 1
+    fi
+    format="${2:-csv}"
+    case "$format" in
+        csv)
+            echo "cycle,timestamp,status,cost,duration_s,exit_code,model,total_cost"
+            jq -r '[.cycle, .timestamp, .status, .cost, .duration_s, .exit_code, .model, .total_cost] | @csv' "$CYCLE_HISTORY_FILE"
+            ;;
+        *)
+            echo "Unknown format: $format (supported: csv)"
+            exit 1
+            ;;
+    esac
+    exit 0
+fi
+
+# === Reset-errors flag (clear circuit breaker state) ===
+
+if [ "${1:-}" = "--reset-errors" ]; then
+    if [ -f "$STATE_FILE" ]; then
+        # Reset error count and status in state file
+        if grep -q '^STATUS=circuit_break\|^STATUS=backoff' "$STATE_FILE"; then
+            sed -i '' 's/^STATUS=.*/STATUS=idle/' "$STATE_FILE" 2>/dev/null || \
+                sed -i 's/^STATUS=.*/STATUS=idle/' "$STATE_FILE"
+            echo "Circuit breaker state cleared. Status reset to idle."
+        else
+            current_status=$(grep '^STATUS=' "$STATE_FILE" | cut -d= -f2)
+            echo "No circuit breaker active (current status: ${current_status:-unknown})."
+        fi
+    else
+        echo "No state file found. Nothing to reset."
+    fi
+    exit 0
+fi
+
 # === Dry-run mode ===
 
 if [ "${1:-}" = "--dry-run" ]; then
@@ -640,6 +688,13 @@ if [ "${1:-}" = "--selftest" ]; then
         check "Agent definitions" 1 "$agent_count agents"
     else
         check "Agent definitions" 0 ".claude/agents/ missing"
+    fi
+
+    # 11. Signal handling (verify trap is functional)
+    if (bash -c 'trap "echo caught" SIGTERM; kill -TERM $$ 2>/dev/null; exit 0' 2>/dev/null); then
+        check "Signal handling (trap)" 1 "SIGTERM trap works"
+    else
+        check "Signal handling (trap)" 0 "bash signal trapping broken"
     fi
 
     echo ""
