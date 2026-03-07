@@ -9,6 +9,15 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: "how-to-build-ai-agent-team",
+    title: "How to Build an AI Agent Team: A Step-by-Step Guide",
+    description:
+      "Build a team of specialized AI agents that collaborate, make decisions, and ship real software. Agent roles, coordination patterns, convergence rules, and working open-source code.",
+    date: "2026-03-07",
+    readTime: "10 min read",
+    tags: ["tutorial", "ai-agents", "multi-agent"],
+  },
+  {
     slug: "lessons-from-33-cycles",
     title:
       "5 Lessons from 33 Cycles of Running an Autonomous AI Company",
