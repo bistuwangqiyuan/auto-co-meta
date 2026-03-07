@@ -40,6 +40,7 @@
 #   ./auto-loop.sh --template [NAME] [DIR] # Scaffold from pre-built template (saas, docs-site, api-backend)
 #   ./auto-loop.sh --dashboard  # Rich terminal dashboard (status, costs, agents, projects)
 #   ./auto-loop.sh --agent NAME "PROMPT" # Run a single named agent ad-hoc
+#   ./auto-loop.sh --webhook URL # POST JSON on lifecycle events (start, end, error, circuit break)
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -58,6 +59,7 @@
 #   RETRY_MAX_SECONDS=600       # Max backoff cap
 #   MAX_CYCLES=0                # Max cycles before exit (0 = unlimited)
 #   NOTIFY_URL=                 # Webhook URL for cycle notifications (empty = disabled)
+#   WEBHOOK_URL=               # Event-based webhook URL (empty = disabled)
 #   PLUGIN_DIR=                 # Directory with hook scripts (empty = disabled)
 #   PARALLEL_DIR=               # Directory with .md prompt files for parallel sessions (empty = disabled)
 # ============================================================
@@ -96,6 +98,7 @@ RETRY_BASE_SECONDS="${RETRY_BASE_SECONDS:-30}"
 RETRY_MAX_SECONDS="${RETRY_MAX_SECONDS:-600}"
 MAX_CYCLES="${MAX_CYCLES:-0}"  # 0 = unlimited
 NOTIFY_URL="${NOTIFY_URL:-}"  # Webhook URL for notifications (empty = disabled)
+WEBHOOK_URL="${WEBHOOK_URL:-}"  # Event-based webhook URL (empty = disabled)
 PLUGIN_DIR="${PLUGIN_DIR:-}"  # Directory with lifecycle hook scripts (empty = disabled)
 PARALLEL_DIR="${PARALLEL_DIR:-}"  # Directory with .md prompt files for parallel sessions (empty = disabled)
 
@@ -235,6 +238,44 @@ send_notification() {
         "$cycle_num" "$status" "${cost}" "${duration}" "$MODEL" "$total_cost" "$timestamp")
     # Fire-and-forget: don't block the loop if the webhook is slow or down
     curl -s -o /dev/null -X POST -H "Content-Type: application/json" -d "$payload" "$NOTIFY_URL" --max-time 10 &
+}
+
+send_webhook() {
+    [ -z "$WEBHOOK_URL" ] && return 0
+    local event=$1
+    local timestamp
+    timestamp=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+    # Build base payload with event type
+    local payload
+    payload=$(printf '{"event":"%s","timestamp":"%s","model":"%s","project":"%s"' \
+        "$event" "$timestamp" "$MODEL" "$(basename "$PROJECT_DIR")")
+    # Append event-specific fields
+    case "$event" in
+        cycle.start)
+            payload=$(printf '%s,"cycle":%d}' "$payload" "${2:-0}")
+            ;;
+        cycle.end)
+            payload=$(printf '%s,"cycle":%d,"status":"%s","cost":%s,"duration_s":%d,"total_cost":%s}' \
+                "$payload" "${2:-0}" "${3:-unknown}" "${4:-0}" "${5:-0}" "$total_cost")
+            ;;
+        error)
+            payload=$(printf '%s,"cycle":%d,"reason":"%s","error_count":%d,"max_errors":%d}' \
+                "$payload" "${2:-0}" "${3:-unknown}" "${4:-0}" "$MAX_CONSECUTIVE_ERRORS")
+            ;;
+        circuit_break)
+            payload=$(printf '%s,"cycle":%d,"cooldown_s":%d,"error_count":%d}' \
+                "$payload" "${2:-0}" "$COOLDOWN_SECONDS" "${3:-0}")
+            ;;
+        usage_limit)
+            payload=$(printf '%s,"cycle":%d,"wait_s":%d}' \
+                "$payload" "${2:-0}" "$LIMIT_WAIT_SECONDS")
+            ;;
+        *)
+            payload=$(printf '%s}' "$payload")
+            ;;
+    esac
+    # Fire-and-forget
+    curl -s -o /dev/null -X POST -H "Content-Type: application/json" -d "$payload" "$WEBHOOK_URL" --max-time 10 &
 }
 
 run_plugin_hook() {
@@ -484,6 +525,7 @@ USAGE:
   ./auto-loop.sh --dashboard  Rich terminal dashboard (status, costs, agents, projects)
   ./auto-loop.sh --agent         List available agents
   ./auto-loop.sh --agent NAME "PROMPT"  Run a single named agent ad-hoc
+  ./auto-loop.sh --webhook URL  POST JSON on lifecycle events (start, end, error, circuit break)
   ./auto-loop.sh --env        Generate .env.example with all config options
   ./auto-loop.sh --env FILE   Write template to custom path
   ./auto-loop.sh --snapshot   Create timestamped tarball of project state
@@ -1377,6 +1419,7 @@ if [ "${1:-}" = "--config" ]; then
     echo "RETRY_MAX_SECONDS:      ${RETRY_MAX_SECONDS}s"
     echo "MAX_CYCLES:             ${MAX_CYCLES:-0} (0 = unlimited)"
     echo "NOTIFY_URL:             ${NOTIFY_URL:-disabled}"
+    echo "WEBHOOK_URL:            ${WEBHOOK_URL:-disabled}"
     echo "PLUGIN_DIR:             ${PLUGIN_DIR:-disabled}"
     echo "PARALLEL_DIR:           ${PARALLEL_DIR:-disabled}"
     echo ""
@@ -1452,6 +1495,9 @@ if [ "${1:-}" = "--env" ] || [ "${1:-}" = "-e" ]; then
 # Receives: {cycle, status, cost, duration_s, model, total_cost, timestamp}
 # Leave empty to disable.
 # NOTIFY_URL=
+
+# Event-based webhook URL — POST JSON on lifecycle events (start, end, error, circuit break).
+# WEBHOOK_URL=
 
 # --- Plugins ---
 # Directory containing lifecycle hook scripts (pre-cycle.sh, post-cycle.sh).
@@ -2327,6 +2373,28 @@ if [ "${1:-}" = "--notify" ] || [ "${1:-}" = "-n" ]; then
     shift 2
 fi
 
+# === Webhook flag (event-based notifications) ===
+
+if [ "${1:-}" = "--webhook" ] || [ "${1:-}" = "-w" ]; then
+    if [ -z "${2:-}" ]; then
+        echo "Usage: ./auto-loop.sh --webhook URL"
+        echo ""
+        echo "POST JSON payloads to URL on key lifecycle events."
+        echo "Events: cycle.start, cycle.end, error, circuit_break, usage_limit"
+        echo ""
+        echo "Each payload includes: {event, timestamp, model, project, ...event-specific fields}"
+        echo ""
+        echo "Example: ./auto-loop.sh --webhook https://hooks.example.com/auto-co"
+        echo "Also: WEBHOOK_URL=https://... ./auto-loop.sh"
+        echo ""
+        echo "Differs from --notify: --notify fires only on cycle end."
+        echo "--webhook fires on all lifecycle events with typed payloads."
+        exit 1
+    fi
+    WEBHOOK_URL="$2"
+    shift 2
+fi
+
 # === Plugin flag (lifecycle hooks directory) ===
 
 if [ "${1:-}" = "--plugin" ]; then
@@ -2973,7 +3041,7 @@ fi
 
 log "=== Auto-Co Loop Started (PID $$) ==="
 log "Project: $PROJECT_DIR"
-log "Model: $MODEL | Interval: ${LOOP_INTERVAL}s | Timeout: ${CYCLE_TIMEOUT_SECONDS}s | Breaker: ${MAX_CONSECUTIVE_ERRORS} errors | Max cycles: ${MAX_CYCLES:-unlimited}${NOTIFY_URL:+ | Notify: $NOTIFY_URL}${PLUGIN_DIR:+ | Plugins: $PLUGIN_DIR}${PARALLEL_DIR:+ | Parallel: $PARALLEL_DIR}"
+log "Model: $MODEL | Interval: ${LOOP_INTERVAL}s | Timeout: ${CYCLE_TIMEOUT_SECONDS}s | Breaker: ${MAX_CONSECUTIVE_ERRORS} errors | Max cycles: ${MAX_CYCLES:-unlimited}${NOTIFY_URL:+ | Notify: $NOTIFY_URL}${WEBHOOK_URL:+ | Webhook: $WEBHOOK_URL}${PLUGIN_DIR:+ | Plugins: $PLUGIN_DIR}${PARALLEL_DIR:+ | Parallel: $PARALLEL_DIR}"
 
 # === Main Loop ===
 
@@ -2998,6 +3066,7 @@ while true; do
     cycle_start_epoch=$(date +%s)
     log_cycle $loop_count "START" "Beginning work cycle"
     save_state "running"
+    send_webhook "cycle.start" "$loop_count"
 
     # Log rotation
     rotate_logs
@@ -3075,12 +3144,15 @@ This is Cycle #$loop_count. Act decisively."
         fi
         append_cycle_history "$loop_count" "ok" "${CYCLE_COST:-0}" "$cycle_duration" "$EXIT_CODE"
         send_notification "$loop_count" "ok" "${CYCLE_COST:-0}" "$cycle_duration"
+        send_webhook "cycle.end" "$loop_count" "ok" "${CYCLE_COST:-0}" "$cycle_duration"
         error_count=0
     else
         error_count=$((error_count + 1))
         log_cycle $loop_count "FAIL" "$cycle_failed_reason (cost: \$${CYCLE_COST:-unknown}, subtype: ${CYCLE_SUBTYPE:-unknown}, ${cycle_duration}s, errors: $error_count/$MAX_CONSECUTIVE_ERRORS)"
+        send_webhook "error" "$loop_count" "$cycle_failed_reason" "$error_count"
         append_cycle_history "$loop_count" "fail" "${CYCLE_COST:-0}" "$cycle_duration" "$EXIT_CODE"
         send_notification "$loop_count" "fail" "${CYCLE_COST:-0}" "$cycle_duration"
+        send_webhook "cycle.end" "$loop_count" "fail" "${CYCLE_COST:-0}" "$cycle_duration"
 
         # Restore consensus on failure
         restore_consensus
@@ -3090,6 +3162,7 @@ This is Cycle #$loop_count. Act decisively."
         # Check for usage limit
         if check_usage_limit "$OUTPUT"; then
             log_cycle $loop_count "LIMIT" "API usage limit detected. Waiting ${LIMIT_WAIT_SECONDS}s..."
+            send_webhook "usage_limit" "$loop_count"
             save_state "waiting_limit"
             sleep "$LIMIT_WAIT_SECONDS"
             error_count=0
@@ -3099,6 +3172,7 @@ This is Cycle #$loop_count. Act decisively."
         # Circuit breaker
         if [ "$error_count" -ge "$MAX_CONSECUTIVE_ERRORS" ]; then
             log_cycle $loop_count "BREAKER" "Circuit breaker tripped! Cooling down ${COOLDOWN_SECONDS}s..."
+            send_webhook "circuit_break" "$loop_count" "$error_count"
             save_state "circuit_break"
             sleep "$COOLDOWN_SECONDS"
             error_count=0
