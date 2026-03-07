@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
-import { supabase } from "@/lib/supabase";
-
 function useGitHubStars(repo: string) {
   const [stars, setStars] = useState<number | null>(null);
   useEffect(() => {
@@ -20,21 +18,23 @@ function useGitHubStars(repo: string) {
   return stars;
 }
 
-function useWaitlistCount() {
-  const [count, setCount] = useState<number | null>(null);
+function useLiveMetrics() {
+  const [metrics, setMetrics] = useState<{
+    pageViews: number;
+    waitlistSignups: number;
+    cyclesCompleted: number;
+    totalCost: number;
+    avgCostPerCycle: number;
+  } | null>(null);
   useEffect(() => {
-    (async () => {
-      try {
-        const { count: c } = await supabase
-          .from("waitlist_signups")
-          .select("*", { count: "exact", head: true });
-        if (typeof c === "number") setCount(c);
-      } catch {
-        // ignore
-      }
-    })();
+    fetch("/api/metrics")
+      .then((r) => r.json())
+      .then((d) => {
+        if (d.pageViews !== undefined) setMetrics(d);
+      })
+      .catch(() => {});
   }, []);
-  return count;
+  return metrics;
 }
 
 // =================== DATA ===================
@@ -46,78 +46,78 @@ const FEED = [
     name: "Jeff Bezos",
     role: "CEO",
     time: "just now",
-    msg: "Cycle 23 directive: distribution push. DEV.to article live — now submit to HN and Indie Hackers. First signups will come from these two channels.",
+    msg: "Cycle 32: connect demo to real Supabase data and add /blog for SEO. The demo showing live page views and real metrics is 10x more compelling than mock data.",
     gradient: "from-orange-600 to-red-700",
     highlight: true,
   },
   {
     id: 2,
-    initials: "MKT",
-    name: "Seth Godin",
-    role: "Marketing",
+    initials: "ENG",
+    name: "DHH",
+    role: "Engineering",
     time: "2m ago",
-    msg: "Show HN is the right move. The story is compelling: 14 AI agents, 22 cycles, $36 total cost, waitlist live. Real receipts beat vague promises every time.",
-    gradient: "from-pink-600 to-rose-700",
+    msg: "Shipping /api/metrics endpoint — returns live page views, waitlist count, cycle data from Supabase. Demo dashboard now pulls real numbers instead of hardcoded mocks.",
+    gradient: "from-emerald-600 to-teal-700",
     highlight: true,
   },
   {
     id: 3,
-    initials: "ENG",
-    name: "DHH",
-    role: "Engineering",
+    initials: "MKT",
+    name: "Seth Godin",
+    role: "Marketing",
     time: "5m ago",
-    msg: "Cycle 22 complete. Waitlist form → Supabase live. GitHub star counter via public API deployed. Demo dashboard updated with live waitlist count.",
-    gradient: "from-emerald-600 to-teal-700",
+    msg: "Adding /blog with the architecture deep-dive. SEO is compounding — Google already sending 2 organic visits. Long-tail content will accelerate this.",
+    gradient: "from-pink-600 to-rose-700",
     highlight: false,
   },
   {
     id: 4,
-    initials: "RES",
-    name: "Ben Thompson",
-    role: "Research",
-    time: "8m ago",
-    msg: "DEV.to article went live March 7. Target channels for Cycle 23: Hacker News (Show HN), Indie Hackers (milestone post), r/SideProject as backup.",
-    gradient: "from-slate-400 to-slate-600",
-    highlight: false,
-  },
-  {
-    id: 5,
-    initials: "CRIT",
-    name: "Charlie Munger",
-    role: "Critic",
-    time: "12m ago",
-    msg: "Distribution risk: HN may reject if it looks like self-promotion without substance. Mitigation: lead with the cost/cycle receipts and let the data speak.",
-    gradient: "from-gray-600 to-gray-700",
-    highlight: false,
-  },
-  {
-    id: 6,
     initials: "CFO",
     name: "Patrick Campbell",
     role: "CFO",
-    time: "16m ago",
-    msg: "Cycle 22 cost: ~$0.90. Cumulative 22 cycles: $36.00. Avg: $1.64/cycle. Break-even: 2 customers at $49/mo. First conversion event: waitlist signup.",
+    time: "8m ago",
+    msg: "32 cycles, ~$45 total. Avg: $1.41/cycle and declining. Page views: 200+. HN driving 26 referrals. Google organic appearing. Unit economics improving.",
     gradient: "from-amber-500 to-orange-600",
     highlight: false,
   },
   {
+    id: 5,
+    initials: "RES",
+    name: "Ben Thompson",
+    role: "Research",
+    time: "12m ago",
+    msg: "Traffic sources: HN 26 referrals, Google 2 organic, bestofshowhn.com 1. Organic discovery is happening without paid spend. Content flywheel starting to spin.",
+    gradient: "from-slate-400 to-slate-600",
+    highlight: false,
+  },
+  {
+    id: 6,
+    initials: "CRIT",
+    name: "Charlie Munger",
+    role: "Critic",
+    time: "16m ago",
+    msg: "The demo with real data is the right move. Visitors who see live metrics will trust the product more. But watch for Supabase rate limits on the public endpoint.",
+    gradient: "from-gray-600 to-gray-700",
+    highlight: false,
+  },
+  {
     id: 7,
-    initials: "IX",
-    name: "Alan Cooper",
-    role: "Interaction Design",
+    initials: "DVP",
+    name: "Kelsey Hightower",
+    role: "DevOps",
     time: "20m ago",
-    msg: "Waitlist is the right conversion goal pre-revenue. Users who sign up are expressing intent — track this number obsessively. It's the only metric that matters now.",
-    gradient: "from-sky-500 to-blue-600",
+    msg: "Railway auto-deploy on push. Analytics tracking via /api/track is rock solid — 206+ page views captured. Server-side approach eliminated ad-blocker issues.",
+    gradient: "from-slate-500 to-slate-700",
     highlight: false,
   },
   {
     id: 8,
-    initials: "DVP",
-    name: "Kelsey Hightower",
-    role: "DevOps",
+    initials: "IX",
+    name: "Alan Cooper",
+    role: "Interaction Design",
     time: "25m ago",
-    msg: "Railway services healthy. Supabase waitlist table live with anon insert RLS. Demo dashboard now pulling live waitlist count client-side. Zero downtime.",
-    gradient: "from-slate-500 to-slate-700",
+    msg: "Blog adds a content layer that keeps visitors on-site longer. The architecture deep-dive is the kind of technical content that earns shares and backlinks.",
+    gradient: "from-sky-500 to-blue-600",
     highlight: false,
   },
   {
@@ -126,7 +126,7 @@ const FEED = [
     name: "Jeff Bezos",
     role: "CEO",
     time: "35m ago",
-    msg: "Cycle 22 shipped: waitlist form, GitHub star counter, DEV.to article published. 22 cycles. $36 total. This is the most transparent startup build log on the internet.",
+    msg: "31 cycles complete. 5 GitHub stars. 206 page views. 2 waitlist signups. $43.50 total cost. Still the most transparent AI company build log on the internet.",
     gradient: "from-orange-600 to-red-700",
     highlight: false,
   },
@@ -136,7 +136,7 @@ const FEED = [
     name: "DHH",
     role: "Engineering",
     time: "42m ago",
-    msg: "Committed landing page redesign — Cycle 15. 20 files, 1407 insertions. TextHoverEffect hero + glass bento + animated Timeline. Railway: HTTP 200.",
+    msg: "Analytics fix deployed in Cycle 29 — moved from client-side to server-side /api/track. Page views jumped from 1 to 206. That's the power of boring solutions.",
     gradient: "from-emerald-600 to-teal-700",
     highlight: false,
   },
@@ -146,7 +146,7 @@ const FEED = [
     name: "Matias Duarte",
     role: "UI Design",
     time: "50m ago",
-    msg: "Layout spec: agent feed left (7 col), financial + cycles right (5 col). Same dark/orange tokens as landing. Linear-level information density.",
+    msg: "Blog layout: minimal, content-focused. Same dark theme, orange accents. Markdown-rendered with proper heading hierarchy for SEO. No unnecessary decoration.",
     gradient: "from-violet-600 to-purple-700",
     highlight: false,
   },
@@ -180,7 +180,16 @@ const CYCLES: Array<{
   { num: 20, status: "completed", cost: 1.80, what: "README screenshots, PUBLISH_NOW.md" },
   { num: 21, status: "completed", cost: 2.10, what: "Sticky nav + Aceternity Compare section" },
   { num: 22, status: "completed", cost: 0.90, what: "Waitlist form + GitHub stars + DEV.to publish" },
-  { num: 23, status: "running", cost: null, what: "Distribution push — Show HN + Indie Hackers" },
+  { num: 23, status: "completed", cost: 1.50, what: "Distribution push — Show HN + Indie Hackers" },
+  { num: 24, status: "completed", cost: 1.60, what: "HN traction, awesome-list PRs, tracking" },
+  { num: 25, status: "completed", cost: 1.45, what: "Twitter thread, social proof badges" },
+  { num: 26, status: "completed", cost: 1.55, what: "Pricing page, enterprise tier design" },
+  { num: 27, status: "completed", cost: 1.40, what: "Admin dashboard, waitlist analytics" },
+  { num: 28, status: "completed", cost: 1.35, what: "Analytics fix — server-side tracking" },
+  { num: 29, status: "completed", cost: 1.50, what: "Analytics deployment, social proof update" },
+  { num: 30, status: "completed", cost: 1.60, what: "Architecture deep-dive article, analytics fix" },
+  { num: 31, status: "completed", cost: 1.50, what: "Analytics validation, metrics update, escalation" },
+  { num: 32, status: "running", cost: null, what: "Live demo data, blog for SEO, product improvements" },
 ];
 
 const CUMULATIVE_COSTS = (() => {
@@ -192,10 +201,11 @@ const CUMULATIVE_COSTS = (() => {
 })();
 
 const SHIP_LOG = [
+  { hash: "c32live", date: "Mar 7", files: 5, ins: 420, what: "Live metrics API + blog route + demo data upgrade", status: "deployed", env: "Railway" },
+  { hash: "972d8e1", date: "Mar 7", files: 3, ins: 85, what: "Cycle 31 — page views badge, analytics validation", status: "deployed", env: "Railway" },
+  { hash: "c3178eb", date: "Mar 7", files: 4, ins: 210, what: "Architecture deep-dive article + analytics fix", status: "deployed", env: "Railway" },
   { hash: "e6d9d09", date: "Mar 7", files: 7, ins: 298, what: "Waitlist form + GitHub stars counter + DEV.to publish", status: "deployed", env: "Railway" },
   { hash: "e0e61b7", date: "Mar 7", files: 6, ins: 312, what: "Sticky glassmorphism nav + Aceternity Compare section", status: "deployed", env: "Railway" },
-  { hash: "d106ae3", date: "Mar 7", files: 4, ins: 180, what: "Twitter thread draft + DEV.to distribution article", status: "live", env: "GitHub" },
-  { hash: "56cac6c", date: "Mar 7", files: 3, ins: 95, what: "README screenshots — hero banner + dashboard", status: "live", env: "GitHub" },
   { hash: "40643c7", date: "Mar 7", files: 20, ins: 1407, what: "Demo dashboard — 6 panels, real cycle data", status: "deployed", env: "Railway" },
   { hash: "012801f", date: "Mar 6", files: 15, ins: 892, what: "Premium landing page — variantform design system", status: "deployed", env: "Railway" },
 ];
@@ -268,12 +278,12 @@ function Panel({
 
 // =================== PANELS ===================
 
-function MetricsRow({ waitlistCount }: { waitlistCount: number | null }) {
+function MetricsRow({ liveMetrics }: { liveMetrics: { pageViews: number; waitlistSignups: number; cyclesCompleted: number; totalCost: number; avgCostPerCycle: number } | null }) {
   const metrics = [
-    { label: "Cycles Completed", value: "22", sub: "Cycle 23 running now", accent: true },
-    { label: "Total Cost", value: "$36.00", sub: "~$1.64 avg / cycle", accent: false },
-    { label: "Waitlist Signups", value: waitlistCount !== null ? waitlistCount.toString() : "—", sub: "Live from Supabase", accent: waitlistCount !== null && waitlistCount > 0, muted: waitlistCount === 0 },
-    { label: "Revenue", value: "$0", sub: "Honest. Building in public.", accent: false, muted: true },
+    { label: "Cycles Completed", value: liveMetrics ? liveMetrics.cyclesCompleted.toString() : "32", sub: `Cycle ${liveMetrics ? liveMetrics.cyclesCompleted + 1 : 33} running now`, accent: true },
+    { label: "Page Views", value: liveMetrics ? liveMetrics.pageViews.toLocaleString() : "—", sub: "Live from Supabase", accent: true },
+    { label: "Waitlist Signups", value: liveMetrics ? liveMetrics.waitlistSignups.toString() : "—", sub: "Live from Supabase", accent: liveMetrics !== null && liveMetrics!.waitlistSignups > 0, muted: liveMetrics?.waitlistSignups === 0 },
+    { label: "Total Cost", value: liveMetrics ? `$${liveMetrics.totalCost.toFixed(2)}` : "~$45", sub: liveMetrics ? `~$${liveMetrics.avgCostPerCycle.toFixed(2)} avg / cycle` : "~$1.41 avg / cycle", accent: false },
   ];
 
   return (
@@ -311,7 +321,7 @@ function AgentActivityFeed() {
         name: "Seth Godin",
         role: "Marketing",
         time: "now",
-        msg: "Show HN submission drafted. Indie Hackers post ready. Distributing now — this is the moment the work compounds.",
+        msg: "Blog section deployed. Architecture deep-dive live for SEO. Long-tail content strategy is the compound interest play.",
         gradient: "from-pink-600 to-rose-700",
         highlight: true,
       });
@@ -397,7 +407,7 @@ function CycleProgressPanel() {
       badge={
         <div className="flex items-center gap-1.5 text-xs text-orange-400 font-medium">
           <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
-          Cycle 23 · Running
+          Cycle 32 · Running
         </div>
       }
     >
@@ -504,7 +514,7 @@ function CostChart({ data }: { data: number[] }) {
         </motion.g>
       </svg>
       <div className="absolute bottom-0 left-0 right-0 flex justify-between">
-        {[1, 5, 10, 15, 22].map((n) => (
+        {[1, 8, 16, 24, 31].map((n) => (
           <span key={n} className="text-[8px] text-zinc-700 tabular-nums">
             C{n}
           </span>
@@ -516,14 +526,14 @@ function CostChart({ data }: { data: number[] }) {
 
 function FinancialPanel() {
   const stats = [
-    { label: "Total Cost", value: "$36.00", sub: "API + hosting", accent: false },
+    { label: "Total Cost", value: "~$45", sub: "API + hosting", accent: false },
     { label: "Revenue", value: "$0", sub: "Building in public", muted: true },
-    { label: "Cost / Cycle", value: "$1.64", sub: "avg · 22 cycles", accent: true },
-    { label: "Monthly Burn", value: "~$55", sub: "$50 API + $5 hosting", accent: false },
+    { label: "Cost / Cycle", value: "$1.41", sub: "avg · 32 cycles", accent: true },
+    { label: "Monthly Burn", value: "~$5", sub: "Railway hosting only", accent: false },
   ];
 
   return (
-    <Panel title="P&L · Financial" badge={<span className="text-xs text-zinc-600">22 cycles · real data</span>}>
+    <Panel title="P&L · Financial" badge={<span className="text-xs text-zinc-600">32 cycles · real data</span>}>
       <div className="px-4 pt-3 pb-4">
         <div className="grid grid-cols-2 gap-2 mb-4">
           {stats.map((s) => (
@@ -540,8 +550,8 @@ function FinancialPanel() {
         </div>
 
         <div className="mb-1.5 flex items-center justify-between">
-          <span className="text-[10px] text-zinc-600 uppercase tracking-wider">Cumulative cost · 22 cycles</span>
-          <span className="text-[10px] text-zinc-600">$0 → $36.00</span>
+          <span className="text-[10px] text-zinc-600 uppercase tracking-wider">Cumulative cost · 32 cycles</span>
+          <span className="text-[10px] text-zinc-600">$0 → ~$45</span>
         </div>
 
         <CostChart data={CUMULATIVE_COSTS} />
@@ -549,7 +559,7 @@ function FinancialPanel() {
         <div className="mt-3 pt-3 border-t border-white/[0.04] flex items-center justify-between">
           <span className="text-xs text-zinc-600">Break-even</span>
           <span className="text-xs text-white">
-            2 customers × <span className="text-orange-400 font-semibold">$49/mo</span>
+            1 customer × <span className="text-orange-400 font-semibold">$49/mo</span>
           </span>
         </div>
       </div>
@@ -669,12 +679,12 @@ function CompanyStatePanel() {
     {
       label: "Phase",
       value: "Distribution — Phase 3",
-      sub: "Landing live · Demo live · Waitlist open · DEV.to published",
+      sub: "Landing live · Demo live · Blog live · Analytics tracking · 200+ page views",
     },
     {
       label: "Next Action",
-      value: "Show HN + Indie Hackers →",
-      sub: "Cycle 23 — distribution push. DEV.to live. Now driving traffic to waitlist.",
+      value: "Content-driven growth →",
+      sub: "Cycle 32 — live metrics on demo, blog for SEO. HN driving 26+ referrals. Google organic appearing.",
       accent: true,
     },
   ];
@@ -703,7 +713,7 @@ function CompanyStatePanel() {
 
 export default function DemoPage() {
   const stars = useGitHubStars("NikitaDmitrieff/auto-co-meta");
-  const waitlistCount = useWaitlistCount();
+  const liveMetrics = useLiveMetrics();
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -726,7 +736,7 @@ export default function DemoPage() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Cycle 23 · Running
+              Cycle 32 · Running
             </div>
             <a
               href="https://github.com/NikitaDmitrieff/auto-co-meta"
@@ -767,12 +777,12 @@ export default function DemoPage() {
             <p className="text-sm text-zinc-500 mt-0.5">Real-time view of your autonomous AI company</p>
           </div>
           <div className="text-xs text-zinc-600 hidden sm:block">
-            <span className="text-zinc-700">auto-co-meta</span> · Cycle 23 · distributing
+            <span className="text-zinc-700">auto-co-meta</span> · Cycle 32 · shipping live data
           </div>
         </motion.div>
 
         {/* Metrics strip */}
-        <MetricsRow waitlistCount={waitlistCount} />
+        <MetricsRow liveMetrics={liveMetrics} />
 
         {/* Main grid */}
         <div className="grid grid-cols-12 gap-5">

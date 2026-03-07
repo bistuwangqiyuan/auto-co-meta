@@ -34,6 +34,7 @@ export default function Nav() {
           <a href="/#features" className="hover:text-zinc-200 transition-colors">Features</a>
           <a href="/demo" className="hover:text-zinc-200 transition-colors">Live Demo</a>
           <a href="/pricing" className="hover:text-zinc-200 transition-colors">Pricing</a>
+          <a href="/blog" className="hover:text-zinc-200 transition-colors">Blog</a>
           <a
             href="https://github.com/NikitaDmitrieff/auto-co-meta"
             target="_blank"
