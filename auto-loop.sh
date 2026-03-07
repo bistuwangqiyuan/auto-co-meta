@@ -24,6 +24,8 @@
 #   ./auto-loop.sh --upgrade    # Check for newer version on GitHub
 #   ./auto-loop.sh --init <dir> # Scaffold a new auto-co project
 #   ./auto-loop.sh --watch      # Live dashboard (alias for monitor.sh --dashboard)
+#   ./auto-loop.sh --pause      # Pause the loop (skip cycles until resumed)
+#   ./auto-loop.sh --resume     # Resume a paused loop
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --version    # Show version
 #
@@ -62,6 +64,7 @@ CONSENSUS_FILE="$PROJECT_DIR/memories/consensus.md"
 PROMPT_FILE="$PROJECT_DIR/PROMPT.md"
 PID_FILE="$PROJECT_DIR/.auto-loop.pid"
 STATE_FILE="$PROJECT_DIR/.auto-loop-state"
+PAUSE_FILE="$PROJECT_DIR/.auto-loop-paused"
 
 # Loop settings (all overridable via env vars)
 MODEL="${MODEL:-opus}"
@@ -329,6 +332,8 @@ USAGE:
   ./auto-loop.sh --upgrade    Check for newer version on GitHub
   ./auto-loop.sh --init DIR   Scaffold a new auto-co project
   ./auto-loop.sh --watch      Live dashboard (alias for monitor.sh --dashboard)
+  ./auto-loop.sh --pause      Pause the loop (skip cycles until resumed)
+  ./auto-loop.sh --resume     Resume a paused loop
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -644,6 +649,27 @@ fi
 
 if [ "${1:-}" = "--watch" ] || [ "${1:-}" = "-w" ]; then
     exec "$SCRIPT_DIR/monitor.sh" --dashboard
+fi
+
+# === Pause flag (create pause file to skip cycles) ===
+
+if [ "${1:-}" = "--pause" ]; then
+    touch "$PAUSE_FILE"
+    echo "Loop paused. Cycles will be skipped until resumed."
+    echo "Resume with: ./auto-loop.sh --resume"
+    exit 0
+fi
+
+# === Resume flag (remove pause file to resume cycles) ===
+
+if [ "${1:-}" = "--resume" ]; then
+    if [ -f "$PAUSE_FILE" ]; then
+        rm -f "$PAUSE_FILE"
+        echo "Loop resumed. Next cycle will run normally."
+    else
+        echo "Loop is not paused."
+    fi
+    exit 0
 fi
 
 # === Config flag (print all config values) ===
@@ -1431,6 +1457,14 @@ while true; do
     if check_stop_requested; then
         log "Stop requested. Shutting down gracefully."
         cleanup
+    fi
+
+    # Check for pause
+    if [ -f "$PAUSE_FILE" ]; then
+        log "Loop is paused. Sleeping ${LOOP_INTERVAL}s... (resume with: ./auto-loop.sh --resume)"
+        save_state "paused"
+        sleep "$LOOP_INTERVAL"
+        continue
     fi
 
     loop_count=$((loop_count + 1))
