@@ -22,6 +22,8 @@
 #   ./auto-loop.sh --purge-logs [N]  # Purge old logs, keep latest N (default: 50)
 #   ./auto-loop.sh --doctor     # Comprehensive health check
 #   ./auto-loop.sh --upgrade    # Check for newer version on GitHub
+#   ./auto-loop.sh --init <dir> # Scaffold a new auto-co project
+#   ./auto-loop.sh --watch      # Live dashboard (alias for monitor.sh --dashboard)
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --version    # Show version
 #
@@ -325,6 +327,8 @@ USAGE:
   ./auto-loop.sh --purge-logs [N]  Purge old logs, keep latest N (default: 50)
   ./auto-loop.sh --doctor     Comprehensive system health check
   ./auto-loop.sh --upgrade    Check for newer version on GitHub
+  ./auto-loop.sh --init DIR   Scaffold a new auto-co project
+  ./auto-loop.sh --watch      Live dashboard (alias for monitor.sh --dashboard)
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -361,6 +365,285 @@ if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-V" ]; then
     version=$(cat "$PROJECT_DIR/VERSION" 2>/dev/null || echo "unknown")
     echo "auto-loop.sh v${version}"
     exit 0
+fi
+
+# === Init flag (scaffold a new auto-co project) ===
+
+if [ "${1:-}" = "--init" ]; then
+    TARGET_DIR="${2:-}"
+    if [ -z "$TARGET_DIR" ]; then
+        echo "Usage: ./auto-loop.sh --init <project-directory>"
+        echo ""
+        echo "Scaffolds a new auto-co project with all necessary files."
+        echo "Example: ./auto-loop.sh --init ~/Projects/my-ai-company"
+        exit 1
+    fi
+
+    # Resolve to absolute path
+    if [[ "$TARGET_DIR" != /* ]]; then
+        TARGET_DIR="$(pwd)/$TARGET_DIR"
+    fi
+
+    if [ -f "$TARGET_DIR/auto-loop.sh" ]; then
+        echo "Error: $TARGET_DIR already contains an auto-co project (auto-loop.sh exists)."
+        exit 1
+    fi
+
+    echo "=== Scaffolding new auto-co project ==="
+    echo "Target: $TARGET_DIR"
+    echo ""
+
+    # Create directory structure
+    mkdir -p "$TARGET_DIR"/{memories,logs,docs,projects}
+    mkdir -p "$TARGET_DIR/docs"/{ceo,cto,critic,product,ui,interaction,fullstack,qa,devops,marketing,operations,sales,cfo,research}
+    mkdir -p "$TARGET_DIR/.claude/agents"
+    mkdir -p "$TARGET_DIR/.claude/skills/team"
+
+    # Copy core scripts
+    for script in auto-loop.sh stop-loop.sh monitor.sh; do
+        if [ -f "$PROJECT_DIR/$script" ]; then
+            cp "$PROJECT_DIR/$script" "$TARGET_DIR/$script"
+            chmod +x "$TARGET_DIR/$script"
+            echo "  copied $script"
+        fi
+    done
+
+    # Copy agent definitions
+    if [ -d "$PROJECT_DIR/.claude/agents" ]; then
+        cp "$PROJECT_DIR/.claude/agents/"*.md "$TARGET_DIR/.claude/agents/" 2>/dev/null || true
+        agent_count=$(ls "$TARGET_DIR/.claude/agents/"*.md 2>/dev/null | wc -l | tr -d ' ')
+        echo "  copied $agent_count agent definitions"
+    fi
+
+    # Copy team skill
+    if [ -f "$PROJECT_DIR/.claude/skills/team/SKILL.md" ]; then
+        cp "$PROJECT_DIR/.claude/skills/team/SKILL.md" "$TARGET_DIR/.claude/skills/team/SKILL.md"
+        echo "  copied team skill"
+    fi
+
+    # Copy VERSION
+    cp "$PROJECT_DIR/VERSION" "$TARGET_DIR/VERSION" 2>/dev/null || echo "1.0.1" > "$TARGET_DIR/VERSION"
+
+    # Create fresh consensus (Day 0)
+    cat > "$TARGET_DIR/memories/consensus.md" << 'CONSENSUS_EOF'
+# Auto Company Consensus
+
+## Last Updated
+(not yet started)
+
+## Current Phase
+Day 0
+
+## What We Did This Cycle
+Nothing yet -- this is a fresh auto-co project.
+
+## Key Decisions Made
+(none)
+
+## Active Projects
+(none)
+
+## Metrics
+- Revenue: $0
+- Users: 0
+- MRR: $0
+- Deployed Services: (none)
+- Cost/month: $0
+
+## Next Action
+**Cycle 1: CEO calls a strategy meeting to decide what to build.**
+
+## Company State
+- Product: TBD
+- Tech Stack: TBD
+- Revenue: $0
+- Users: 0
+
+## Human Escalation
+- Pending Request: NO
+- Last Response: N/A
+- Awaiting Response Since: N/A
+
+## Open Questions
+- What product should we build?
+- What market should we target?
+CONSENSUS_EOF
+    echo "  created memories/consensus.md (Day 0)"
+
+    # Create empty escalation files
+    echo "" > "$TARGET_DIR/memories/human-request.md"
+    echo "" > "$TARGET_DIR/memories/human-response.md"
+    echo "  created escalation files"
+
+    # Create template PROMPT.md
+    cat > "$TARGET_DIR/PROMPT.md" << 'PROMPT_EOF'
+# Auto-Co -- Autonomous Loop Prompt
+
+You are Auto-Co's autonomous operating coordinator. Each time you are invoked, you drive one work cycle. No supervision, autonomous decisions, bold action.
+
+## Work Cycle
+
+### 1. Read Consensus
+
+The current consensus is pre-loaded at the end of this prompt. If it's missing, read `memories/consensus.md`.
+
+### 2. Check for Human Escalation Response
+
+Before deciding on the cycle's action, check `memories/human-response.md`. If it contains a response:
+- Read and incorporate the human's answer into your decision-making
+- Clear the file after processing (write an empty string)
+- Note in consensus that a human response was received and acted upon
+
+### 3. Decide
+
+- Clear Next Action exists -> execute it
+- Active project in progress -> continue pushing forward (check `docs/*/` for outputs)
+- Day 0, no direction -> CEO calls a strategy meeting
+- Stuck -> change angle, narrow scope, or just ship it
+
+Priority: **Ship > Plan > Discuss**
+
+### 4. Form Team and Execute
+
+Read `.claude/skills/team/SKILL.md` and follow the process to assemble a team for the task. Select 3-5 of the most relevant agents per cycle -- do not pull everyone in.
+
+### 5. Update Consensus (Mandatory)
+
+Before ending, you **must** update `memories/consensus.md`.
+
+**Atomic write protocol:** Write to `memories/.consensus.tmp` first, then rename to `memories/consensus.md`.
+
+## Convergence Rules (Mandatory)
+
+1. **Cycle 1**: Brainstorm. Each agent proposes one idea. End by ranking top 3.
+2. **Cycle 2**: Select #1. Critic runs Pre-Mortem, Research validates the market, CFO runs the numbers. Deliver a **GO / NO-GO** verdict.
+3. **Cycle 3+**: GO -> create repo, start writing code. Discussion is **FORBIDDEN**. NO-GO -> try #2. If all fail, force-pick one and build it.
+4. **Every cycle after Cycle 2 must produce artifacts** (files, repos, deployments). Pure discussion is forbidden.
+5. **Same Next Action appearing 2 consecutive cycles** -> you are stalled. Change direction or narrow scope and ship immediately.
+
+## Anti-Patterns (Never Do These)
+
+- Endless brainstorming past Cycle 1
+- "Let's research more" after Cycle 2
+- Producing only documents with no code or deployments
+- Waiting for perfect information
+- Asking the human for routine decisions
+- Repeating the same Next Action without progress
+PROMPT_EOF
+    echo "  created PROMPT.md"
+
+    # Create template CLAUDE.md
+    cat > "$TARGET_DIR/CLAUDE.md" << 'CLAUDE_EOF'
+# Auto-Co -- Fully Autonomous AI Company
+
+## Mission
+
+**Define your mission here.** This auto-co instance will work autonomously toward this goal.
+
+## Operating Mode
+
+This is a **fully autonomous AI company** with no human involvement in daily decisions.
+
+- **Do NOT wait for human approval** -- you are the decision-maker
+- **Do NOT ask for human opinions** -- discuss internally as a team, then act
+- **CEO (Bezos) is the ultimate decision-maker** -- when the team disagrees, CEO has final say
+- **Munger is the only brake** -- every major decision must pass through him
+
+## Safety Red Lines (Absolute -- Never Violate)
+
+| Forbidden | Specifics |
+|-----------|-----------|
+| Delete GitHub repos | `gh repo delete` and any repo-deletion operations |
+| Delete Vercel projects | `vercel remove` -- never delete projects/deployments |
+| Delete Railway services | `railway delete` -- never delete services/projects |
+| Reset Supabase databases | `supabase db reset` -- never wipe production data |
+| Delete system files | `rm -rf /`, do not touch `~/.ssh/`, `~/.config/`, `~/.claude/` |
+| Illegal activity | Fraud, copyright infringement, data theft, unauthorized access |
+| Leak credentials | API keys/tokens/passwords must never enter public repos or logs |
+| Force push main | `git push --force` to main/master |
+| Destructive git ops | `git reset --hard` only on temporary branches |
+
+## Team Architecture
+
+14 AI Agents defined in `.claude/agents/`. See agent files for full role definitions.
+
+## Decision Principles
+
+1. **Ship > Plan > Discuss** -- if you can ship it, don't discuss it
+2. **Act on 70% information** -- waiting for 90% means you're already too slow
+3. **Customer obsession** -- start from real needs
+4. **Simplicity first** -- if one person can do it, don't split it
+5. **Ramen profitability** -- the first goal is revenue, not users
+6. **Boring technology** -- mature, stable tech unless new tech offers 10x advantage
+7. **Monolith first** -- get it running, split when needed
+
+## Shared Memory
+
+- **`memories/consensus.md`** -- cross-cycle relay baton
+- **`memories/human-request.md`** -- outbound escalation requests
+- **`memories/human-response.md`** -- inbound responses from the human
+- **`docs/<role>/`** -- each Agent's work output
+- **`projects/`** -- all new projects
+
+## Human Escalation Protocol
+
+When truly necessary (spending money, legal questions, credentials):
+1. CEO writes request to `memories/human-request.md`
+2. If no response within 2 cycles, make autonomous decision and note it
+CLAUDE_EOF
+    echo "  created CLAUDE.md (template)"
+
+    # Create .gitignore
+    cat > "$TARGET_DIR/.gitignore" << 'GITIGNORE_EOF'
+# Auto-Co
+.auto-loop.pid
+.auto-loop-stop
+.auto-loop-paused
+.auto-loop-state
+logs/cycle-*.log
+logs/auto-loop.log*
+memories/.consensus.tmp
+
+# Dependencies
+node_modules/
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# OS
+.DS_Store
+Thumbs.db
+GITIGNORE_EOF
+    echo "  created .gitignore"
+
+    # Init git repo if not already one
+    if [ ! -d "$TARGET_DIR/.git" ]; then
+        (cd "$TARGET_DIR" && git init -q && git add -A && git commit -q -m "chore: scaffold auto-co project via --init")
+        echo "  initialized git repository"
+    fi
+
+    echo ""
+    echo "=== Auto-Co project scaffolded successfully! ==="
+    echo ""
+    echo "Next steps:"
+    echo "  1. cd $TARGET_DIR"
+    echo "  2. Edit CLAUDE.md -- set your mission and customize"
+    echo "  3. Run: ./auto-loop.sh --selftest"
+    echo "  4. Run: ./auto-loop.sh"
+    echo ""
+    echo "The AI team will hold a strategy meeting in Cycle 1"
+    echo "and start building by Cycle 3."
+    exit 0
+fi
+
+# === Watch flag (alias for monitor.sh --dashboard) ===
+
+if [ "${1:-}" = "--watch" ] || [ "${1:-}" = "-w" ]; then
+    exec "$SCRIPT_DIR/monitor.sh" --dashboard
 fi
 
 # === Config flag (print all config values) ===

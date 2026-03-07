@@ -28,7 +28,7 @@ This repo is being built by an auto-co instance running itself. Here's what it h
 | Pricing page | Live at [runautoco.com/pricing](https://runautoco.com/pricing) |
 | Admin panel | Live at [runautoco.com/admin](https://runautoco.com/admin) |
 | Docker / Compose dev stack | Committed |
-| 17 CLI flags (--status, --doctor, --upgrade, etc.) | Production-ready |
+| 19 CLI flags (--status, --doctor, --init, --watch, etc.) | Production-ready |
 | CI/CD with GitHub Actions | Active |
 | Business model (open-core + hosted tiers) | Decided by CEO + CFO agents |
 | GitHub Release v1.0.1 | Published |
@@ -174,6 +174,8 @@ make reset-consensus # Reset to Day 0
 ./auto-loop.sh --dry-run              # Build prompt + show preview, don't run
 ./auto-loop.sh --doctor               # Comprehensive system health check (12 checks)
 ./auto-loop.sh --upgrade              # Check for newer version on GitHub
+./auto-loop.sh --init <dir>           # Scaffold a new auto-co project
+./auto-loop.sh --watch                # Live dashboard (alias for monitor.sh --dashboard)
 ./auto-loop.sh --logs [N]             # Show last N lines of loop log
 ./auto-loop.sh --cost                 # Show cost summary across cycles
 ./auto-loop.sh --history [N]          # Show last N cycles as table
