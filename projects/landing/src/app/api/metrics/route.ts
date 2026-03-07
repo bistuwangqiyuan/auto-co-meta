@@ -22,10 +22,14 @@ export async function GET() {
     return NextResponse.json({
       pageViews: viewsResult.count ?? 0,
       waitlistSignups: waitlistResult.count ?? 0,
-      cyclesCompleted: 38,
-      totalCost: 54.50,
-      avgCostPerCycle: 1.43,
+      cyclesCompleted: 42,
+      totalCost: 59.0,
+      avgCostPerCycle: 1.40,
       monthlyBurn: 5,
+      revenue: 0,
+      githubStars: 5,
+      blogPosts: 3,
+      awesomeListPRs: 5,
     });
   } catch {
     return NextResponse.json(
