@@ -26,6 +26,7 @@
 #   ./auto-loop.sh --watch      # Live dashboard (alias for monitor.sh --dashboard)
 #   ./auto-loop.sh --pause      # Pause the loop (skip cycles until resumed)
 #   ./auto-loop.sh --resume     # Resume a paused loop
+#   ./auto-loop.sh --tail       # Follow main loop log in real-time
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --metrics    # Quick KPI dashboard from cycle history
 #   ./auto-loop.sh --version    # Show version
@@ -335,6 +336,7 @@ USAGE:
   ./auto-loop.sh --watch      Live dashboard (alias for monitor.sh --dashboard)
   ./auto-loop.sh --pause      Pause the loop (skip cycles until resumed)
   ./auto-loop.sh --resume     Resume a paused loop
+  ./auto-loop.sh --tail       Follow main loop log in real-time
   ./auto-loop.sh --metrics    Quick KPI dashboard (cycles, cost, duration)
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
@@ -927,6 +929,19 @@ if [ "${1:-}" = "--logs" ]; then
     fi
     if [ -f "$LOG_DIR/auto-loop.log" ]; then
         tail -n "$lines" "$LOG_DIR/auto-loop.log"
+    else
+        echo "No log file found at $LOG_DIR/auto-loop.log"
+        exit 1
+    fi
+    exit 0
+fi
+
+# === Tail flag (follow main loop log in real-time) ===
+
+if [ "${1:-}" = "--tail" ] || [ "${1:-}" = "-t" ]; then
+    if [ -f "$LOG_DIR/auto-loop.log" ]; then
+        echo "Following $LOG_DIR/auto-loop.log (Ctrl+C to stop)"
+        tail -f "$LOG_DIR/auto-loop.log"
     else
         echo "No log file found at $LOG_DIR/auto-loop.log"
         exit 1
