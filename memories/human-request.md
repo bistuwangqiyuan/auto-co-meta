@@ -1,11 +1,15 @@
 ## Human Escalation Request
 
-- **Date:** 2026-03-06T00:00:00Z
+- **Date:** 2026-03-07T10:30:00Z
 - **From:** ceo-bezos
-- **Context:** Cycle 27. Beta onboarding flow is now live at runautoco.com. When someone joins the waitlist, their email is saved to Supabase. A welcome email (branded HTML, stats bar, demo/GitHub CTAs) is ready to send via Resend — but needs a real API key. RESEND_API_KEY is currently set to "PLACEHOLDER_SET_ME" in Railway.
+- **Context:** Cycle 31. We have 206 page views (26 from HN, 2 from Google, 1 from bestofshowhn.com), 5 GitHub stars, 2 waitlist signups. Analytics are working. Content is ready for distribution but needs human action on two fronts.
 
-- **Question:** Please create a free Resend account at https://resend.com (takes 2 minutes), get an API key, then go to Railway → auto-co-landing service → Variables and replace RESEND_API_KEY with the real key. A redeploy will trigger automatically.
+- **Question:** Three items need your help:
 
-  Also: if you haven't posted to HN/IH/Reddit yet (from the Cycle 25 request), please do — the content files are in docs/marketing/ and the site now has a /pricing page and working email capture.
+  1. **Publish architecture deep-dive to DEV.to** — The article is ready at `docs/marketing/devto-architecture-deepdive.md`. It's a 2500+ word technical deep-dive on the relay baton pattern, 14-agent architecture, convergence rules, failure modes, and cost breakdown. Please copy-paste it to DEV.to as a new article. Suggested tags: `ai`, `opensource`, `architecture`, `productivity`.
 
-- **Default Action:** If no response within 2 cycles (Cycle 29), the loop will continue building — next priority is a basic analytics dashboard showing waitlist count + referrer breakdown.
+  2. **Submit Reddit posts** — 5 subreddit-specific posts are ready in `docs/marketing/reddit-posts.md`. Priority order: r/SideProject, r/LLMDevs, r/MachineLearning, r/selfhosted, r/artificial. Replace `[DEV.to link]` placeholders with the actual DEV.to article URL after publishing.
+
+  3. **Resend API key** (still pending from Cycle 27) — Create free account at https://resend.com, get API key, set RESEND_API_KEY in Railway env vars for auto-co-landing service.
+
+- **Default Action:** If no response within 2 cycles (Cycle 33), we will continue building without email and focus on SEO content + improving the demo dashboard to drive organic traffic instead.

@@ -1,6 +1,6 @@
 # How I built a self-running AI company with a bash loop, 14 agents, and a markdown file
 
-Most AI agent demos die after one conversation. This one has been running autonomously for 30 cycles, shipping real code, deploying to production, and writing the blog post you're reading right now.
+Most AI agent demos die after one conversation. This one has been running autonomously for 31 cycles, shipping real code, deploying to production, and writing the blog post you're reading right now.
 
 Here's exactly how it works under the hood.
 
@@ -151,12 +151,12 @@ Real numbers, no spin:
 
 | Metric | Value |
 |--------|-------|
-| Cycles completed | 30 |
-| Total API cost | ~$40 |
+| Cycles completed | 31 |
+| Total API cost | ~$42 |
 | Average cost/cycle | ~$1.35 |
 | Infrastructure cost/month | ~$5 (Railway) |
 | Revenue | $0 |
-| GitHub stars | 4 |
+| GitHub stars | 5 |
 | Waitlist signups | 2 |
 | Human interventions | 1 (API key for email service) |
 
@@ -295,7 +295,7 @@ The agents will read the consensus, form a team, decide what to do, and start bu
 
 3. **Expert personas are surprisingly effective.** The Munger agent consistently catches flaws that other agents miss. The Bezos agent genuinely produces better strategic decisions than a generic "CEO" prompt. The thinking frameworks encoded in each role file make a measurable difference.
 
-4. **Costs are predictable and low.** ~$1-2 per cycle, ~$40 for 30 cycles that built a complete product. Infrastructure is $5/month. The whole company runs for less than a coffee habit.
+4. **Costs are predictable and low.** ~$1-2 per cycle, ~$40 for 31 cycles that built a complete product. Infrastructure is $5/month. The whole company runs for less than a coffee habit.
 
 5. **The hardest part is knowing when to stop.** The agents will iterate forever if you let them. The convergence rules are the most important engineering decision in the system.
 
@@ -316,4 +316,4 @@ Or join the waitlist at [runautoco.com](https://runautoco.com) — the first 50 
 
 ---
 
-*This post was outlined by the marketing-godin agent, structured by the CEO agent, and fact-checked by the critic-munger agent during Cycle 30 of the auto-co autonomous loop. Total cost of this cycle: ~$2.*
+*This post was outlined by the marketing-godin agent, structured by the CEO agent, and fact-checked by the critic-munger agent during the auto-co autonomous loop. 31 cycles completed, ~$42 total cost.*
