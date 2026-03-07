@@ -18,6 +18,8 @@
 #   ./auto-loop.sh --cost       # Show cost summary across cycles
 #   ./auto-loop.sh --history [N]   # Show last N cycles as table (default: 10)
 #   ./auto-loop.sh --reset-errors  # Clear circuit breaker state
+#   ./auto-loop.sh --purge-logs [N]  # Purge old logs, keep latest N (default: 50)
+#   ./auto-loop.sh --doctor     # Comprehensive health check
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --version    # Show version
 #
@@ -312,11 +314,13 @@ USAGE:
   ./auto-loop.sh --config     Print all config values
   ./auto-loop.sh --status     Quick status check (with cycle stats)
   ./auto-loop.sh --status --json  Machine-readable JSON output
-  ./auto-loop.sh --export     Export cycle history as CSV
+  ./auto-loop.sh --export [FMT]  Export cycle history (csv, json, markdown)
   ./auto-loop.sh --logs [N]   Show last N lines of loop log (default: 50)
   ./auto-loop.sh --cost       Show cost summary across cycles
   ./auto-loop.sh --history [N]   Show last N cycles as table (default: 10)
   ./auto-loop.sh --reset-errors  Clear circuit breaker state
+  ./auto-loop.sh --purge-logs [N]  Purge old logs, keep latest N (default: 50)
+  ./auto-loop.sh --doctor     Comprehensive system health check
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -517,8 +521,22 @@ if [ "${1:-}" = "--export" ]; then
             echo "cycle,timestamp,status,cost,duration_s,exit_code,model,total_cost"
             jq -r '[.cycle, .timestamp, .status, .cost, .duration_s, .exit_code, .model, .total_cost] | @csv' "$CYCLE_HISTORY_FILE"
             ;;
+        json)
+            jq -s '.' "$CYCLE_HISTORY_FILE"
+            ;;
+        markdown|md)
+            printf "| %-7s | %-22s | %-8s | %-10s | %-10s | %-6s | %-8s |\n" \
+                "Cycle" "Timestamp" "Status" "Cost" "Duration" "Exit" "Model"
+            printf "| %-7s | %-22s | %-8s | %-10s | %-10s | %-6s | %-8s |\n" \
+                "-------" "----------------------" "--------" "----------" "----------" "------" "--------"
+            jq -r '[.cycle, .timestamp, .status, .cost, .duration_s, .exit_code, .model] |
+                 "\(.[0])\t\(.[1])\t\(.[2])\t$\(.[3])\t\(.[4])s\t\(.[5])\t\(.[6])"' "$CYCLE_HISTORY_FILE" | \
+                while IFS=$'\t' read -r cy ts st co du ex mo; do
+                    printf "| %-7s | %-22s | %-8s | %-10s | %-10s | %-6s | %-8s |\n" "$cy" "$ts" "$st" "$co" "$du" "$ex" "$mo"
+                done
+            ;;
         *)
-            echo "Unknown format: $format (supported: csv)"
+            echo "Unknown format: $format (supported: csv, json, markdown)"
             exit 1
             ;;
     esac
@@ -629,6 +647,183 @@ if [ "${1:-}" = "--reset-errors" ]; then
         fi
     else
         echo "No state file found. Nothing to reset."
+    fi
+    exit 0
+fi
+
+# === Purge-logs flag (manual log rotation) ===
+
+if [ "${1:-}" = "--purge-logs" ]; then
+    keep="${2:-50}"
+    if ! echo "$keep" | grep -qE '^[0-9]+$'; then
+        echo "Usage: ./auto-loop.sh --purge-logs [KEEP]  (default: 50, keep latest N cycle logs)"
+        exit 1
+    fi
+    count=$(find "$LOG_DIR" -name "cycle-*.log" -type f 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$count" -le "$keep" ]; then
+        echo "Only $count cycle logs found (keeping $keep). Nothing to purge."
+        exit 0
+    fi
+    to_delete=$((count - keep))
+    find "$LOG_DIR" -name "cycle-*.log" -type f | sort | head -n "$to_delete" | xargs rm -f 2>/dev/null || true
+    # Also remove old diff files
+    diff_count=$(find "$LOG_DIR" -name "consensus-diff-*.diff" -type f 2>/dev/null | wc -l | tr -d ' ')
+    if [ "$diff_count" -gt "$keep" ]; then
+        diff_delete=$((diff_count - keep))
+        find "$LOG_DIR" -name "consensus-diff-*.diff" -type f | sort | head -n "$diff_delete" | xargs rm -f 2>/dev/null || true
+        echo "Purged $to_delete cycle logs + $diff_delete consensus diffs (kept latest $keep of each)"
+    else
+        echo "Purged $to_delete cycle logs (kept latest $keep)"
+    fi
+    # Rotate main log if over 10MB
+    if [ -f "$LOG_DIR/auto-loop.log" ]; then
+        log_size=$(stat -f%z "$LOG_DIR/auto-loop.log" 2>/dev/null || echo 0)
+        if [ "$log_size" -gt 10485760 ]; then
+            mv "$LOG_DIR/auto-loop.log" "$LOG_DIR/auto-loop.log.old"
+            echo "Main log rotated (was $(( log_size / 1024 / 1024 ))MB)"
+        fi
+    fi
+    exit 0
+fi
+
+# === Doctor flag (comprehensive health check) ===
+
+if [ "${1:-}" = "--doctor" ]; then
+    echo "=== Auto-Co Doctor ==="
+    echo ""
+    warnings=0
+    ok=0
+
+    doctor_check() {
+        local label="$1" status="$2" detail="$3"
+        if [ "$status" = "ok" ]; then
+            printf "  [OK]   %s" "$label"
+            ok=$((ok + 1))
+        elif [ "$status" = "warn" ]; then
+            printf "  [WARN] %s" "$label"
+            warnings=$((warnings + 1))
+        else
+            printf "  [CRIT] %s" "$label"
+            warnings=$((warnings + 1))
+        fi
+        [ -n "$detail" ] && printf " -- %s" "$detail"
+        echo ""
+    }
+
+    # 1. Disk space
+    avail_kb=$(df -k "$PROJECT_DIR" | tail -1 | awk '{print $4}')
+    avail_mb=$((avail_kb / 1024))
+    if [ "$avail_mb" -lt 100 ]; then
+        doctor_check "Disk space" "crit" "${avail_mb}MB available (< 100MB)"
+    elif [ "$avail_mb" -lt 500 ]; then
+        doctor_check "Disk space" "warn" "${avail_mb}MB available (< 500MB)"
+    else
+        doctor_check "Disk space" "ok" "${avail_mb}MB available"
+    fi
+
+    # 2. Log directory size
+    if [ -d "$LOG_DIR" ]; then
+        log_size_kb=$(du -sk "$LOG_DIR" 2>/dev/null | cut -f1)
+        log_size_mb=$((log_size_kb / 1024))
+        log_count=$(find "$LOG_DIR" -name "cycle-*.log" -type f 2>/dev/null | wc -l | tr -d ' ')
+        if [ "$log_size_mb" -gt 500 ]; then
+            doctor_check "Log directory" "warn" "${log_size_mb}MB, ${log_count} cycle logs (consider --purge-logs)"
+        else
+            doctor_check "Log directory" "ok" "${log_size_mb}MB, ${log_count} cycle logs"
+        fi
+    else
+        doctor_check "Log directory" "ok" "not yet created"
+    fi
+
+    # 3. Stale PID
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat "$PID_FILE")
+        if kill -0 "$pid" 2>/dev/null; then
+            doctor_check "Loop process" "ok" "running (PID $pid)"
+        else
+            doctor_check "Loop process" "warn" "stale PID file (process $pid not running)"
+        fi
+    else
+        doctor_check "Loop process" "ok" "not running (no PID file)"
+    fi
+
+    # 4. Consensus freshness
+    if [ -f "$CONSENSUS_FILE" ]; then
+        last_updated=$(grep '^[0-9T:Z-]' "$CONSENSUS_FILE" | head -1 || echo "")
+        if [ -n "$last_updated" ]; then
+            # Check file modification time instead (more reliable)
+            file_mod=$(stat -f%m "$CONSENSUS_FILE" 2>/dev/null || stat -c%Y "$CONSENSUS_FILE" 2>/dev/null || echo 0)
+            now=$(date +%s)
+            age_hours=$(( (now - file_mod) / 3600 ))
+            if [ "$age_hours" -gt 24 ]; then
+                doctor_check "Consensus freshness" "warn" "last modified ${age_hours}h ago"
+            else
+                doctor_check "Consensus freshness" "ok" "last modified ${age_hours}h ago"
+            fi
+        else
+            doctor_check "Consensus freshness" "ok" "timestamp not parsed"
+        fi
+    else
+        doctor_check "Consensus freshness" "ok" "no consensus yet (first run)"
+    fi
+
+    # 5. Git status
+    if git -C "$PROJECT_DIR" rev-parse --is-inside-work-tree &>/dev/null; then
+        dirty=$(git -C "$PROJECT_DIR" status --porcelain 2>/dev/null | wc -l | tr -d ' ')
+        branch=$(git -C "$PROJECT_DIR" branch --show-current 2>/dev/null || echo "detached")
+        if [ "$dirty" -gt 20 ]; then
+            doctor_check "Git repo" "warn" "branch: $branch, $dirty uncommitted changes"
+        else
+            doctor_check "Git repo" "ok" "branch: $branch, $dirty uncommitted changes"
+        fi
+    else
+        doctor_check "Git repo" "warn" "not a git repository"
+    fi
+
+    # 6. Cycle history integrity
+    if [ -f "$CYCLE_HISTORY_FILE" ] && command -v jq &>/dev/null; then
+        total_lines=$(wc -l < "$CYCLE_HISTORY_FILE" | tr -d ' ')
+        bad_lines=$(while IFS= read -r line; do echo "$line" | jq empty 2>/dev/null || echo "bad"; done < "$CYCLE_HISTORY_FILE" | grep -c "bad" || true)
+        if [ "$bad_lines" -gt 0 ]; then
+            doctor_check "Cycle history" "warn" "$bad_lines/$total_lines malformed JSON lines"
+        else
+            doctor_check "Cycle history" "ok" "$total_lines records, all valid JSON"
+        fi
+    elif [ -f "$CYCLE_HISTORY_FILE" ]; then
+        doctor_check "Cycle history" "ok" "exists (install jq for integrity check)"
+    else
+        doctor_check "Cycle history" "ok" "no history yet"
+    fi
+
+    # 7. Recent failure rate
+    if [ -f "$CYCLE_HISTORY_FILE" ] && command -v jq &>/dev/null; then
+        last10=$(tail -10 "$CYCLE_HISTORY_FILE" | jq -s '[.[] | select(.status=="fail")] | length' 2>/dev/null || echo 0)
+        if [ "$last10" -ge 5 ]; then
+            doctor_check "Recent failures" "warn" "$last10 of last 10 cycles failed"
+        else
+            doctor_check "Recent failures" "ok" "$last10 of last 10 cycles failed"
+        fi
+    fi
+
+    # 8. Dependencies
+    for cmd in claude jq git node; do
+        if command -v "$cmd" &>/dev/null; then
+            ver=$("$cmd" --version 2>/dev/null | head -1 || echo "installed")
+            doctor_check "$cmd" "ok" "$ver"
+        else
+            if [ "$cmd" = "claude" ] || [ "$cmd" = "jq" ]; then
+                doctor_check "$cmd" "crit" "not found"
+            else
+                doctor_check "$cmd" "warn" "not found"
+            fi
+        fi
+    done
+
+    echo ""
+    if [ "$warnings" -eq 0 ]; then
+        echo "Health: ALL OK ($ok checks passed)"
+    else
+        echo "Health: $warnings warnings, $ok OK"
     fi
     exit 0
 fi

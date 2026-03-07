@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status export logs cost history reset-errors changelog config lint test pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status export logs cost history reset-errors purge-logs doctor changelog config lint test pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -69,8 +69,8 @@ dry-run: ## Build and preview the prompt without running Claude
 quick-status: ## Quick status from state file (no monitor.sh needed)
 	./auto-loop.sh --status
 
-export: ## Export cycle history as CSV
-	./auto-loop.sh --export
+export: ## Export cycle history (usage: make export FMT=json|csv|markdown)
+	./auto-loop.sh --export $${FMT:-csv}
 
 logs: ## Show last 50 lines of loop log (usage: make logs LINES=100)
 	./auto-loop.sh --logs $${LINES:-50}
@@ -83,6 +83,12 @@ history: ## Show last N cycles as table (usage: make history N=20)
 
 reset-errors: ## Clear circuit breaker state without restarting
 	./auto-loop.sh --reset-errors
+
+purge-logs: ## Purge old cycle logs (usage: make purge-logs KEEP=50)
+	./auto-loop.sh --purge-logs $${KEEP:-50}
+
+doctor: ## Comprehensive system health check
+	./auto-loop.sh --doctor
 
 config: ## Print all loop configuration values
 	./auto-loop.sh --config
