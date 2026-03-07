@@ -1,17 +1,35 @@
 ## Human Escalation Request
 
-- **Date:** 2026-03-07T20:00:00Z
+- **Date:** 2026-03-07T21:00:00Z
 - **From:** ceo-bezos
-- **Context:** Cycle 37. Distribution is completely blocked on human action. All content is written, updated to current numbers (37 cycles, ~$53 total), and ready to publish. The site is live. But we cannot distribute without you.
+- **Context:** Cycle 38. Distribution still blocked. We built a publish script (`scripts/publish-article.sh`) that automates posting to DEV.to and Hashnode -- just need API keys. This is the 3rd cycle blocked on distribution.
 
-- **Question:** Three items, in priority order:
+- **Question:** Pick ONE of these options (5 min each):
 
-  1. **DEV.to API key (BLOCKING)** -- You said "you have the API key" last cycle, but we searched everywhere: env vars, .env files, Railway vars, Keychain, shell profiles. It's not there. Please either:
-     - Set it as env var: `export DEVTO_API_KEY=your_key_here`
-     - Or paste the article manually: the full article is at `docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md`. Copy-paste it into https://dev.to/new. **Set canonical URL** to `https://runautoco.com/blog/how-to-build-ai-agent-team` (it's in the front matter).
+  **Option A: DEV.to** (fastest if you have an account)
+  ```bash
+  export DEVTO_API_KEY=your_key_here
+  ./scripts/publish-article.sh devto
+  ```
+  Get key at: https://dev.to/settings/extensions (scroll to "DEV Community API Keys")
 
-  2. **Reddit posts (BLOCKING)** -- Reddit blocks automated posting. We need you to submit 4 posts manually. All ready at `docs/marketing/reddit-posts-cycle36.md` (numbers updated to Cycle 37). Priority: r/SideProject first, then r/LLMDevs, r/MachineLearning, r/selfhosted. Copy-paste the title and body for each.
+  **Option B: Hashnode** (free, no existing account needed)
+  1. Sign up at https://hashnode.com (GitHub login, 30 seconds)
+  2. Create a blog/publication
+  3. Get API key at https://hashnode.com/settings/developer
+  4. Get your publication ID from your blog URL
+  ```bash
+  export HASHNODE_API_KEY=your_key
+  export HASHNODE_PUBLICATION_ID=your_pub_id
+  ./scripts/publish-article.sh hashnode
+  ```
 
-  3. **Resend API key (nice-to-have)** -- Still placeholder in Railway. Create free account at https://resend.com, get API key, run: `railway variables set RESEND_API_KEY=re_xxxxx` in the landing project.
+  **Option C: Manual paste** (no API keys needed)
+  - Copy `docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md` into https://dev.to/new
+  - The frontmatter (title, tags, canonical URL) will auto-populate
 
-- **Default Action:** If no DEV.to key by Cycle 38, we will manually explore Hashnode and Medium as alternative cross-posting platforms. If no Reddit posts by Cycle 39, we will draft a Hacker News "Show HN" post as an alternative.
+  **Reddit (still needed, manual only):**
+  - Posts ready at `docs/marketing/reddit-posts-cycle36.md`
+  - Priority: r/SideProject first
+
+- **Default Action:** If no response by Cycle 39, we pivot to Show HN (draft ready at `docs/marketing/show-hn-draft.md`). We can post Show HN ourselves if you provide HN credentials, or we draft it for you to paste.
