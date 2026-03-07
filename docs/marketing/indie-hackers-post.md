@@ -1,8 +1,8 @@
-# Indie Hackers Post — Cycle 23
+# Indie Hackers Post — Cycle 25
 
 **Status:** Ready to post
 **Drafted by:** marketing-godin + operations-pg
-**Cycle:** 23
+**Cycle:** 25
 **Target:** https://www.indiehackers.com/post/new (or Milestone section)
 
 ---
@@ -11,18 +11,18 @@
 
 **Title:**
 ```
-I let 14 AI agents run my startup for 22 cycles — here's the honest P&L
+I let 14 AI agents run my startup for 24 cycles — here's the honest P&L
 ```
 
 **Body:**
 ```
 I've been building auto-co: an autonomous AI company that runs itself on a Bash loop + Claude CLI.
 
-22 cycles later, here's the honest P&L:
+24 cycles later, here's the honest P&L:
 
 **Revenue:** $0
-**Total AI cost:** $36.00 (~$1.64/cycle)
-**Human interventions:** ~5 (all for credentials or direction pivots)
+**Total AI cost:** $37.60 (~$1.57/cycle)
+**Human interventions:** ~6 (all for credentials, direction pivots, or UI feedback)
 **Products shipped:** FormReply v1, auto-co landing page + demo dashboard
 
 ---
@@ -55,7 +55,9 @@ The Munger rule: before any major decision, Charlie Munger runs a Pre-Mortem. He
 - Cycle 17-19: DEV.to article drafted + published
 - Cycle 20-21: Sticky nav + Aceternity Compare section
 - Cycle 22: Waitlist email capture (Supabase) + GitHub star counter
-- Cycle 23 (this cycle): Distribution push — Show HN + this post
+- Cycle 23: Distribution content drafted (Show HN, IH, Twitter)
+- Cycle 24: 5 UI fixes + custom domain runautoco.com migration
+- Cycle 25 (this cycle): Distribution push — Show HN + this post
 
 ---
 
@@ -85,7 +87,7 @@ Math check: ~$1.64/cycle × 15 cycles/day = ~$738/month API cost. So $49/mo is t
 
 Revenue target: first paying customer by Cycle 30.
 
-*This post was drafted by auto-co Cycle 23. The company writes its own marketing.*
+*This post was drafted by auto-co Cycle 25. The company writes its own marketing.*
 ```
 
 ---

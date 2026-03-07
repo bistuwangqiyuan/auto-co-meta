@@ -1,4 +1,4 @@
-# Twitter/X Thread — auto-co Cycle 19
+# Twitter/X Thread — auto-co Cycle 25
 
 **Drafted by:** marketing-godin + operations-pg
 **Date:** 2026-03-07
@@ -14,7 +14,7 @@
 **Tweet 1 (Hook)**
 I stopped running my side project and let 14 AI agents run it for me.
 
-18 cycles later: landing page live, demo dashboard built, $26 total cost, $0 revenue.
+24 cycles later: landing page live, demo dashboard built, $37.60 total cost, $0 revenue.
 
 Here's the full receipts. 🧵
 
@@ -62,26 +62,28 @@ The Munger rule: before any major decision, Munger runs a Pre-Mortem. He can vet
 ---
 
 **Tweet 5 (What shipped)**
-In 18 cycles (~3 weeks), it shipped:
+In 24 cycles (~3 weeks), it shipped:
 
 - Bash loop + consensus relay system
 - 14-agent framework with skills library
-- Full Next.js landing page (live on Railway)
-- Live demo dashboard at /demo (6 panels)
-- Headless Chrome screenshots embedded in hero
-- This thread (written by auto-co Cycle 18)
+- Full Next.js landing page (live at runautoco.com)
+- Live demo dashboard at /demo (6 panels, interactive iframe)
+- Waitlist email capture (Supabase)
+- GitHub star counter (live API)
+- DEV.to article (written and published by the agents)
+- Custom domain runautoco.com
 
 ---
 
 **Tweet 6 (Real numbers)**
 The numbers nobody shows:
 
-Total AI cost: $26.30
-Cost per cycle: $1.46 avg
+Total AI cost: $37.60
+Cost per cycle: $1.57 avg
 Revenue: $0 (first post ever)
-Human interventions: ~5
-GitHub stars: 0 (help fix that?)
-Deployments: 3
+Human interventions: ~6
+GitHub stars: 3
+Deployments: 3 (Railway, Supabase, custom domain)
 
 Revenue is $0. Not spinning it. The company has been building, not selling. That changes now.
 
@@ -97,9 +99,9 @@ What broke (because autonomous AI systems break):
 ---
 
 **Tweet 8 (What broke pt 2)**
-3. Demo dashboard uses fake data. Made peace with it — clearly labeled, realistic, and the alternative was building a backend before having users. That's backwards.
+3. Demo dashboard started with fake data. Made peace with it — clearly labeled, realistic, and the alternative was building a backend before having users. That's backwards.
 
-4. Had to intervene ~5 times: 3 for credentials, 2 for direction. Credentials + strategic pivots are the RIGHT things to escalate.
+4. Had to intervene ~6 times: 3 for credentials, 2 for direction, 1 for UI feedback. Credentials + strategic pivots are the RIGHT things to escalate.
 
 ---
 
@@ -115,11 +117,11 @@ The AI always has full company context — not a summarized embedding, but the a
 ---
 
 **Tweet 10 (Demo)**
-The demo dashboard is live:
+The demo dashboard is live and embedded interactively in the landing page:
 
 → Agent Activity Feed (chat-style, shows agents arguing)
 → Cycle Progress tracker
-→ P&L panel ($26 total, $0 revenue, honest)
+→ P&L panel ($37.60 total, $0 revenue, honest)
 → Ship Log
 → Agent Roster (14 agents, active/idle status)
 → Consensus Summary
@@ -134,9 +136,9 @@ Path to revenue:
 Open-source (MIT) → you clone it, run with your own Anthropic key
 Hosted tier ($49/mo) → you give us your API key, we run the loop on your goals
 
-The math: ~$1.50/cycle × 15 cycles/day = ~$675/month API cost per user. So $49/month is the floor for viability.
+The math: ~$1.57/cycle × 15 cycles/day = ~$706/month API cost per user. So $49/month is the floor for viability.
 
-Next: Hacker News Show HN.
+Next: first paying customer by Cycle 30.
 
 ---
 
@@ -153,9 +155,9 @@ cp .env.example .env  # add Anthropic API key
 ```
 
 Star the repo if this is worth building.
-Waitlist for hosted tier on the landing page.
+Waitlist for hosted tier: runautoco.com
 
-*This thread was drafted by auto-co Cycle 19. The company writes its own marketing.*
+*This thread was drafted by auto-co Cycle 25. The company writes its own marketing.*
 
 ---
 

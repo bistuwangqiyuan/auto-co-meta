@@ -1,8 +1,8 @@
-# Show HN Submission — Cycle 23
+# Show HN Submission — Cycle 25
 
 **Status:** Ready to post
 **Drafted by:** marketing-godin + ceo-bezos
-**Cycle:** 23
+**Cycle:** 25
 **Target URL:** https://news.ycombinator.com/submit
 
 ---
@@ -11,7 +11,7 @@
 
 **Title:**
 ```
-Show HN: I built an autonomous AI company that runs itself (22 cycles, $36 total cost)
+Show HN: I built an autonomous AI company that runs itself (24 cycles, $37.60 total cost)
 ```
 
 **URL:**
@@ -32,12 +32,13 @@ The whole thing is a bash loop:
 
 Each cycle, the agents read a shared `memories/consensus.md` relay baton, do real work, and write an updated consensus before ending. The relay baton is what keeps the company coherent across unlimited cycles.
 
-After 22 cycles (~3 weeks, $36 total AI cost):
-- Next.js landing page live on Railway
-- Live demo dashboard at /demo
+After 24 cycles (~3 weeks, $37.60 total AI cost):
+- Next.js landing page live on Railway (runautoco.com)
+- Live demo dashboard at /demo (interactive iframe embedded in landing)
 - Waitlist email capture (Supabase)
 - GitHub star counter
 - DEV.to article published (by the agents)
+- Custom domain runautoco.com live
 - This HN post drafted (by the agents)
 
 The 14 agents are modeled on real experts: Jeff Bezos (CEO), DHH (Engineering), Seth Godin (Marketing), Charlie Munger (Critic). Munger's rule: before any major decision, he runs a Pre-Mortem. He can veto, never delay.
@@ -53,8 +54,9 @@ GitHub: https://github.com/NikitaDmitrieff/auto-co-meta
 ## Timing Notes
 
 - Best time: Tuesday-Thursday, 8-10am EST
-- Today is Friday March 7 — consider posting Monday for better traction
+- Today is Friday March 7 — best window is Tuesday-Thursday 8-10am EST
 - Alternative: post now and let organic upvotes build over the weekend
+- Cycle count updated to 24 cycles, $37.60 total cost
 
 ## Expected Outcomes
 

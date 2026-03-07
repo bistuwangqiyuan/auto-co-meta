@@ -1,77 +1,49 @@
 ## Human Escalation Request
 
-- **Date:** 2026-03-07T11:00:00Z
+- **Date:** 2026-03-07T13:00:00Z
 - **From:** ceo-bezos
-- **Context:** Cycle 23 — distribution push. Demo dashboard updated (Cycle 23 live, waitlist count live). Show HN and Indie Hackers content fully drafted. These platforms require authenticated manual posting — no public API available.
-
-- **Question:** Please post the following two things (takes ~10 minutes total):
-
----
-
-### ACTION 1: Show HN (Hacker News)
-
-Go to: https://news.ycombinator.com/submit
-
-**Title (copy exactly):**
-```
-Show HN: I built an autonomous AI company that runs itself (22 cycles, $36 total cost)
-```
-
-**URL:**
-```
-https://runautoco.com
-```
-
-**Text (paste as first comment after submitting, or in the text box):**
-```
-auto-co is a Bash loop + Claude CLI that runs a 14-agent AI company autonomously.
-
-The whole thing is a bash loop:
-
-  while true; do
-    claude -p "$PROMPT" --dangerously-skip-permissions
-    sleep 120
-  done
-
-Each cycle, agents read a shared consensus.md relay baton, do real work, and write an updated consensus before ending.
-
-22 cycles, $36 total AI cost:
-- Next.js landing page + demo dashboard live on Railway
-- Waitlist email capture (Supabase)
-- DEV.to article published by the agents themselves
-- This HN post drafted by the agents
-
-14 agents modeled on real experts: Jeff Bezos (CEO), DHH (Engineering), Seth Godin (Marketing), Charlie Munger (Critic). Munger rule: he runs Pre-Mortem before every major decision. Can veto, never delay.
-
-Revenue: $0. Not spinning it.
-
-Demo: https://runautoco.com/demo
-GitHub: https://github.com/NikitaDmitrieff/auto-co-meta
-```
-
-Full submission guide: `docs/marketing/show-hn-submission.md`
+- **Context:** Cycle 25. All UI fixes are live at runautoco.com. Content for 4 distribution channels is ready and updated to Cycle 24 / $37.60. The loop cannot post to HN/IH/Twitter/Reddit — no saved login sessions for these platforms.
+- **Question:** Please post to these platforms using the content files. All content is ready to paste — ~20 minutes total.
 
 ---
 
-### ACTION 2: Indie Hackers Post
+## What to Post — Priority Order
 
-Go to: https://www.indiehackers.com/post/new
+### 1. Hacker News (Show HN) — HIGHEST PRIORITY
+- **File:** `docs/marketing/show-hn-submission.md`
+- **URL:** https://news.ycombinator.com/submit
+- **Title:** `Show HN: I built an autonomous AI company that runs itself (24 cycles, $37.60 total cost)`
+- **Link:** `https://runautoco.com`
+- **Text:** paste the text block from the file (starts with "auto-co is a Bash loop...")
+- **Best time:** Tuesday-Thursday 8-10am EST for front page odds
 
-**Title:**
-```
-I let 14 AI agents run my startup for 22 cycles — here's the honest P&L
-```
+### 2. Indie Hackers
+- **File:** `docs/marketing/indie-hackers-post.md`
+- **URL:** https://www.indiehackers.com/post/new
+- **Category:** Product
+- **Title + body:** paste directly from the file
 
-Full post content: `docs/marketing/indie-hackers-post.md` (copy the body from there)
+### 3. Reddit (r/SideProject + r/LLMDevs)
+- **File:** `docs/marketing/reddit-posts.md`
+- Use "Post 1" for r/SideProject, "Post 2" for r/LLMDevs
+- Post after HN goes live, link to HN thread in each Reddit post
+
+### 4. Twitter/X Thread
+- **File:** `docs/marketing/twitter-thread.md`
+- Start with Tweet 1, reply with full thread
+- Tags: #buildinpublic #AI #opensource
 
 ---
 
-### ACTION 3 (Optional): Twitter Thread
+## Default Action
 
-The thread was drafted in Cycle 18/19. File: `docs/marketing/twitter-thread.md`
-Update the numbers to 22 cycles / $36 total before posting.
-Post during 9-11am EST Tuesday-Thursday for best reach.
+If no response within 2 cycles (Cycle 27), the loop will build the pricing page and first beta user onboarding flow. Distribution posts will remain queued.
 
 ---
 
-- **Default Action:** If no response within 2 cycles, auto-co will continue building the product (Cycle 24 will focus on landing page SEO optimization + waitlist count milestone messaging). Distribution posts will remain queued.
+## Notes
+
+- Interactive demo at runautoco.com/demo — great for sharing in HN comments
+- DEV.to article live: https://dev.to/nikita_dmitrieff_4ac62e72/i-built-an-autonomous-ai-company-that-runs-itself-22-cycles-of-receipts-4kbc
+- GitHub: https://github.com/NikitaDmitrieff/auto-co-meta
+- Respond to technical HN comments with depth — relay baton architecture + Munger veto rule generate discussion
