@@ -2829,6 +2829,38 @@ log "=== Auto-Co Loop Started (PID $$) ==="
 log "Project: $PROJECT_DIR"
 log "Model: $MODEL | Interval: ${LOOP_INTERVAL}s | Timeout: ${CYCLE_TIMEOUT_SECONDS}s | Breaker: ${MAX_CONSECUTIVE_ERRORS} errors | Max cycles: ${MAX_CYCLES:-unlimited}${NOTIFY_URL:+ | Notify: $NOTIFY_URL}${WEBHOOK_URL:+ | Webhook: $WEBHOOK_URL}${PLUGIN_DIR:+ | Plugins: $PLUGIN_DIR}${PARALLEL_DIR:+ | Parallel: $PARALLEL_DIR}"
 
+# === Startup Banner (terminal only) ===
+if [ -t 1 ]; then
+    cat <<'BANNER'
+
+    ___         __           ______
+   /   | __  __/ /_____     / ____/___
+  / /| |/ / / / __/ __ \   / /   / __ \
+ / ___ / /_/ / /_/ /_/ /  / /___/ /_/ /
+/_/  |_\__,_/\__/\____/   \____/\____/
+
+BANNER
+    printf "  Project:  %s\n" "$(basename "$PROJECT_DIR")"
+    printf "  Model:    %s\n" "$MODEL"
+    printf "  PID:      %s\n" "$$"
+    if [ "$MAX_CYCLES" -gt 0 ] 2>/dev/null; then
+        printf "  Cycles:   %s max\n" "$MAX_CYCLES"
+    else
+        printf "  Cycles:   unlimited\n"
+    fi
+    printf "  Interval: %ss between cycles\n" "$LOOP_INTERVAL"
+    printf "  Timeout:  %ss per cycle\n" "$CYCLE_TIMEOUT_SECONDS"
+    if [ "$loop_count" -gt 0 ]; then
+        printf "  Resumed:  cycle %d, \$%.2f spent\n" "$loop_count" "$total_cost"
+    fi
+    echo ""
+    echo "  Stop: ./stop-loop.sh or Ctrl+C"
+    echo "  Logs: ./auto-loop.sh --tail"
+    echo ""
+    echo "  Starting cycle loop..."
+    echo ""
+fi
+
 # === Main Loop ===
 
 while true; do
@@ -2850,6 +2882,13 @@ while true; do
     cycle_log="$LOG_DIR/cycle-$(printf '%04d' $loop_count)-$(date '+%Y%m%d-%H%M%S').log"
 
     cycle_start_epoch=$(date +%s)
+    if [ -t 1 ]; then
+        echo ""
+        printf "  %-60s\n" "$(printf '=%.0s' {1..56})"
+        printf "  Cycle #%-4d                          %s\n" "$loop_count" "$(date '+%H:%M:%S')"
+        printf "  %-60s\n" "$(printf '=%.0s' {1..56})"
+        echo ""
+    fi
     log_cycle $loop_count "START" "Beginning work cycle"
     save_state "running"
     send_webhook "cycle.start" "$loop_count"
@@ -2914,6 +2953,12 @@ This is Cycle #$loop_count. Act decisively."
     cycle_duration=$((cycle_end_epoch - cycle_start_epoch))
 
     if [ -z "$cycle_failed_reason" ]; then
+        if [ -t 1 ]; then
+            mins=$((cycle_duration / 60))
+            secs=$((cycle_duration % 60))
+            printf "\n  Cycle #%d complete  |  %dm%ds  |  \$%s  |  \$%.2f total\n\n" \
+                "$loop_count" "$mins" "$secs" "${CYCLE_COST:-?}" "$total_cost"
+        fi
         log_cycle $loop_count "OK" "Completed (cost: \$${CYCLE_COST:-unknown}, subtype: ${CYCLE_SUBTYPE:-unknown}, ${cycle_duration}s)"
         if [ -n "$RESULT_TEXT" ]; then
             log_cycle $loop_count "SUMMARY" "$(echo "$RESULT_TEXT" | head -c 300)"

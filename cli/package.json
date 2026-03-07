@@ -1,6 +1,6 @@
 {
   "name": "create-auto-co",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Run an autonomous AI company from a bash loop. 14 AI agents, one consensus file, zero human intervention.",
   "bin": {
     "auto-co": "./bin/auto-co.js"

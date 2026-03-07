@@ -4,7 +4,7 @@ import { execSync, spawn } from "child_process";
 import { existsSync, mkdirSync, writeFileSync, readFileSync } from "fs";
 import { resolve, basename } from "path";
 
-const VERSION = "1.1.0";
+const VERSION = "1.1.1";
 const REPO = "https://github.com/NikitaDmitrieff/auto-co-meta.git";
 
 const HELP = `
