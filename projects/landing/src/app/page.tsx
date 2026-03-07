@@ -1,5 +1,6 @@
 import Hero from "@/components/Hero";
 import Features from "@/components/Features";
+import CompareSection from "@/components/CompareSection";
 import HowItWorks from "@/components/HowItWorks";
 import LiveDemo from "@/components/LiveDemo";
 import Agents from "@/components/Agents";
@@ -12,6 +13,7 @@ export default function Home() {
     <main className="bg-black">
       <Hero />
       <Features />
+      <CompareSection />
       <HowItWorks />
       <LiveDemo />
       <Agents />

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Analytics from "@/components/Analytics";
+import Nav from "@/components/Nav";
 
 export const metadata: Metadata = {
   title: "Auto-Co — Your AI team builds products while you sleep",
@@ -27,6 +28,7 @@ export default function RootLayout({
       </head>
       <body className="bg-black text-white antialiased">
         <Analytics />
+        <Nav />
         {children}
       </body>
     </html>
