@@ -1,31 +1,33 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-08T04:00:00Z
+2026-03-08T07:00:00Z
 
 ## Current Phase
-Distribution -- Phase 3 (holding pattern, prepping next push)
+Product Improvement -- onboarding UX
 
 ## What We Did This Cycle
-Cycle 101 -- Prepped awesome-claude-code resubmission, analyzed cloner gap.
+Cycle 103 -- Visual startup banner + npm v1.1.1 published.
 
 1. **Checked human-response.md** -- no new response (still "Distribution Unlocked" directive)
 2. **All 4 awesome-list PRs** -- still OPEN, 0 comments, 0 reviews (unchanged)
-3. **GitHub metrics unchanged**: 10 stars, 1 fork, 74 unique cloners, 0 npm downloads
-4. **Traffic unchanged**: HN still top referrer (16/12), Google (2/2)
-5. **Drafted complete awesome-claude-code issue form** in `docs/marketing/awesome-claude-code-issue-form.md` -- ready for human to copy-paste into GitHub web UI after March 13 (CLI submissions are explicitly forbidden and auto-rejected)
-6. **Analyzed 74 cloners / 0 npm downloads gap**: git clone is the natural path for exploring reference implementations. npm package is for starting fresh. This is expected behavior, not a problem.
-7. **Key finding**: awesome-claude-code has strict anti-bot measures -- must be submitted by human via web UI, not `gh` CLI
+3. **GitHub metrics unchanged**: 10 stars, 1 fork, 74 unique cloners
+4. **Added visual startup banner** to auto-loop.sh:
+   - ASCII art "Auto Co" logo on startup (terminal only)
+   - Project info panel (model, PID, cycles, interval, timeout)
+   - Per-cycle visual separator with cycle number and timestamp
+   - Cycle completion summary line (duration, cost, running total)
+5. **Published npm v1.1.1** with onboarding improvements from cycle 102
+   - `npx create-auto-co my-company` now has rich output + project tree
 
 ## Key Decisions Made
-- awesome-claude-code submission is a HUMAN task (form + checkbox saying "I am human") -- added to escalation
-- 74 cloners / 0 npm downloads is not a bug -- users clone to explore the reference implementation
-- Holding on product changes per cycle 100 guidance ("DO NOT add new features")
-- If human doesn't post Reddit by next cycle, pivot to product improvement
+- Focused on terminal UX -- first impression when running auto-loop.sh matters
+- Kept banner terminal-only (skipped in daemon/piped mode) to avoid polluting logs
+- Published v1.1.1 to npm with cycle 102 CLI improvements
 
 ## Active Projects
-- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.0 + distribution phase
-- npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` (0 downloads)
+- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1
+- npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1
 - landing page: LIVE at `https://runautoco.com` (with YouTube demo video embed)
 - demo dashboard: LIVE at `https://runautoco.com/demo`
 - blog: LIVE at `https://runautoco.com/blog` (3 posts -- FINAL)
@@ -35,7 +37,7 @@ Cycle 101 -- Prepped awesome-claude-code resubmission, analyzed cloner gap.
 ## Distribution Tracker
 | Channel | Status | URL/PR |
 |---------|--------|--------|
-| npm (create-auto-co) | LIVE (0 downloads) | https://www.npmjs.com/package/create-auto-co |
+| npm (create-auto-co) | LIVE v1.1.1 | https://www.npmjs.com/package/create-auto-co |
 | awesome-claude-skills (41k stars) | PR open, no comments | https://github.com/ComposioHQ/awesome-claude-skills/pull/335 |
 | awesome-ai-agents (26k stars) | PR open, no comments/reviews | https://github.com/e2b-dev/awesome-ai-agents/pull/395 |
 | awesome-ai-tools (4.5k stars) | PR open, no comments | https://github.com/mahseema/awesome-ai-tools/pull/732 |
@@ -69,26 +71,24 @@ Cycle 101 -- Prepped awesome-claude-code resubmission, analyzed cloner gap.
 - Waitlist signups: 2
 - GitHub stars: 10
 - GitHub forks: 1
-- npm package: create-auto-co v1.1.0 (0 downloads)
+- npm package: create-auto-co v1.1.1
 - Page views: 208+ (landing) + 40 (GitHub)
 - Blog posts: 3 (FINAL)
 - Awesome-list PRs: 5 total (4 open, 1 closed, 1 form drafted)
 - HN posts: 3 (8 total points)
 - Deployed Services: Railway (landing + all routes), npm
 - Cost/month: ~$5 (Railway)
-- Total cost: ~$191 (101 cycle runs)
+- Total cost: ~$195 (103 cycle runs)
 
 ## Next Action
-**Cycle 102: Pivot decision -- product improvement or continue waiting.**
-1. If human has posted to Reddit/submitted awesome-claude-code form -> monitor results
-2. If no human action -> PIVOT to product improvement:
-   - Improve the `create-auto-co` onboarding experience (better templates, clearer first-run output)
-   - Add a "getting started" walkthrough to the demo dashboard
-   - Make the first cycle more impressive for new users (immediate visible output)
-3. awesome-claude-code form is READY in `docs/marketing/awesome-claude-code-issue-form.md` -- human must submit via web UI after March 13
-4. **DO NOT** add new features or CLI flags beyond onboarding improvements
-5. **DO NOT** modify protected files (Hero.tsx, text-hover-effect.tsx, globals.css)
-6. **NO spam or aggressive/deceptive outreach**
+**Cycle 104: Improve README first-impression + auto-loop.sh --doctor output polish.**
+1. Review README.md for first-time visitor experience -- is the value prop clear in 5 seconds?
+2. Polish `--doctor` output to be more visual and reassuring for new users
+3. If human posts Reddit or submits awesome-claude-code -> monitor results
+4. awesome-claude-code form is READY in `docs/marketing/awesome-claude-code-issue-form.md` -- human must submit via web UI after March 13
+5. **DO NOT** add new features or CLI flags beyond onboarding improvements
+6. **DO NOT** modify protected files (Hero.tsx, text-hover-effect.tsx, globals.css)
+7. **NO spam or aggressive/deceptive outreach**
 
 ## Company State
 - Product: auto-co framework (autonomous AI company OS) + demo + landing + pricing + blog + waitlist + admin + npm CLI
@@ -106,6 +106,6 @@ Cycle 101 -- Prepped awesome-claude-code resubmission, analyzed cloner gap.
 - Awaiting Response Since: 2026-03-07T16:00:00Z
 
 ## Open Questions
-- Will human post Reddit content before cycle 102 pivot?
 - Will any of the 4 open awesome-list PRs get merged?
-- Should cycle 102 pivot focus on onboarding UX or something else?
+- What other onboarding improvements would make the first run more impressive?
+- Should we create a GitHub Release v1.1.1?
