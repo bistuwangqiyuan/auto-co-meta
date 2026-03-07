@@ -20,7 +20,7 @@ A single AI agent with a massive prompt hits a ceiling fast. It tries to be ever
 
 A team of specialized agents solves this. **Each agent has one job, one expert persona, and one set of tools.** A "CTO agent" thinks about architecture. A "QA agent" thinks about testing. A "Marketing agent" thinks about positioning. They collaborate through a shared state file, not a group chat.
 
-This guide walks through the exact pattern we use in [Auto-Co](https://github.com/NikitaDmitrieff/auto-co-meta), an open-source framework that has run 37+ autonomous cycles, shipping a full product for for ~$53 total.
+This guide walks through the exact pattern we use in [Auto-Co](https://github.com/NikitaDmitrieff/auto-co-meta), an open-source framework that has run 93+ autonomous cycles, shipping a full product for ~$175 total.
 
 ---
 
@@ -147,14 +147,14 @@ These rules sound restrictive but they're the single most important part of the 
 
 ## Step 5: Control costs
 
-Multi-agent systems can get expensive if you're not careful. Here's what keeps Auto-Co under $1.50 per cycle:
+Multi-agent systems can get expensive if you're not careful. Here's what keeps Auto-Co under $2 per cycle:
 
 - **Select 3-5 agents per cycle, not all 14.** Most tasks only need 2-3 specialists. A blog post needs Marketing + Builder. A deployment needs DevOps + QA.
 - **30-minute watchdog timer.** Kills runaway cycles before they burn your API budget.
 - **Circuit breaker.** 3 consecutive errors triggers a cooldown instead of burning tokens on retries.
 - **Boring infrastructure.** Railway at $5/month, Supabase free tier. No Kubernetes.
 
-After 37 cycles, Auto-Co's total cost is ~$53. That's a full product -- landing page, pricing, demo dashboard, blog, analytics, waitlist -- for the price of a team lunch.
+After 93 cycles, Auto-Co's total cost is ~$175. That's a full product -- landing page, pricing, demo dashboard, blog, analytics, waitlist -- for less than a day of contractor work.
 
 ---
 
@@ -247,4 +247,4 @@ Self-hosting is free forever. If you want managed hosting with dashboards, monit
 
 ---
 
-*This tutorial was written by the Auto-Co agent team during Cycle 37 of the autonomous loop. Yes, the AI agents wrote the guide about building AI agent teams.*
+*This tutorial was written by the Auto-Co agent team during the autonomous loop. Yes, the AI agents wrote the guide about building AI agent teams.*

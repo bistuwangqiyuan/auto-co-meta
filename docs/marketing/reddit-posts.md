@@ -3,7 +3,7 @@
 **Status:** Ready for human submission
 **Drafted by:** marketing-godin
 **Date:** 2026-03-07
-**Numbers current as of:** Cycle 92
+**Numbers current as of:** Cycle 93
 
 ---
 
@@ -11,7 +11,7 @@
 
 **Title:**
 ```
-I turned Claude Code into an autonomous AI company that runs itself. 92 cycles, $171 total cost. Open source.
+I turned Claude Code into an autonomous AI company that runs itself. 93 cycles, $175 total cost. Open source.
 ```
 
 **Body:**
@@ -31,12 +31,12 @@ What 92 autonomous cycles produced:
 - 38 CLI flags: monitoring dashboard, snapshots, daemon mode (launchd), Telegram escalation, webhooks, parallel execution
 - Docker Compose stack, GitHub Actions CI
 - The business model and pricing tiers were decided by the CEO + CFO agents
-- Total API cost: ~$171 (~$1.86/cycle). Infrastructure: $5/mo on Railway.
+- Total API cost: ~$175 (~$1.88/cycle). Infrastructure: $5/mo on Railway.
 
 Key things I learned about making Claude Code work in long autonomous loops:
 
 - You need hard convergence rules. Without them, agents will produce strategy documents forever. After cycle 2, every cycle must produce artifacts (code, deployments, content). Pure discussion is forbidden.
-- The single-file state pattern works surprisingly well. No retrieval failures, fully debuggable, atomic writes. Zero state corruption in 92 cycles.
+- The single-file state pattern works surprisingly well. No retrieval failures, fully debuggable, atomic writes. Zero state corruption in 93 cycles.
 - Safety guardrails must be absolute and non-negotiable. No force push to main, no repo deletion, no DB resets. The agents will test boundaries.
 - Cost per cycle stays flat. It doesn't get more expensive over time because the context doesn't grow unboundedly -- the relay baton file stays concise.
 
@@ -55,7 +55,7 @@ Happy to answer questions about the architecture. The whole thing is about 500 l
 
 **Title:**
 ```
-I let 14 AI agents run a startup for 92 cycles. $171 total cost, $0 revenue. Here's what happened.
+I let 14 AI agents run a startup for 93 cycles. $175 total cost, $0 revenue. Here's what happened.
 ```
 
 **Body:**
@@ -64,10 +64,10 @@ auto-co is a bash loop that turns Claude Code into an autonomous AI company. You
 
 I built it to answer a simple question: what happens if you set up AI agents with real tools (git, npm, Vercel, Railway, Supabase) and get out of their way?
 
-92 cycles later, here's the honest P&L:
+93 cycles later, here's the honest P&L:
 
 **Costs:**
-- AI API: ~$171 total (~$1.86/cycle average)
+- AI API: ~$175 total (~$1.88/cycle average)
 - Infrastructure: $5/month (Railway)
 - My time: maybe 10 hours total over 3 months (API keys, DNS, responding to escalation requests via Telegram)
 
@@ -82,9 +82,9 @@ I built it to answer a simple question: what happens if you set up AI agents wit
 
 **What I learned:**
 - Without convergence rules, AI agents will strategize forever. I lost 3 early cycles to beautiful planning docs with zero code. Fix: "every cycle after cycle 2 must produce artifacts."
-- The relay baton pattern (one markdown file carrying full state between cycles) is more reliable than complex memory systems. Zero state corruption in 92 cycles.
+- The relay baton pattern (one markdown file carrying full state between cycles) is more reliable than complex memory systems. Zero state corruption in 93 cycles.
 - The agents are surprisingly good at deployment and DevOps. They're bad at knowing when to stop polishing.
-- $171 for 92 cycles of autonomous development is absurdly cheap. The bottleneck is distribution, not building.
+- $175 for 93 cycles of autonomous development is absurdly cheap. The bottleneck is distribution, not building.
 
 The whole framework is open source (MIT): https://github.com/NikitaDmitrieff/auto-co-meta
 
@@ -101,7 +101,7 @@ Would genuinely appreciate feedback on whether the "autonomous AI company" frami
 
 **Title:**
 ```
-Open-source framework that runs 14 AI agents as an autonomous company -- 92 cycles completed, $171 total cost
+Open-source framework that runs 14 AI agents as an autonomous company -- 93 cycles completed, $175 total cost
 ```
 
 **Body:**
@@ -110,16 +110,16 @@ I've been running an experiment for the past few months: can a team of AI agents
 
 auto-co is the result. It's a bash loop that calls Claude Code CLI with a structured prompt. 14 specialized agents (modeled on real experts -- Bezos as CEO, DHH as engineer, Munger as critic, etc.) coordinate through a single shared state file. Each cycle, relevant agents are selected, they do real work, and the state is updated for the next cycle.
 
-No human in the loop unless the agents explicitly escalate (via Telegram). I've intervened maybe 5 times in 92 cycles, mostly for things like API keys and DNS configuration.
+No human in the loop unless the agents explicitly escalate (via Telegram). I've intervened maybe 5 times in 93 cycles, mostly for things like API keys and DNS configuration.
 
 After 92 autonomous cycles:
 
 - A full landing page, demo dashboard, pricing page, blog, and admin panel are live at runautoco.com
 - 38 CLI flags for monitoring, daemon mode, webhooks, parallel execution, snapshots
-- Total API cost: ~$171. Infrastructure: $5/mo.
+- Total API cost: ~$175. Infrastructure: $5/mo.
 - The agents decided the business model, designed the pricing tiers, wrote the blog posts, and deployed everything.
 
-The interesting finding isn't that AI agents can write code -- we know that. It's that they can maintain coherence across 92+ cycles with no external memory system. The trick is a "relay baton" pattern: one markdown file carries the full company state, read at the start of every cycle, updated at the end. No vector database, no embeddings, no RAG. It fits in the context window every time.
+The interesting finding isn't that AI agents can write code -- we know that. It's that they can maintain coherence across 93+ cycles with no external memory system. The trick is a "relay baton" pattern: one markdown file carries the full company state, read at the start of every cycle, updated at the end. No vector database, no embeddings, no RAG. It fits in the context window every time.
 
 The other finding: convergence rules matter more than prompts. Without hard constraints ("every cycle must produce artifacts, pure discussion is forbidden"), agents will plan and strategize indefinitely. They're excellent at producing beautiful strategy documents that ship nothing.
 
