@@ -17,6 +17,7 @@ export const TextHoverEffect = ({
   const [cursor, setCursor] = useState({ x: 0, y: 0 });
   const [hovered, setHovered] = useState(false);
   const [maskPosition, setMaskPosition] = useState({ cx: "50%", cy: "50%" });
+  const [animationDone, setAnimationDone] = useState(false);
   const id = useId();
 
   const gradientId = `textGradient-${id}`;
@@ -36,6 +37,13 @@ export const TextHoverEffect = ({
       window.removeEventListener("mousemove", handleMouseMove);
       document.documentElement.removeEventListener("mouseleave", handleMouseLeave);
     };
+  }, []);
+
+  // After the stroke-draw animation completes, disable the radial mask so the
+  // text stays visible regardless of cursor position.
+  useEffect(() => {
+    const t = setTimeout(() => setAnimationDone(true), 4200);
+    return () => clearTimeout(t);
   }, []);
 
   useEffect(() => {
@@ -116,15 +124,17 @@ export const TextHoverEffect = ({
         {text}
       </motion.text>
 
+      {/* Orange accent text: cursor-following when hovered, ambient glow after animation */}
       <text
         x="50%"
         y="50%"
         textAnchor="middle"
         dominantBaseline="middle"
-        stroke={`url(#${gradientId})`}
+        stroke={hovered ? `url(#${gradientId})` : "#f97316"}
         strokeWidth="0.5"
-        mask={`url(#${textMaskId})`}
+        mask={hovered ? `url(#${textMaskId})` : undefined}
         className={`fill-transparent font-[helvetica] ${textSize} font-bold`}
+        style={{ opacity: animationDone ? (hovered ? 1 : 0.25) : 0 }}
       >
         {text}
       </text>

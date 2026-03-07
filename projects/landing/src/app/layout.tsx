@@ -7,11 +7,20 @@ export const metadata: Metadata = {
   title: "Auto-Co — Your AI team builds products while you sleep",
   description:
     "14 AI agents — CEO, CTO, engineer, marketer, and more — autonomously build, deploy, and grow your digital product. No code required.",
+  metadataBase: new URL("https://runautoco.com"),
   openGraph: {
     title: "Auto-Co — Your AI team builds products while you sleep",
     description:
       "14 AI agents. 24/7 autonomous loop. Zero daily supervision. Watch your AI company ship.",
     type: "website",
+    url: "https://runautoco.com",
+    images: [{ url: "https://runautoco.com/screenshots/demo-full.png", width: 1400, height: 900 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Auto-Co — Your AI team builds products while you sleep",
+    description: "14 AI agents. 24/7 autonomous loop. Zero daily supervision.",
+    images: ["https://runautoco.com/screenshots/demo-full.png"],
   },
 };
 

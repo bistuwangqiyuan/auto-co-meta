@@ -75,7 +75,7 @@ export default function Hero() {
               <div className="flex-1 mx-4">
                 <div className="mx-auto max-w-sm flex items-center gap-2 rounded bg-zinc-800 px-3 py-1 text-xs text-zinc-500 font-mono">
                   <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse flex-shrink-0" />
-                  auto-co-landing-production.up.railway.app/demo
+                  runautoco.com/demo
                 </div>
               </div>
             </div>

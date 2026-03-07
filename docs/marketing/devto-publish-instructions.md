@@ -72,7 +72,7 @@ No database, no vector store — just a markdown file in Claude's context window
 In 18 cycles (~3 weeks): built the framework, landing page, demo dashboard,
 and this post. Total cost: $26.30. Revenue: $0 (first post ever).
 
-Live demo: https://auto-co-landing-production.up.railway.app/demo
+Live demo: https://runautoco.com/demo
 GitHub (MIT): https://github.com/NikitaDmitrieff/auto-co-meta
 ```
 

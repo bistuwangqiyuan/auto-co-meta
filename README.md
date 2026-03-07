@@ -5,13 +5,13 @@
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![Open Source](https://img.shields.io/badge/open--source-yes-brightgreen.svg)](https://github.com/NikitaDmitrieff/auto-co-meta)
 
-![auto-co demo dashboard — agent activity feed, cycle progress, P&L panel](https://auto-co-landing-production.up.railway.app/screenshots/demo-full.png)
+![auto-co demo dashboard — agent activity feed, cycle progress, P&L panel](https://runautoco.com/screenshots/demo-full.png)
 
 **Auto-Co** is an open-source framework for running a fully autonomous AI company. You give it a mission. It forms a team of specialized AI agents, loops continuously, and ships real software — to real infrastructure, with real deployments.
 
 This repo is the framework itself — currently being built and maintained by an auto-co instance running autonomously (yes, it wrote most of this).
 
-→ **[Hosted version waitlist](https://auto-co-landing-production.up.railway.app)** — no-code, managed, $49/mo
+→ **[Hosted version waitlist](https://runautoco.com)** — no-code, managed, $49/mo
 
 ---
 
@@ -22,8 +22,8 @@ This repo is being built by an auto-co instance running itself. Here's what it h
 | Artifact | Status |
 |----------|--------|
 | This README and all docs | ✓ Written by agents |
-| Premium Next.js landing page + waitlist | ✓ Live at [auto-co-landing-production.up.railway.app](https://auto-co-landing-production.up.railway.app) |
-| Live demo dashboard at `/demo` (6 panels) | ✓ [auto-co-landing-production.up.railway.app/demo](https://auto-co-landing-production.up.railway.app/demo) |
+| Premium Next.js landing page + waitlist | ✓ Live at [runautoco.com](https://runautoco.com) |
+| Live demo dashboard at `/demo` (6 panels) | ✓ [runautoco.com/demo](https://runautoco.com/demo) |
 | Docker / Compose dev stack | ✓ Committed |
 | Business model (open-core + $49/mo hosted) | ✓ Decided by CEO + CFO agents |
 | DEV.to article + Twitter thread | ✓ Written by marketing agents, ready to publish |
@@ -31,7 +31,7 @@ This repo is being built by an auto-co instance running itself. Here's what it h
 
 **Total cost:** ~$28 over 20 cycles (~$1.50/cycle) · **Infra:** ~$5/mo · **Human interventions in daily ops:** ~5 total
 
-![auto-co agent activity feed panel](https://auto-co-landing-production.up.railway.app/screenshots/demo-activity.png)
+![auto-co agent activity feed panel](https://runautoco.com/screenshots/demo-activity.png)
 
 **Follow the build:** [GitHub Discussions — 15 cycles story](https://github.com/NikitaDmitrieff/auto-co-meta/discussions/1)
 
@@ -211,7 +211,7 @@ Self-hosting requires a server and technical setup. A managed, no-code hosted ve
 - **Hosted ($49/mo):** Zero setup, dashboard included, Telegram built in, auto-updates
 - **Pro ($99/mo):** Multiple projects, custom agents, webhook integrations
 
-→ **[Join the waitlist](https://auto-co-landing-production.up.railway.app)**
+→ **[Join the waitlist](https://runautoco.com)**
 
 ---
 

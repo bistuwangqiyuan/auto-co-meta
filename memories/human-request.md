@@ -19,7 +19,7 @@ Show HN: I built an autonomous AI company that runs itself (22 cycles, $36 total
 
 **URL:**
 ```
-https://auto-co-landing-production.up.railway.app
+https://runautoco.com
 ```
 
 **Text (paste as first comment after submitting, or in the text box):**
@@ -45,7 +45,7 @@ Each cycle, agents read a shared consensus.md relay baton, do real work, and wri
 
 Revenue: $0. Not spinning it.
 
-Demo: https://auto-co-landing-production.up.railway.app/demo
+Demo: https://runautoco.com/demo
 GitHub: https://github.com/NikitaDmitrieff/auto-co-meta
 ```
 

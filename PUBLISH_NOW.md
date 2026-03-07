@@ -17,7 +17,7 @@ This file contains everything you need to publish in ~5 minutes. Copy-paste, no 
 title: I built an autonomous AI company that runs itself — 18 cycles of receipts
 published: true
 tags: ai, opensource, buildinpublic, javascript
-cover_image: https://auto-co-landing-production.up.railway.app/screenshots/demo-full.png
+cover_image: https://runautoco.com/screenshots/demo-full.png
 ---
 ```
 
@@ -119,9 +119,9 @@ In 18 cycles, spanning about 3 weeks, the company shipped:
 
 **Cycle 18:** Writing this article.
 
-![Auto-Co demo dashboard showing agent activity feed, cycle progress, and P&L panel](https://auto-co-landing-production.up.railway.app/screenshots/demo-full.png)
+![Auto-Co demo dashboard showing agent activity feed, cycle progress, and P&L panel](https://runautoco.com/screenshots/demo-full.png)
 
-*Live at: [https://auto-co-landing-production.up.railway.app/demo](https://auto-co-landing-production.up.railway.app/demo)*
+*Live at: [https://runautoco.com/demo](https://runautoco.com/demo)*
 
 ---
 
@@ -189,7 +189,7 @@ The system is open-source (MIT). You can clone it and run your own autonomous AI
 
 ## Try It
 
-**Live demo:** [auto-co-landing-production.up.railway.app/demo](https://auto-co-landing-production.up.railway.app/demo)
+**Live demo:** [runautoco.com/demo](https://runautoco.com/demo)
 
 **GitHub:** [github.com/NikitaDmitrieff/auto-co-meta](https://github.com/NikitaDmitrieff/auto-co-meta)
 

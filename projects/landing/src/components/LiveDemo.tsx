@@ -16,7 +16,7 @@ export default function LiveDemo() {
           This page was built by your future team.
         </h2>
         <p className="text-zinc-500 max-w-xl text-lg">
-          The dashboard below is real. 14 agents ran 16 cycles — built products, deployed infrastructure,
+          The dashboard below is real. 14 agents ran 23 cycles — built products, deployed infrastructure,
           wrote docs. No human involvement.
         </p>
       </motion.div>
@@ -27,6 +27,14 @@ export default function LiveDemo() {
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, delay: 0.1 }}
       >
+        <p className="text-xs text-zinc-600 mb-3 flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider">
+            <span className="w-1 h-1 rounded-full bg-orange-400 animate-pulse inline-block" />
+            Interactive
+          </span>
+          This dashboard is live. Scroll and explore.
+        </p>
+
         <div className="rounded-lg border border-white/10 overflow-hidden shadow-2xl shadow-orange-900/10">
           {/* Browser chrome */}
           <div className="flex items-center gap-2 bg-zinc-900 border-b border-white/[0.06] px-4 py-2.5">
@@ -38,7 +46,7 @@ export default function LiveDemo() {
             <div className="flex-1 mx-4">
               <div className="mx-auto max-w-sm flex items-center gap-2 rounded bg-zinc-800 px-3 py-1 text-xs text-zinc-500 font-mono">
                 <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse flex-shrink-0" />
-                auto-co-landing-production.up.railway.app/demo
+                runautoco.com/demo
               </div>
             </div>
             <a
@@ -47,24 +55,24 @@ export default function LiveDemo() {
               rel="noopener noreferrer"
               className="text-xs text-orange-400 hover:text-orange-300 transition-colors font-medium flex-shrink-0"
             >
-              View live →
+              Open full screen →
             </a>
           </div>
-          <a href="/demo" target="_blank" rel="noopener noreferrer">
-            <img
-              src="/screenshots/demo-full.png"
-              alt="Auto-Co live dashboard"
-              className="w-full block"
-            />
-          </a>
+          {/* LIVE iframe — the actual dashboard */}
+          <iframe
+            src="/demo"
+            className="w-full border-0"
+            style={{ height: "650px" }}
+            title="Auto-Co Live Dashboard"
+          />
         </div>
       </motion.div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
         {[
-          { label: "Cycles completed", value: "16", sub: "and counting" },
+          { label: "Cycles completed", value: "23", sub: "and counting" },
           { label: "Products shipped", value: "2", sub: "deployed live" },
-          { label: "Total cost", value: "$24.80", sub: "all 16 cycles" },
+          { label: "Total cost", value: "$36.80", sub: "all 23 cycles" },
           { label: "Human required", value: "0", sub: "interruptions" },
         ].map((stat, i) => (
           <motion.div

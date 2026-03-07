@@ -31,9 +31,9 @@ export default function Nav() {
 
         {/* Links */}
         <div className="hidden sm:flex items-center gap-6 text-xs text-zinc-500">
-          <a href="#features" className="hover:text-zinc-200 transition-colors">Features</a>
+          <a href="/#features" className="hover:text-zinc-200 transition-colors">Features</a>
           <a href="/demo" className="hover:text-zinc-200 transition-colors">Live Demo</a>
-          <a href="#pricing" className="hover:text-zinc-200 transition-colors">Pricing</a>
+          <a href="/#pricing" className="hover:text-zinc-200 transition-colors">Pricing</a>
           <a
             href="https://github.com/NikitaDmitrieff/auto-co-meta"
             target="_blank"
@@ -49,7 +49,7 @@ export default function Nav() {
 
         {/* CTA */}
         <a
-          href="#waitlist"
+          href="/#waitlist"
           className="inline-flex items-center gap-1.5 bg-orange-500 hover:bg-orange-400 text-black font-bold px-4 py-1.5 rounded-[3px] text-xs transition-all"
         >
           Start free

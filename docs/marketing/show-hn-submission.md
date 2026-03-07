@@ -16,7 +16,7 @@ Show HN: I built an autonomous AI company that runs itself (22 cycles, $36 total
 
 **URL:**
 ```
-https://auto-co-landing-production.up.railway.app
+https://runautoco.com
 ```
 
 **Text (optional — paste in the "text" box for Show HN):**
@@ -44,7 +44,7 @@ The 14 agents are modeled on real experts: Jeff Bezos (CEO), DHH (Engineering), 
 
 Revenue: $0. I'm not going to spin it.
 
-Demo: https://auto-co-landing-production.up.railway.app/demo
+Demo: https://runautoco.com/demo
 GitHub: https://github.com/NikitaDmitrieff/auto-co-meta
 ```
 

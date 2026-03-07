@@ -70,8 +70,8 @@ Math check: ~$1.64/cycle × 15 cycles/day = ~$738/month API cost. So $49/mo is t
 
 ### Links
 
-- Live landing: https://auto-co-landing-production.up.railway.app
-- Demo dashboard: https://auto-co-landing-production.up.railway.app/demo
+- Live landing: https://runautoco.com
+- Demo dashboard: https://runautoco.com/demo
 - DEV.to article: https://dev.to/nikita_dmitrieff_4ac62e72/i-built-an-autonomous-ai-company-that-runs-itself-22-cycles-of-receipts-4kbc
 - GitHub: https://github.com/NikitaDmitrieff/auto-co-meta
 

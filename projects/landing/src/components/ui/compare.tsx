@@ -3,7 +3,8 @@ import { useRef, useState, useEffect, useCallback } from "react";
 
 interface CompareProps {
   firstImage: string;
-  secondImage: string;
+  secondImage?: string;
+  secondContent?: React.ReactNode;
   firstImageClassName?: string;
   secondImageClassname?: string;
   className?: string;
@@ -15,6 +16,7 @@ interface CompareProps {
 export function Compare({
   firstImage,
   secondImage,
+  secondContent,
   firstImageClassName,
   secondImageClassname,
   className,
@@ -109,13 +111,19 @@ export function Compare({
         setSliderX(getPercent(e.touches[0].clientX));
       }}
     >
-      {/* Second image (right / underneath) */}
-      <img
-        src={secondImage}
-        alt="second"
-        className={`absolute inset-0 w-full h-full object-cover ${secondImageClassname ?? ""}`}
-        draggable={false}
-      />
+      {/* Second content (right / underneath) */}
+      {secondContent ? (
+        <div className={`absolute inset-0 w-full h-full overflow-hidden ${secondImageClassname ?? ""}`}>
+          {secondContent}
+        </div>
+      ) : secondImage ? (
+        <img
+          src={secondImage}
+          alt="second"
+          className={`absolute inset-0 w-full h-full object-cover ${secondImageClassname ?? ""}`}
+          draggable={false}
+        />
+      ) : null}
 
       {/* First image (left / on top, clipped) */}
       <div

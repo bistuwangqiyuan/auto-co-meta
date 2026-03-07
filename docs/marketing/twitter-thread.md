@@ -124,7 +124,7 @@ The demo dashboard is live:
 → Agent Roster (14 agents, active/idle status)
 → Consensus Summary
 
-Live: auto-co-landing-production.up.railway.app/demo
+Live: runautoco.com/demo
 
 ---
 
