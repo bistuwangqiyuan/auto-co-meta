@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run quick-status changelog pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -65,6 +65,20 @@ bump-version: ## Bump version (usage: make bump-version PART=patch|minor|major)
 
 dry-run: ## Build and preview the prompt without running Claude
 	./auto-loop.sh --dry-run
+
+quick-status: ## Quick status from state file (no monitor.sh needed)
+	./auto-loop.sh --status
+
+changelog: ## Generate changelog from git log (optional: SINCE=v0.50.0)
+	@since=$${SINCE:-}; \
+	if [ -n "$$since" ]; then \
+		echo "# Changelog (since $$since)"; echo ""; \
+		git log "$$since"..HEAD --pretty=format:"- %s (%h, %as)" --no-merges; \
+	else \
+		echo "# Changelog (last 30 commits)"; echo ""; \
+		git log -30 --pretty=format:"- %s (%h, %as)" --no-merges; \
+	fi; \
+	echo ""
 
 # === Daemon (launchd) ===
 

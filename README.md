@@ -147,6 +147,8 @@ make docker-start    # Start with Docker Compose
 make docker-monitor  # Tail Docker logs
 make bump-version    # Bump patch version (PART=patch|minor|major)
 make dry-run         # Preview prompt without running Claude
+make quick-status    # Quick status from state file
+make changelog       # Generate changelog from git log (SINCE=v0.50.0)
 make version         # Show current version
 make reset-consensus # Reset to Day 0
 ```
@@ -158,6 +160,7 @@ make reset-consensus # Reset to Day 0
 ./auto-loop.sh --daemon     # Run via launchd (no tty)
 ./auto-loop.sh --selftest   # Validate environment (10 checks)
 ./auto-loop.sh --dry-run    # Build prompt + show preview, don't run
+./auto-loop.sh --status     # Quick status from state file
 ./auto-loop.sh --version    # Show version
 ```
 

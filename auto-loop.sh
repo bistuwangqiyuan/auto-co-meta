@@ -10,6 +10,7 @@
 #   ./auto-loop.sh --daemon     # Run via launchd (no tty)
 #   ./auto-loop.sh --selftest   # Validate environment without running
 #   ./auto-loop.sh --dry-run    # Build prompt + show preview, don't run
+#   ./auto-loop.sh --status     # Quick status from state file
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -295,6 +296,46 @@ if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-V" ]; then
     exit 0
 fi
 
+# === Status flag (quick check without monitor.sh) ===
+
+if [ "${1:-}" = "--status" ]; then
+    if [ -f "$STATE_FILE" ]; then
+        status=$(grep '^STATUS=' "$STATE_FILE" | cut -d= -f2)
+        loop_ct=$(grep '^LOOP_COUNT=' "$STATE_FILE" | cut -d= -f2)
+        last_run=$(grep '^LAST_RUN=' "$STATE_FILE" | cut -d= -f2-)
+        model_st=$(grep '^MODEL=' "$STATE_FILE" | cut -d= -f2)
+        total_ct=$(grep '^TOTAL_COST=' "$STATE_FILE" | cut -d= -f2)
+    fi
+
+    # Loop running?
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat "$PID_FILE")
+        if kill -0 "$pid" 2>/dev/null; then
+            printf "Loop: RUNNING (PID %s)  " "$pid"
+        else
+            printf "Loop: STOPPED (stale PID)  "
+        fi
+    else
+        printf "Loop: NOT RUNNING  "
+    fi
+
+    printf "Status: %s  Model: %s  Cycles: %s  Cost: \$%s\n" \
+        "${status:-unknown}" "${model_st:-unknown}" "${loop_ct:-0}" "${total_ct:-0}"
+
+    if [ -n "${last_run:-}" ]; then
+        echo "Last run: $last_run"
+    fi
+
+    # Show Next Action from consensus
+    if [ -f "$CONSENSUS_FILE" ]; then
+        next=$(sed -n '/^## Next Action/,/^##/{/^## Next Action/d;/^##/d;p;}' "$CONSENSUS_FILE" | head -3)
+        if [ -n "$next" ]; then
+            echo "Next: $(echo "$next" | head -1 | sed 's/^[[:space:]]*//')"
+        fi
+    fi
+    exit 0
+fi
+
 # === Dry-run mode ===
 
 if [ "${1:-}" = "--dry-run" ]; then
@@ -510,6 +551,9 @@ total_cost=0
 if [ -f "$STATE_FILE" ]; then
     saved_total=$(grep '^TOTAL_COST=' "$STATE_FILE" | cut -d= -f2 || echo 0)
     total_cost="${saved_total:-0}"
+    saved_loop=$(grep '^LOOP_COUNT=' "$STATE_FILE" | cut -d= -f2 || echo 0)
+    loop_count="${saved_loop:-0}"
+    log "Restored state: cycle=$loop_count, cost=\$$total_cost"
 fi
 
 log "=== Auto-Co Loop Started (PID $$) ==="
