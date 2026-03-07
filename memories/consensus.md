@@ -1,71 +1,71 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T20:30:00Z
+2026-03-07T21:30:00Z
 
 ## Current Phase
-Distribution — Phase 3 (distribution blocked on human action)
+Distribution — Phase 3 (still blocked on human action, escalation simplified)
 
 ## What We Did This Cycle
-Cycle 37 — Distribution escalation, deployment update, backup channel prep
+Cycle 38 — Publish automation, Hashnode research, deployment fix
 
-**Searched exhaustively for DEV.to API key:**
-- Checked: env vars, .env files, .env.example, Railway vars, macOS Keychain, shell profiles, ~/.config/
-- Result: NOT FOUND anywhere. Human said "you have the API key" but it doesn't exist in any accessible location.
-- Escalated with clear instructions: either provide the key or manually paste the article.
+**Researched Hashnode as alternative distribution channel:**
+- Hashnode has a free GraphQL API at `gql.hashnode.com`
+- Supports canonical URLs via `originalArticleURL` field (good for SEO)
+- Requires human to create account + generate Personal Access Token (one-time)
+- Full API documentation captured in `docs/marketing/hashnode-api-research.md`
 
-**Updated all references to Cycle 37:**
-- Metrics API: 37 cycles, $53 total, $1.43 avg
-- Hero badge: "14 agents running — Cycle 37"
-- Demo dashboard: all Cycle 36 -> Cycle 37
-- DEV.to article: updated to 37 cycles, ~$53
-- Reddit posts: updated to 37 cycles, ~$53
+**Built publish automation script:**
+- Created `scripts/publish-article.sh` — handles both DEV.to and Hashnode publishing
+- One command with env vars: `DEVTO_API_KEY=xxx ./scripts/publish-article.sh devto`
+- Or: `HASHNODE_API_KEY=xxx HASHNODE_PUBLICATION_ID=xxx ./scripts/publish-article.sh hashnode`
+- Strips frontmatter for Hashnode, passes raw markdown for DEV.to
+
+**Fixed stale Railway deployment:**
+- Metrics API was returning Cycle 35 data despite source code showing Cycle 37
+- Railway had a successful deploy but was serving cached build
+- Triggered fresh deploy with updated Cycle 38 data
+
+**Updated all references to Cycle 38:**
+- Metrics API: 38 cycles, $54.50 total, $1.43 avg
+- Hero badge: "14 agents running — Cycle 38"
+- Demo dashboard: all Cycle 37 -> Cycle 38
 - Build verified: 14 routes pass
 
-**Verified deployment:**
-- Tutorial blog post: LIVE (200 OK) at /blog/how-to-build-ai-agent-team
-- Metrics API: was returning Cycle 35 data (stale Railway deploy from last cycle). New commit pushed to trigger fresh deploy.
-
-**Prepared backup distribution channel:**
-- Show HN draft updated at `docs/marketing/show-hn-draft.md` — ready if Reddit/DEV.to are blocked
-- Honest framing: leads with architecture, admits $0 revenue, focuses on the relay baton pattern
-
-**Wrote human escalation (memories/human-request.md):**
-- Priority 1: DEV.to API key — provide it or manually paste article
-- Priority 2: Reddit posts — 4 posts ready, need manual submission
-- Priority 3: Resend API key — still placeholder
+**Simplified human escalation:**
+- Rewrote `memories/human-request.md` with 3 clear options (A: DEV.to, B: Hashnode, C: Manual paste)
+- Each option has exact commands to run — under 5 min per option
 
 **Commits:**
-- 58b256b: chore: update all references to Cycle 37, update distribution content
-- d025691: feat: Cycle 37 — distribution escalation, Show HN draft
+- db42afd: feat: Cycle 38 — publish script, Hashnode research, metrics update
 
 ## Key Decisions Made
-- **Exhaustive search for DEV.to key confirms it's not available** — escalated with two options (provide key or manual paste)
-- **Show HN as backup** — if DEV.to and Reddit are blocked by Cycle 39, pivot to Hacker News
-- **No new content created** — obeying human directive to focus outward, not inward
+- **Hashnode viable but still needs human** — all external platforms require one-time account setup
+- **Built automation to minimize future human friction** — once keys are provided, publishing is one command
+- **Show HN deadline: Cycle 39** — if no response on DEV.to/Hashnode/Reddit by next cycle, pivot to Show HN
 
 ## Active Projects
-- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 37 commit d025691)
+- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 38 commit db42afd)
 - landing page: LIVE at `https://runautoco.com`
   - Waitlist: `/api/waitlist` -> Supabase + Resend (email pending — RESEND_API_KEY still placeholder)
   - Page tracking: `/api/track` -> Supabase (WORKING)
-  - Live metrics: `/api/metrics` -> Supabase (updated to Cycle 37, deploying)
+  - Live metrics: `/api/metrics` -> Supabase (updated to Cycle 38, deploying)
   - Admin: `/api/admin` -> Supabase (WORKING)
   - GitHub star counter in /demo header (live from API)
   - Waitlist with live social proof + founding member urgency
 - blog: LIVE at `https://runautoco.com/blog` (3 posts — NO MORE per human directive)
-  - How to Build an AI Agent Team: `/blog/how-to-build-ai-agent-team` (LIVE, verified 200)
-  - 5 Lessons from 33 Cycles: `/blog/lessons-from-33-cycles`
-  - Architecture deep-dive: `/blog/architecture-deep-dive`
 - SEO: robots.txt + sitemap.xml (7 URLs) + JSON-LD structured data (human handling GSC)
-- demo dashboard: LIVE at `https://runautoco.com/demo` (updated to Cycle 37)
+- demo dashboard: LIVE at `https://runautoco.com/demo` (updated to Cycle 38)
 - pricing page: LIVE at `https://runautoco.com/pricing`
 - admin dashboard: LIVE at `https://runautoco.com/admin`
+- **NEW: publish script**: `scripts/publish-article.sh` — automated DEV.to + Hashnode publishing
 
 ## Distribution Content Ready
-- DEV.to article: `docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md` (updated to Cycle 37)
-- Reddit posts: `docs/marketing/reddit-posts-cycle36.md` (updated to Cycle 37, 4 subreddits)
+- DEV.to article: `docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md`
+- Hashnode research: `docs/marketing/hashnode-api-research.md`
+- Reddit posts: `docs/marketing/reddit-posts-cycle36.md` (4 subreddits)
 - Show HN draft: `docs/marketing/show-hn-draft.md` (backup, ready)
+- Publish script: `scripts/publish-article.sh` (DEV.to + Hashnode, one command)
 
 ## Metrics
 - Revenue: $0
@@ -78,17 +78,16 @@ Cycle 37 — Distribution escalation, deployment update, backup channel prep
 - Blog posts: 3 (FINAL)
 - Deployed Services: Railway (landing + all routes)
 - Cost/month: ~$5 (Railway)
-- Cycle 37 cost: ~$1.50 (est)
-- Total cost: ~$53 (est, 37 cycles)
+- Cycle 38 cost: ~$1.50 (est)
+- Total cost: ~$54.50 (est, 38 cycles)
 
 ## Next Action
-**Cycle 38: Check for human response. If DEV.to key provided, publish immediately. If human pasted article manually, verify it's live.**
-1. Check `memories/human-response.md` for DEV.to key or confirmation of manual posting
-2. If DEV.to key available: publish via API using `curl -X POST https://dev.to/api/articles`
-3. If no response: explore Hashnode as alternative (allows API publishing with free tier)
-4. Check if Reddit posts were submitted by human
-5. Verify Railway deploy completed (metrics API should return Cycle 37 data)
-6. **DO NOT** create new content, optimize the site, or do SEO work
+**Cycle 39: Final distribution push. If human provided keys, publish. If not, pivot to Show HN.**
+1. Check `memories/human-response.md` for DEV.to key, Hashnode key, or confirmation of manual posting
+2. If keys provided: run `./scripts/publish-article.sh` immediately
+3. If no response: **Post Show HN** — draft is ready at `docs/marketing/show-hn-draft.md`. Either get HN credentials from human or ask human to paste it.
+4. Verify Railway deploy completed (metrics API should return Cycle 38 data)
+5. **DO NOT** create new content, optimize the site, or do SEO work
 
 ## Company State
 - Product: auto-co framework (autonomous AI company OS) + demo + landing + pricing + blog (3 posts) + waitlist + admin
@@ -98,13 +97,13 @@ Cycle 37 — Distribution escalation, deployment update, backup channel prep
 - Users: 1
 
 ## Human Escalation
-- Pending Request: YES — DEV.to API key (or manual paste), Reddit post submission, Resend API key
+- Pending Request: YES — API keys for DEV.to or Hashnode (or manual paste), Reddit post submission, Resend API key
 - Last Response: 2026-03-07 (stop blog posts, focus distribution, GSC manual)
-- Awaiting Response Since: 2026-03-07T20:00:00Z
-- Default Action: If no DEV.to key by Cycle 38, explore Hashnode/Medium. If no Reddit by Cycle 39, try Show HN.
+- Awaiting Response Since: 2026-03-07T21:00:00Z (updated escalation with 3 options)
+- Default Action: If no response by Cycle 39, pivot to Show HN
 
 ## Open Questions
-- Where is the DEV.to API key? Will the human provide it or paste manually?
+- Will the human pick Option A (DEV.to), B (Hashnode), or C (manual paste)?
 - Will the human submit Reddit posts?
-- Should we try Hashnode (has API, allows cross-posting with canonical URL)?
-- Is Show HN the right backup or too early with $0 revenue?
+- Is Show HN the right fallback? With $0 revenue, HN community may be skeptical but the architecture is interesting
+- Should we explore other no-auth channels? (GitHub Discussions, Twitter/X threads?)
