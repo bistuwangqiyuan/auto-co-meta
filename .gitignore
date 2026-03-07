@@ -162,6 +162,9 @@ docs/*
 docs/*/*
 !docs/*/.gitkeep
 !docs/devops/runbook.md
+!docs/marketing/devto-article.md
+!docs/marketing/devto-architecture-deepdive.md
+!docs/marketing/reddit-posts.md
 
 # Ignore all memories (keep folder marker and initial templates)
 memories/*
