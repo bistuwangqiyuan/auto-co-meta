@@ -15,21 +15,25 @@ This repo is the framework itself — currently being built and maintained by an
 
 ---
 
-## What the AI team has shipped (20 cycles in)
+## What the AI team has shipped (62 cycles in)
 
 This repo is being built by an auto-co instance running itself. Here's what it has autonomously produced:
 
 | Artifact | Status |
 |----------|--------|
-| This README and all docs | ✓ Written by agents |
-| Premium Next.js landing page + waitlist | ✓ Live at [runautoco.com](https://runautoco.com) |
-| Live demo dashboard at `/demo` (6 panels) | ✓ [runautoco.com/demo](https://runautoco.com/demo) |
-| Docker / Compose dev stack | ✓ Committed |
-| Business model (open-core + $49/mo hosted) | ✓ Decided by CEO + CFO agents |
-| DEV.to article + Twitter thread | ✓ Written by marketing agents, ready to publish |
-| GitHub Release v1.0.0 | ✓ Published |
+| This README and all docs | Written by agents |
+| Premium Next.js landing page + waitlist | Live at [runautoco.com](https://runautoco.com) |
+| Live demo dashboard at `/demo` (6 panels) | [runautoco.com/demo](https://runautoco.com/demo) |
+| Blog with 3 posts | Live at [runautoco.com/blog](https://runautoco.com/blog) |
+| Pricing page | Live at [runautoco.com/pricing](https://runautoco.com/pricing) |
+| Admin panel | Live at [runautoco.com/admin](https://runautoco.com/admin) |
+| Docker / Compose dev stack | Committed |
+| 17 CLI flags (--status, --doctor, --upgrade, etc.) | Production-ready |
+| CI/CD with GitHub Actions | Active |
+| Business model (open-core + hosted tiers) | Decided by CEO + CFO agents |
+| GitHub Release v1.0.1 | Published |
 
-**Total cost:** ~$28 over 20 cycles (~$1.50/cycle) · **Infra:** ~$5/mo · **Human interventions in daily ops:** ~5 total
+**Total cost:** ~$111 over 62 cycles (~$1.80/cycle) · **Infra:** ~$5/mo · **Human interventions in daily ops:** ~10 total
 
 ![auto-co agent activity feed panel](https://runautoco.com/screenshots/demo-activity.png)
 
@@ -159,15 +163,24 @@ make reset-consensus # Reset to Day 0
 ### Loop flags
 
 ```
-./auto-loop.sh              # Run in foreground
-./auto-loop.sh --daemon     # Run via launchd (no tty)
-./auto-loop.sh --help       # Show full help message
-./auto-loop.sh --selftest   # Validate environment (11 checks)
-./auto-loop.sh --dry-run    # Build prompt + show preview, don't run
-./auto-loop.sh --status     # Quick status with cycle duration stats
-./auto-loop.sh --status --json  # Machine-readable JSON output
-./auto-loop.sh --config     # Print all config values
-./auto-loop.sh --version    # Show version
+./auto-loop.sh                        # Run in foreground
+./auto-loop.sh --daemon               # Run via launchd (no tty)
+./auto-loop.sh --help                 # Show full help message
+./auto-loop.sh --version              # Show version
+./auto-loop.sh --config               # Print all config values
+./auto-loop.sh --status               # Quick status with cycle duration stats
+./auto-loop.sh --status --json        # Machine-readable JSON output
+./auto-loop.sh --selftest             # Validate environment (12 checks)
+./auto-loop.sh --dry-run              # Build prompt + show preview, don't run
+./auto-loop.sh --doctor               # Comprehensive system health check (12 checks)
+./auto-loop.sh --upgrade              # Check for newer version on GitHub
+./auto-loop.sh --logs [N]             # Show last N lines of loop log
+./auto-loop.sh --cost                 # Show cost summary across cycles
+./auto-loop.sh --history [N]          # Show last N cycles as table
+./auto-loop.sh --history --compact    # One-line-per-cycle summary
+./auto-loop.sh --export [FMT]         # Export cycle history (csv, json, markdown)
+./auto-loop.sh --reset-errors         # Clear circuit breaker state
+./auto-loop.sh --purge-logs [N]       # Purge old logs, keep latest N
 ```
 
 ### Monitor flags
