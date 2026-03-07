@@ -1,12 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
 export default function Waitlist() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [metrics, setMetrics] = useState<{ cyclesCompleted: number; totalCost: number; pageViews: number } | null>(null);
+
+  useEffect(() => {
+    fetch("/api/metrics")
+      .then((r) => r.json())
+      .then((d) => { if (d.cyclesCompleted) setMetrics(d); })
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,9 +59,25 @@ export default function Waitlist() {
             Your AI company,{" "}
             <span className="text-zinc-500">fully hosted.</span>
           </h2>
-          <p className="text-zinc-500 text-lg mb-10 max-w-xl mx-auto">
-            Join the waitlist for the hosted version — zero setup, Telegram alerts, and a dashboard like the one above. $49/mo at launch.
+          <p className="text-zinc-500 text-lg mb-6 max-w-xl mx-auto">
+            Zero setup, Telegram alerts, and a dashboard like the one above. First 50 founding members get <span className="text-orange-400 font-semibold">50% off</span> — $24.50/mo instead of $49.
           </p>
+
+          {/* Live social proof */}
+          {metrics && (
+            <div className="flex flex-wrap items-center justify-center gap-6 mb-8 text-xs">
+              {[
+                { value: `${metrics.cyclesCompleted}`, label: "cycles shipped" },
+                { value: `$${metrics.totalCost.toFixed(0)}`, label: "total cost" },
+                { value: `${metrics.pageViews.toLocaleString()}+`, label: "page views" },
+              ].map((stat) => (
+                <div key={stat.label} className="flex items-center gap-1.5">
+                  <span className="text-orange-400 font-bold text-sm">{stat.value}</span>
+                  <span className="text-zinc-600">{stat.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
 
           <AnimatePresence mode="wait">
             {status === "success" ? (
@@ -67,8 +91,8 @@ export default function Waitlist() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                 </svg>
                 <div className="text-left">
-                  <div className="text-emerald-400 font-semibold text-sm">You&apos;re on the list</div>
-                  <div className="text-zinc-500 text-xs mt-0.5">We&apos;ll email you when hosted launches.</div>
+                  <div className="text-emerald-400 font-semibold text-sm">You&apos;re on the list — founding member locked in</div>
+                  <div className="text-zinc-500 text-xs mt-0.5">We&apos;ll email you when hosted launches. You&apos;ll get 50% off.</div>
                 </div>
               </motion.div>
             ) : (
@@ -93,7 +117,7 @@ export default function Waitlist() {
                   disabled={status === "loading"}
                   className="w-full sm:w-auto flex-shrink-0 bg-orange-500 hover:bg-orange-400 disabled:opacity-60 text-black font-bold px-6 py-3 rounded-[3px] text-sm transition-colors whitespace-nowrap"
                 >
-                  {status === "loading" ? "Joining…" : "Join waitlist"}
+                  {status === "loading" ? "Joining…" : "Lock in 50% off"}
                 </button>
               </motion.form>
             )}
@@ -104,7 +128,7 @@ export default function Waitlist() {
           )}
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-zinc-700">
-            {["No spam, ever", "Cancel anytime", "Founding member pricing"].map((item) => (
+            {["No credit card required", "Cancel anytime", "50% off for founding members"].map((item) => (
               <div key={item} className="flex items-center gap-1.5">
                 <svg className="w-3 h-3 text-orange-500/60" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />

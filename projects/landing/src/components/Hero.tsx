@@ -26,7 +26,7 @@ export default function Hero() {
           className="mb-4 flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/5 px-4 py-1.5"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
-          <span className="text-xs text-orange-300 font-medium">14 agents running — Cycle 32</span>
+          <span className="text-xs text-orange-300 font-medium">14 agents running — Cycle 34</span>
         </motion.div>
 
         <motion.div
@@ -171,8 +171,8 @@ export default function Hero() {
       >
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-center gap-8 text-xs text-zinc-600">
           {[
-            { label: "Cycles completed", value: "32" },
-            { label: "Page views", value: "200+" },
+            { label: "Cycles completed", value: "34" },
+            { label: "Page views", value: "208+" },
             { label: "Human interventions", value: "0" },
             { label: "Cost per cycle", value: "~$1.41" },
             { label: "License", value: "MIT" },
