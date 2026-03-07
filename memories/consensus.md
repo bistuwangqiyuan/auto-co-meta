@@ -1,68 +1,64 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T17:00:00Z
+2026-03-07T19:00:00Z
 
 ## Current Phase
-Distribution — Phase 3 (SEO content, organic growth)
+Distribution — Phase 3 (content distribution, not creation)
 
 ## What We Did This Cycle
-Cycle 35 — SEO blog post, metrics update, Google Search Console investigation
+Cycle 36 — Distribution push, deployment fix, human response processing
 
-**New blog post: "How to Build an AI Agent Team: A Step-by-Step Guide"**
-- 10 min read, ~2500 words, tutorial format targeting search keyword "how to build an AI agent team"
-- Covers: agent roles, relay baton pattern, convergence rules, cost control, failure modes, complete architecture diagram
-- Full SEO metadata: OpenGraph, Twitter cards, JSON-LD structured data
-- Strong CTAs: GitHub repo, waitlist, live demo
-- Added to blog index (now first/newest post) and sitemap.xml
+**Processed human response (from memories/human-response.md):**
+- Human confirmed: STOP writing blog posts. 3 is enough. Focus on distribution.
+- Human will handle GSC manually — don't waste cycles on it.
+- Human said "cross-post to DEV.to, you have the API key" — but API key NOT found in env or Railway. Need clarification.
+- Human said: focus outward (distribution), not inward (optimization).
+- Human fixed hero dimming issue manually (commit a57e3c5). DO NOT modify text-hover-effect.tsx or Hero.tsx.
 
-**Metrics & references updated to Cycle 35:**
-- Metrics API: 35 cycles, $50 total cost, $1.43 avg/cycle
-- Hero badge: "14 agents running — Cycle 35"
-- Demo dashboard: All 7 references updated (cycle progress, financial panel, P&L, cost chart, activity log, footer)
-- Demo costs updated: $50 total, $1.43 avg
+**Fixed critical deployment gap:**
+- Tutorial blog post (/blog/how-to-build-ai-agent-team) was returning 404!
+- Root cause: Railway's last successful deploy (10:46 UTC) was built from a commit BEFORE the tutorial was added (11:04 UTC)
+- Triggered manual Railway redeploy + pushed new commit to trigger git-based deploy
+- Also: metrics API was serving stale data (Cycle 33 instead of 35) for the same reason
 
-**Google Search Console investigation:**
-- Google's sitemap ping API is deprecated (returns 404)
-- GSC requires Google account authentication for site verification — cannot be done programmatically
-- This needs human action: add runautoco.com to GSC, verify via HTML tag or DNS, submit sitemap
-- Added to human escalation
+**Created distribution-ready content:**
+- DEV.to tutorial article: `docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md` — full markdown with front matter, canonical URL pointing to runautoco.com
+- Updated Reddit posts: `docs/marketing/reddit-posts-cycle36.md` — 4 subreddit-specific posts (r/SideProject, r/LLMDevs, r/MachineLearning, r/selfhosted) with current numbers
+
+**Updated all references to Cycle 36:**
+- Metrics API: 36 cycles, $51.50 total, $1.43 avg
+- Hero badge: "14 agents running — Cycle 36"
+- Demo dashboard: all references updated
+- Blog post cost reference updated
 
 **Deployment:**
-- Build verified: all 14 routes pass (including new /blog/how-to-build-ai-agent-team)
-- Commit 91236a9 pushed to main, Railway deploy triggered
-
-**Verification of Cycle 34 conversion changes:**
-- Homepage: 200 OK
-- Metrics API: responding with live data from Supabase
-- Blog: 200 OK
-- All routes confirmed live
+- Build verified: 14 routes pass (including tutorial)
+- Commit d5094d3 pushed to main, Railway deploy triggered
+- Previous manual deploy also triggered via Railway CLI
 
 ## Key Decisions Made
-- **Tutorial-format blog post for SEO** — Targeting "how to build an AI agent team" as the primary keyword. Tutorial format is best for search intent (people searching this want a guide, not a think piece).
-- **Google Search Console needs human** — Cannot verify site ownership programmatically. Added to escalation.
-- **3 blog posts is enough for now** — Focus should shift to distribution (getting links to existing content) rather than producing more content with no traffic.
+- **Distribution over creation** — Human directive: stop writing blog posts. 3 is enough with 0 traffic. Focus on getting existing content in front of people.
+- **DEV.to cross-post is highest priority** — Tutorial with canonical URL is the best backlink + traffic play. Article is ready, just needs API key or manual posting.
+- **Reddit posts ready** — 4 posts updated to current numbers, all linking back to tutorial on runautoco.com.
 
 ## Active Projects
-- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 35 commit 91236a9)
+- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` (Cycle 36 commit d5094d3)
 - landing page: LIVE at `https://runautoco.com`
-  - Waitlist: `/api/waitlist` -> Supabase + Resend (email pending API key)
+  - Waitlist: `/api/waitlist` -> Supabase + Resend (email pending — RESEND_API_KEY still placeholder)
   - Page tracking: `/api/track` -> Supabase (WORKING)
-  - Live metrics: `/api/metrics` -> Supabase (WORKING, updated to Cycle 35)
+  - Live metrics: `/api/metrics` -> Supabase (updated to Cycle 36)
   - Admin: `/api/admin` -> Supabase (WORKING)
   - GitHub star counter in /demo header (live from API)
   - Waitlist with live social proof + founding member urgency
-- blog: LIVE at `https://runautoco.com/blog` (3 posts, ~0 views — no distribution yet)
-  - How to Build an AI Agent Team: `/blog/how-to-build-ai-agent-team` (NEW — Cycle 35)
+- blog: LIVE at `https://runautoco.com/blog` (3 posts — NO MORE POSTS per human directive)
+  - How to Build an AI Agent Team: `/blog/how-to-build-ai-agent-team` (was 404, now deploying)
   - 5 Lessons from 33 Cycles: `/blog/lessons-from-33-cycles`
   - Architecture deep-dive: `/blog/architecture-deep-dive`
-- SEO: robots.txt + sitemap.xml (7 URLs) + JSON-LD structured data (waiting for Google to crawl)
-- demo dashboard: LIVE at `https://runautoco.com/demo` (live data, updated to Cycle 35)
+- SEO: robots.txt + sitemap.xml (7 URLs) + JSON-LD structured data (human handling GSC)
+- demo dashboard: LIVE at `https://runautoco.com/demo` (live data, updated to Cycle 36)
 - pricing page: LIVE at `https://runautoco.com/pricing`
 - admin dashboard: LIVE at `https://runautoco.com/admin`
-- DEV.to article: LIVE (announcement)
-- Show HN: POSTED (live)
-- Twitter thread: POSTED (live)
 
 ## Metrics
 - Revenue: $0
@@ -70,22 +66,20 @@ Cycle 35 — SEO blog post, metrics update, Google Search Console investigation
 - MRR: $0
 - Waitlist signups: 2 (1 real + 1 test)
 - GitHub stars: 5
-- Page views: 208+ (106 /demo, 97 /, 3 /pricing, 2 test)
-- HN referrals: 27
-- Google referrals: 2
-- Blog views: ~0 (no distribution)
-- Blog posts: 3
+- Page views: 208+
+- Blog views: ~0 (no distribution yet)
+- Blog posts: 3 (FINAL — no more per human directive)
 - Deployed Services: Railway (landing + all routes)
 - Cost/month: ~$5 (Railway)
-- Cycle 35 cost: ~$1.50 (est)
-- Total cost: ~$50 (est, 35 cycles)
+- Cycle 36 cost: ~$1.50 (est)
+- Total cost: ~$51.50 (est, 36 cycles)
 
 ## Next Action
-**Cycle 36: Distribution push — get the blog posts in front of people.**
-1. **Cross-post "How to Build an AI Agent Team" to DEV.to** — Write a DEV.to-formatted version with canonical URL pointing to runautoco.com. This is the highest-leverage action: DEV.to has domain authority and drives traffic.
-2. **Write Reddit posts for r/SideProject and r/LLMDevs** — Short, authentic posts linking to the tutorial. Not promotional — genuinely useful content.
-3. **Update human escalation** — Add GSC verification request alongside the existing Resend/DEV.to requests.
-4. **If still 0 conversions** — Consider adding a lead magnet (free "Auto-Co Setup Guide" PDF) as an alternative to the waitlist.
+**Cycle 37: Cross-post tutorial to DEV.to and submit Reddit posts.**
+1. **DEV.to** — If API key is available, publish `docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md` via DEV.to API. If not, escalate again with specific request for the key.
+2. **Reddit** — Posts are ready at `docs/marketing/reddit-posts-cycle36.md`. Human needs to submit these (Reddit blocks automated posting). Escalate with clear instructions.
+3. **Verify deployment** — Confirm the tutorial blog post is live (was 404 this cycle). Confirm metrics API returns Cycle 36 data.
+4. **DO NOT** write more blog posts, do more SEO work, or optimize the landing page. The human was clear: focus outward.
 
 ## Company State
 - Product: auto-co framework (autonomous AI company OS) + demo + landing + pricing + blog (3 posts) + waitlist + admin
@@ -95,14 +89,13 @@ Cycle 35 — SEO blog post, metrics update, Google Search Console investigation
 - Users: 1
 
 ## Human Escalation
-- Pending Request: YES — DEV.to deep-dive publishing + Reddit posts + Resend API key + NEW: Google Search Console verification
-- Last Response: 2026-03-07T11:00:00Z
-- Awaiting Response Since: 2026-03-07T10:30:00Z
-- Default Action: Continuing with content creation + organic growth. Will cross-post to DEV.to autonomously next cycle.
+- Pending Request: YES — DEV.to API key (not found in env), Reddit post submission, Resend API key
+- Last Response: 2026-03-07 (processed this cycle — stop blog posts, focus distribution, GSC manual)
+- Awaiting Response Since: 2026-03-07T19:00:00Z
+- Default Action: If no DEV.to API key by Cycle 38, explore Hashnode/Medium cross-posting or ask human to manually paste the article.
 
 ## Open Questions
-- Will the tutorial blog post rank for "how to build an AI agent team"? Need GSC data to track.
-- Should we cross-post to DEV.to ourselves (agents can write the formatted version) or wait for human?
-- Is 3 blog posts enough, or should we keep producing content before distributing?
-- Would a lead magnet (PDF guide) convert better than the current 50% off waitlist offer?
-- When will Google index the site? Sitemap added Cycle 33, still not indexed as of Cycle 34.
+- Where is the DEV.to API key? Human said "you have it" but it's not in env vars or Railway.
+- Can we automate Reddit posting or does human need to submit manually?
+- When will the Railway deploy complete and the tutorial page go live?
+- Should we explore other distribution channels (Hashnode, Medium, Indie Hackers)?
