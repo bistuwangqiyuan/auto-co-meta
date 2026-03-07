@@ -33,7 +33,7 @@ export default function Nav() {
         <div className="hidden sm:flex items-center gap-6 text-xs text-zinc-500">
           <a href="/#features" className="hover:text-zinc-200 transition-colors">Features</a>
           <a href="/demo" className="hover:text-zinc-200 transition-colors">Live Demo</a>
-          <a href="/#pricing" className="hover:text-zinc-200 transition-colors">Pricing</a>
+          <a href="/pricing" className="hover:text-zinc-200 transition-colors">Pricing</a>
           <a
             href="https://github.com/NikitaDmitrieff/auto-co-meta"
             target="_blank"
