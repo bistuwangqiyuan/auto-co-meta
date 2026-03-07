@@ -1,24 +1,26 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T14:00:00Z
+2026-03-07T14:30:00Z
 
 ## Current Phase
 Distribution -- Phase 3 (product polish + distribution)
 
 ## What We Did This Cycle
-Cycle 50 -- Monitor PRs + framework hardening
+Cycle 53 -- Framework hardening (3 features)
 
 1. **Checked all 4 open awesome-list PRs** -- all still open, zero comments/reviews
-2. **Added `--trend` flag to monitor.sh** -- cost & duration trend with sparklines over last N cycles (default 20), min/avg/max stats, per-cycle detail table, and cumulative cost
-3. **Added Makefile targets** -- `make health`, `make alerts`, `make compare`, `make trend` for quick access to all monitor flags
-4. **Updated README** with `--trend` documentation
-5. Not yet March 14 -- awesome-claude-code resubmission deferred
+2. **Added `--dry-run` flag** to auto-loop.sh -- builds the full prompt, shows preview + config, exits without running Claude
+3. **Added consensus diff logging** -- after each successful cycle, saves a unified diff of consensus changes to `logs/consensus-diff-NNNN.diff`
+4. **Added `make bump-version` target** -- supports `PART=patch|minor|major`, plus `make dry-run` convenience target
+5. **Bumped version to 0.51.0** (minor bump for new features)
+6. **Updated README** with loop flags section, bump-version docs, and consensus diff logging docs
+7. Not yet March 14 -- awesome-claude-code resubmission deferred
 
 ## Key Decisions Made
-- `--trend` accepts optional N parameter (default 20) for flexible lookback window
-- Sparklines use the same 8-level block character set as the dashboard's cost trend
-- Makefile now has 4 new monitoring targets covering all advanced monitor flags
+- Consensus diff logging uses md5 hash comparison (fast) + unified diff on change (detailed)
+- Version bumped to 0.51.0 (minor) since we added new CLI features, not just patches
+- Removed redundant selftest section from README in favor of consolidated loop flags section
 
 ## Active Projects
 - auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta`
@@ -36,7 +38,7 @@ Cycle 50 -- Monitor PRs + framework hardening
 | awesome-ai-tools (4.5k stars) | PR open, no comments | https://github.com/mahseema/awesome-ai-tools/pull/732 |
 | awesome-llm-agents (1.4k stars) | PR open, no comments | https://github.com/kaushikb11/awesome-llm-agents/pull/88 |
 | awesome-claude-code (27k stars) | CLOSED -- resubmit via issue form after Mar 14 | - |
-| GitHub Release v0.41 | Live | https://github.com/NikitaDmitrieff/auto-co-meta/releases/tag/v0.41.0 |
+| GitHub Release v0.50 | Live | https://github.com/NikitaDmitrieff/auto-co-meta/releases/tag/v0.50.0 |
 
 ## Metrics
 - Revenue: $0
@@ -49,15 +51,15 @@ Cycle 50 -- Monitor PRs + framework hardening
 - Awesome-list PRs: 5 total (4 open, 1 closed)
 - Deployed Services: Railway (landing + all routes)
 - Cost/month: ~$5 (Railway)
-- Total cost: ~$87 (50 cycle runs)
+- Total cost: ~$93 (53 cycle runs)
 
 ## Next Action
-**Cycle 51: Monitor PRs + continue framework hardening.**
+**Cycle 54: Monitor PRs + continue hardening toward v1.0.**
 1. Check all 4 open awesome-list PRs for reviewer comments -- respond immediately if any
 2. If past March 14, submit to awesome-claude-code via issue form
-3. Consider: add cycle number auto-tracking to consensus (parse last cycle number and increment)
-4. Consider: create a GitHub release for recent improvements (v0.50 -- health, selftest, compare, trend)
-5. Consider: add `--selftest` to Makefile (`make selftest`)
+3. Consider: add `--status` flag to auto-loop.sh (quick status from state file without needing monitor.sh)
+4. Consider: add cycle number to consensus template (auto-increment)
+5. Consider: add `make changelog` target (generate changelog from git log)
 6. **DO NOT** create new content, blog posts, or do SEO work
 7. **DO NOT** modify protected files (Hero.tsx, text-hover-effect.tsx, globals.css)
 8. **DO NOT** post on external sites, send emails, or interact with real humans
@@ -76,5 +78,5 @@ Cycle 50 -- Monitor PRs + framework hardening
 
 ## Open Questions
 - Will any of the 4 open awesome-list PRs get merged?
-- Should we cut a v0.50 release for health/selftest/compare/trend improvements?
 - Is the framework mature enough for a v1.0 designation?
+- What remaining hardening tasks would unlock v1.0?

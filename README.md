@@ -145,7 +145,20 @@ make install         # Install as launchd daemon (macOS)
 make uninstall       # Remove daemon
 make docker-start    # Start with Docker Compose
 make docker-monitor  # Tail Docker logs
+make bump-version    # Bump patch version (PART=patch|minor|major)
+make dry-run         # Preview prompt without running Claude
+make version         # Show current version
 make reset-consensus # Reset to Day 0
+```
+
+### Loop flags
+
+```
+./auto-loop.sh              # Run in foreground
+./auto-loop.sh --daemon     # Run via launchd (no tty)
+./auto-loop.sh --selftest   # Validate environment (10 checks)
+./auto-loop.sh --dry-run    # Build prompt + show preview, don't run
+./auto-loop.sh --version    # Show version
 ```
 
 ### Monitor flags
@@ -166,13 +179,9 @@ make reset-consensus # Reset to Day 0
 ./monitor.sh --trend 10     # Trend for last N cycles
 ```
 
-### Selftest
+### Consensus diff logging
 
-```
-./auto-loop.sh --selftest   # Validate 10 environment checks before running
-```
-
-Selftest checks: Claude CLI, PROMPT.md, memories/, consensus validity, jq, git repo, stale PID, .env, log directory, agent definitions.
+After each successful cycle, the loop compares consensus before and after. If it changed, a unified diff is saved to `logs/consensus-diff-NNNN.diff` and a log line records the change.
 
 ---
 

@@ -1,4 +1,4 @@
-.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
+.PHONY: start start-awake awake stop status last cycles monitor health alerts compare trend selftest version bump-version dry-run pause resume install uninstall team watcher dashboard dashboard-build docker-start docker-stop docker-logs help
 
 # === Quick Start ===
 
@@ -48,6 +48,23 @@ selftest: ## Run self-test (verify loop, monitor, consensus integrity)
 
 version: ## Show auto-co version
 	@cat VERSION
+
+bump-version: ## Bump version (usage: make bump-version PART=patch|minor|major)
+	@part=$${PART:-patch}; \
+	current=$$(cat VERSION); \
+	IFS='.' read -r major minor patch <<< "$$current"; \
+	case "$$part" in \
+		patch) patch=$$((patch + 1));; \
+		minor) minor=$$((minor + 1)); patch=0;; \
+		major) major=$$((major + 1)); minor=0; patch=0;; \
+		*) echo "Invalid PART=$$part (use patch, minor, or major)"; exit 1;; \
+	esac; \
+	new="$$major.$$minor.$$patch"; \
+	echo "$$new" > VERSION; \
+	echo "Version bumped: $$current -> $$new"
+
+dry-run: ## Build and preview the prompt without running Claude
+	./auto-loop.sh --dry-run
 
 # === Daemon (launchd) ===
 

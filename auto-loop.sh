@@ -9,6 +9,7 @@
 #   ./auto-loop.sh              # Run in foreground
 #   ./auto-loop.sh --daemon     # Run via launchd (no tty)
 #   ./auto-loop.sh --selftest   # Validate environment without running
+#   ./auto-loop.sh --dry-run    # Build prompt + show preview, don't run
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -294,6 +295,39 @@ if [ "${1:-}" = "--version" ] || [ "${1:-}" = "-V" ]; then
     exit 0
 fi
 
+# === Dry-run mode ===
+
+if [ "${1:-}" = "--dry-run" ]; then
+    echo "=== Auto-Co Dry Run ==="
+    echo ""
+    PROMPT=$(cat "$PROMPT_FILE")
+    CONSENSUS=$(cat "$CONSENSUS_FILE" 2>/dev/null || echo "No consensus file found. This is the very first cycle.")
+    FULL_PROMPT="$PROMPT
+
+---
+
+## Current Consensus (pre-loaded, do NOT re-read this file)
+
+$CONSENSUS
+
+---
+
+This is Cycle #1. Act decisively."
+
+    echo "Model: $MODEL"
+    echo "Interval: ${LOOP_INTERVAL}s"
+    echo "Timeout: ${CYCLE_TIMEOUT_SECONDS}s"
+    echo "Prompt length: $(echo "$FULL_PROMPT" | wc -c | tr -d ' ') bytes"
+    echo ""
+    echo "--- Prompt Preview (first 80 lines) ---"
+    echo "$FULL_PROMPT" | head -80
+    echo ""
+    echo "--- End Preview ---"
+    echo ""
+    echo "(dry run -- no Claude session started)"
+    exit 0
+fi
+
 # === Self-test mode ===
 
 if [ "${1:-}" = "--selftest" ]; then
@@ -501,8 +535,9 @@ while true; do
     # Log rotation
     rotate_logs
 
-    # Backup consensus before cycle
+    # Backup consensus before cycle (also used for diff logging)
     backup_consensus
+    pre_cycle_consensus_hash=$(md5 -q "$CONSENSUS_FILE" 2>/dev/null || md5sum "$CONSENSUS_FILE" 2>/dev/null | cut -d' ' -f1 || echo "")
 
     # Build prompt with consensus pre-injected
     PROMPT=$(cat "$PROMPT_FILE")
@@ -551,6 +586,16 @@ This is Cycle #$loop_count. Act decisively."
         log_cycle $loop_count "OK" "Completed (cost: \$${CYCLE_COST:-unknown}, subtype: ${CYCLE_SUBTYPE:-unknown}, ${cycle_duration}s)"
         if [ -n "$RESULT_TEXT" ]; then
             log_cycle $loop_count "SUMMARY" "$(echo "$RESULT_TEXT" | head -c 300)"
+        fi
+        # Log consensus diff if it changed
+        post_cycle_consensus_hash=$(md5 -q "$CONSENSUS_FILE" 2>/dev/null || md5sum "$CONSENSUS_FILE" 2>/dev/null | cut -d' ' -f1 || echo "")
+        if [ -n "$pre_cycle_consensus_hash" ] && [ "$pre_cycle_consensus_hash" != "$post_cycle_consensus_hash" ]; then
+            diff_file="$LOG_DIR/consensus-diff-$(printf '%04d' $loop_count).diff"
+            diff -u "$CONSENSUS_FILE.bak" "$CONSENSUS_FILE" > "$diff_file" 2>/dev/null || true
+            diff_lines=$(wc -l < "$diff_file" | tr -d ' ')
+            log_cycle $loop_count "DIFF" "Consensus changed ($diff_lines diff lines) -- saved to $diff_file"
+        else
+            log_cycle $loop_count "DIFF" "Consensus unchanged"
         fi
         append_cycle_history "$loop_count" "ok" "${CYCLE_COST:-0}" "$cycle_duration" "$EXIT_CODE"
         error_count=0
