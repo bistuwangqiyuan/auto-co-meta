@@ -119,7 +119,7 @@ const TERMINAL_LINES = [
 function AgentAvatar({ agent, size = "md" }: { agent: AgentInfo; size?: "sm" | "md" | "lg" }) {
   const sizes = { sm: "w-7 h-7 text-[8px]", md: "w-9 h-9 text-[10px]", lg: "w-11 h-11 text-xs" };
   return (
-    <div className={`rounded-xl bg-gradient-to-br ${agent.gradient} flex items-center justify-center text-white font-bold flex-shrink-0 ${sizes[size]}`}>
+    <div className={`bg-gradient-to-br ${agent.gradient} flex items-center justify-center text-white font-bold flex-shrink-0 ${sizes[size]}`}>
       {agent.initials}
     </div>
   );
@@ -128,7 +128,7 @@ function AgentAvatar({ agent, size = "md" }: { agent: AgentInfo; size?: "sm" | "
 function TerminalView({ compact = false }: { compact?: boolean }) {
   const lines = compact ? TERMINAL_LINES.slice(0, 6) : TERMINAL_LINES;
   return (
-    <div className={`w-full bg-zinc-950 font-mono text-xs leading-relaxed ${compact ? "p-3" : "p-4"} rounded-xl border border-white/[0.06] overflow-hidden`}>
+    <div className={`w-full bg-zinc-950 font-mono text-xs leading-relaxed ${compact ? "p-3" : "p-4"} border border-white/[0.08] overflow-hidden`}>
       <div className="mb-2 flex items-center gap-2 pb-2 border-b border-white/[0.06]">
         <div className="flex gap-1.5">
           <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
@@ -163,26 +163,25 @@ type LayoutId = "classic" | "sidenav" | "compact";
 
 function LayoutHeader({ active, onChange }: { active: LayoutId; onChange: (id: LayoutId) => void }) {
   return (
-    <div className="border-b border-white/[0.08] bg-black">
-      <div className="max-w-[1400px] mx-auto px-6 py-5 flex flex-col items-center gap-3">
+    <div className="bg-black">
+      <div className="max-w-[1400px] mx-auto px-6 py-6 flex flex-col items-center gap-4">
         <div className="w-full flex items-center justify-between">
-          <Link href="/" className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors flex items-center gap-1.5">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" /></svg>
-            Back
+          <Link href="/" className="flex items-center gap-2 group">
+            <Image src="/logo-ac.png" alt="auto-co" width={28} height={20} className="opacity-70 group-hover:opacity-100 transition-opacity" />
           </Link>
-          <div className="flex items-center gap-2">
-            <Image src="/logo-ac.png" alt="AC" width={20} height={15} className="opacity-70" />
-            <span className="text-sm text-zinc-500">Pick the view that fits how you work</span>
-          </div>
-          <div className="w-10" />
+          <span className="text-sm text-zinc-500">Pick the view that fits how you work</span>
+          <div className="w-7" />
         </div>
-        <div className="flex items-center border border-white/[0.1] bg-white/[0.02]">
+        {/* Glass rounded picker — landing page layer */}
+        <div className="flex items-center backdrop-blur-md bg-white/[0.04] border border-white/[0.08] rounded-full p-1 shadow-lg shadow-black/20">
           {(["classic", "sidenav", "compact"] as const).map((id) => (
             <button
               key={id}
               onClick={() => onChange(id)}
-              className={`px-6 py-2 text-sm font-medium transition-all border-r last:border-r-0 border-white/[0.1] ${
-                active === id ? "bg-orange-500/15 text-orange-400" : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.03]"
+              className={`px-5 py-1.5 text-sm font-medium rounded-full transition-all ${
+                active === id
+                  ? "bg-orange-500/15 text-orange-400 shadow-sm shadow-orange-500/10"
+                  : "text-zinc-500 hover:text-zinc-300"
               }`}
             >
               {id === "classic" ? "Classic" : id === "sidenav" ? "Side Nav" : "Compact"}
@@ -222,7 +221,7 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
         <div className="flex items-center gap-3">
           <Image src="/logo-ac.png" alt="auto-co" width={24} height={18} className="opacity-80" />
           <span className="text-white font-bold text-sm">auto-co</span>
-          <div className="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 rounded-full px-3 py-1">
+          <div className="flex items-center gap-1.5 text-xs text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-3 py-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />Cycle {cycleCount} &middot; Running
           </div>
         </div>
@@ -242,7 +241,7 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
           { label: "Page Views", value: pageViews.toLocaleString(), accent: true },
           { label: "Avg / Cycle", value: `$${avgCost.toFixed(2)}`, accent: true },
         ].map((m, i) => (
-          <motion.div key={m.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="stat-card">
+          <motion.div key={m.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-zinc-950/80 border border-white/[0.08] px-5 py-4">
             <div className={`text-xl font-bold mb-0.5 tabular-nums ${"muted" in m && m.muted ? "text-zinc-600" : "accent" in m && m.accent ? "text-orange-400" : "text-white"}`}>{m.value}</div>
             <div className="text-[10px] text-zinc-500">{m.label}</div>
           </motion.div>
@@ -252,7 +251,7 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
       <div className="grid grid-cols-12 gap-6">
         {/* Main content */}
         <div className="col-span-12 lg:col-span-8 flex flex-col gap-6">
-          <div className="glass-card">
+          <div className="bg-zinc-950/80 border border-white/[0.08]">
             <div className="flex border-b border-white/[0.05] overflow-x-auto">
               {TABS.map((tab) => (
                 <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`px-5 py-3.5 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === tab.id ? "text-orange-400" : "text-zinc-500 hover:text-zinc-300"}`}>
@@ -277,12 +276,12 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                 ))}</div>}
                 {activeTab === "decisions" && <div className="divide-y divide-white/[0.04]">{DECISIONS.map((d, i) => (
                   <motion.div key={d.cycle} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }} className={`px-5 py-4 flex gap-4 ${d.status === "active" ? "bg-orange-500/[0.04] border-l-2 border-orange-500/30" : "hover:bg-white/[0.02]"}`}>
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-xs font-mono font-bold ${d.status === "active" ? "bg-orange-500/20 text-orange-400 border border-orange-500/30" : d.status === "waiting" ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-white/[0.04] text-zinc-600"}`}>{d.cycle}</div>
+                    <div className={`w-8 h-8 flex items-center justify-center flex-shrink-0 text-xs font-mono font-bold ${d.status === "active" ? "bg-orange-500/20 text-orange-400 border border-orange-500/30" : d.status === "waiting" ? "bg-amber-500/10 text-amber-400 border border-amber-500/20" : "bg-white/[0.04] text-zinc-600"}`}>{d.cycle}</div>
                     <div className="flex-1 min-w-0">
                       <p className={`text-sm leading-relaxed ${d.status === "active" ? "text-white font-medium" : "text-zinc-400"}`}>{d.decision}</p>
                       <div className="flex items-center gap-2 mt-1.5">
-                        <div className="flex -space-x-1.5">{d.agents.map((a) => (<div key={a} className={`w-5 h-5 rounded-md bg-gradient-to-br ${AGENTS[a].gradient} flex items-center justify-center text-[7px] text-white font-bold ring-1 ring-black`}>{AGENTS[a].initials}</div>))}</div>
-                        <span className={`text-[10px] px-1.5 py-0.5 rounded ${d.status === "active" ? "text-orange-400 bg-orange-400/10" : d.status === "waiting" ? "text-amber-400 bg-amber-400/10" : "text-zinc-600 bg-white/[0.03]"}`}>{d.status === "active" ? "In progress" : d.status === "waiting" ? "Waiting" : "Done"}</span>
+                        <div className="flex -space-x-1.5">{d.agents.map((a) => (<div key={a} className={`w-5 h-5 bg-gradient-to-br ${AGENTS[a].gradient} flex items-center justify-center text-[7px] text-white font-bold ring-1 ring-black`}>{AGENTS[a].initials}</div>))}</div>
+                        <span className={`text-[10px] px-1.5 py-0.5 ${d.status === "active" ? "text-orange-400 bg-orange-400/10" : d.status === "waiting" ? "text-amber-400 bg-amber-400/10" : "text-zinc-600 bg-white/[0.03]"}`}>{d.status === "active" ? "In progress" : d.status === "waiting" ? "Waiting" : "Done"}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -297,7 +296,7 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                   </motion.div>
                 ))}</div>}
                 {activeTab === "cycles" && <div className="p-5 space-y-0.5 max-h-[500px] overflow-y-auto">{CYCLE_HISTORY.map((c, i) => (
-                  <motion.div key={c.num} initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.01 }} className={`flex items-center gap-3 px-3 py-2 rounded-lg ${c.phase === "current" ? "bg-orange-500/[0.06] border border-orange-500/20" : "hover:bg-white/[0.02]"}`}>
+                  <motion.div key={c.num} initial={{ opacity: 0, x: -4 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.01 }} className={`flex items-center gap-3 px-3 py-2 ${c.phase === "current" ? "bg-orange-500/[0.06] border border-orange-500/20" : "hover:bg-white/[0.02]"}`}>
                     <span className={`text-xs font-mono w-8 flex-shrink-0 ${c.phase === "current" ? "text-orange-400 font-semibold" : "text-zinc-600"}`}>C{c.num}</span>
                     <span className={`text-sm flex-1 ${c.phase === "current" ? "text-white font-medium" : "text-zinc-500"}`}>{c.what}</span>
                     <span className={`text-xs tabular-nums flex-shrink-0 ${c.phase === "current" ? "text-orange-400" : "text-zinc-700"}`}>${c.cost.toFixed(2)}</span>
@@ -312,7 +311,7 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
 
         {/* Sidebar */}
         <div className="col-span-12 lg:col-span-4 flex flex-col gap-4">
-          <div className="glass-card p-4">
+          <div className="bg-zinc-950/80 border border-white/[0.08] p-4">
             <div className="flex items-center justify-between mb-3">
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Current Cycle</span>
               <div className="flex items-center gap-1.5 text-xs text-emerald-400"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />Running</div>
@@ -321,14 +320,14 @@ function ClassicLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
             <p className="text-xs text-zinc-500 leading-relaxed">Distribution pivot — GitHub-first. Kill SEO/blog. Focus on README + awesome-lists.</p>
             <div className="mt-3 h-1.5 bg-white/[0.06] rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: "65%" }} transition={{ duration: 1.5 }} className="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full" /></div>
           </div>
-          <div className="glass-card p-4">
+          <div className="bg-zinc-950/80 border border-white/[0.08] p-4">
             <div className="flex items-center justify-between mb-3"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Agents</span><span className="text-xs text-zinc-600">{ACTIVE_AGENTS.length}/{ALL_AGENTS.length}</span></div>
             <div className="grid grid-cols-7 gap-1.5">
               {ACTIVE_AGENTS.map((a) => (<div key={a.initials} className="relative group"><AgentAvatar agent={a} size="sm" /><span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-black" /></div>))}
               {ALL_AGENTS.filter(a => !ACTIVE_AGENTS.includes(a)).map((a) => (<div key={a.initials} className="opacity-30"><AgentAvatar agent={a} size="sm" /></div>))}
             </div>
           </div>
-          <div className="glass-card p-4">
+          <div className="bg-zinc-950/80 border border-white/[0.08] p-4">
             <div className="flex items-end justify-between gap-4 mb-3">
               <div><div className="text-xl font-bold text-white">${totalCost.toFixed(2)}</div><div className="text-[10px] text-zinc-500">total spent</div></div>
               <div className="text-right"><div className="text-lg font-bold text-orange-400">${avgCost.toFixed(2)}</div><div className="text-[10px] text-zinc-500">avg/cycle</div></div>
@@ -361,10 +360,10 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
   const pageViews = liveMetrics?.pageViews ?? 336;
 
   return (
-    <div className="flex min-h-[calc(100vh-120px)]">
-      {/* Floating side nav — neo-brutalist */}
+    <div className="relative min-h-[600px]">
+      {/* Floating side nav — neo-brutalist, absolute so it overlays without pushing content */}
       <div
-        className="fixed left-3 top-1/2 -translate-y-1/2 z-50"
+        className="absolute left-3 top-1/2 -translate-y-1/2 z-20"
         onMouseEnter={() => setNavHovered(true)}
         onMouseLeave={() => setNavHovered(false)}
       >
@@ -413,7 +412,7 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
       </div>
 
       {/* Content */}
-      <div className="flex-1 ml-14 p-6">
+      <div className="pl-16 pr-6 py-6">
         <AnimatePresence mode="wait">
           <motion.div key={section} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}>
 
@@ -427,14 +426,14 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                     { label: "Total Spend", value: `$${totalCost.toFixed(2)}` },
                     { label: "Page Views", value: pageViews.toLocaleString(), accent: true },
                   ].map((m, i) => (
-                    <motion.div key={m.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="glass-card p-4">
+                    <motion.div key={m.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }} className="bg-zinc-950/80 border border-white/[0.08] p-4">
                       <div className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">{m.label}</div>
                       <div className={`text-2xl font-bold tabular-nums ${"accent" in m && m.accent ? "text-orange-400" : "text-white"}`}>{m.value}</div>
                     </motion.div>
                   ))}
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  <div className="glass-card p-4">
+                  <div className="bg-zinc-950/80 border border-white/[0.08] p-4">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Current Cycle</span>
                       <div className="flex items-center gap-1.5 text-xs text-emerald-400"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />Running</div>
@@ -443,7 +442,7 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                     <p className="text-xs text-zinc-500 leading-relaxed mb-3">Distribution pivot — kill SEO/blog, focus README + awesome-lists.</p>
                     <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden"><motion.div initial={{ width: 0 }} animate={{ width: "65%" }} transition={{ duration: 1.5 }} className="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full" /></div>
                   </div>
-                  <div className="glass-card p-4">
+                  <div className="bg-zinc-950/80 border border-white/[0.08] p-4">
                     <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Recent</span>
                     <div className="mt-3 space-y-2.5">
                       {ACTIVITY_FEED.slice(0, 3).map((msg, i) => (
@@ -462,7 +461,7 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
             {/* LIVE */}
             {section === "live" && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                <div className="glass-card">
+                <div className="bg-zinc-950/80 border border-white/[0.08]">
                   <div className="px-4 py-3 border-b border-white/[0.05] flex items-center justify-between">
                     <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Activity Feed</span>
                     <div className="flex items-center gap-1.5 text-xs text-emerald-400"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />LIVE</div>
@@ -481,7 +480,7 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                 </div>
                 <div className="flex flex-col gap-5">
                   <TerminalView />
-                  <div className="glass-card">
+                  <div className="bg-zinc-950/80 border border-white/[0.08]">
                     <div className="px-4 py-3 border-b border-white/[0.05]"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Deployments</span></div>
                     <div className="divide-y divide-white/[0.03]">
                       {DEPLOY_HISTORY.slice(0, 5).map((d) => (
@@ -506,7 +505,7 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                     const isActive = ACTIVE_AGENTS.includes(a);
                     const actions: Record<string, string> = { CEO: "Distribution pivot decision", ENG: "4 commits pushed", DVP: "Deploy #47 success", RES: "Awesome-list scan", CRIT: "Revenue warning", CFO: "Unit economics update", MKT: "README funnel analysis", UI: "Dashboard rebuild", QA: "Smoke test passed" };
                     return (
-                      <motion.div key={a.initials} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }} className={`glass-card p-3.5 flex gap-2.5 ${!isActive ? "opacity-35" : ""}`}>
+                      <motion.div key={a.initials} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }} className={`bg-zinc-950/80 border border-white/[0.08] p-3.5 flex gap-2.5 ${!isActive ? "opacity-35" : ""}`}>
                         <div className="relative"><AgentAvatar agent={a} />{isActive && <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-black" />}</div>
                         <div className="flex-1 min-w-0">
                           <div className="text-xs font-semibold text-white">{a.name}</div>
@@ -517,14 +516,14 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                     );
                   })}
                 </div>
-                <div className="glass-card">
+                <div className="bg-zinc-950/80 border border-white/[0.08]">
                   <div className="px-4 py-3 border-b border-white/[0.05]"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Decisions</span></div>
                   <div className="divide-y divide-white/[0.03]">
                     {DECISIONS.map((d) => (
                       <div key={d.cycle} className={`px-4 py-3 flex gap-3 ${d.status === "active" ? "bg-orange-500/[0.03] border-l-2 border-orange-500/30" : ""}`}>
                         <span className={`text-xs font-mono font-bold w-6 flex-shrink-0 ${d.status === "active" ? "text-orange-400" : "text-zinc-600"}`}>{d.cycle}</span>
                         <p className={`text-xs flex-1 ${d.status === "active" ? "text-white" : "text-zinc-500"}`}>{d.decision}</p>
-                        <div className="flex -space-x-1">{d.agents.map((a) => (<div key={a} className={`w-4 h-4 rounded bg-gradient-to-br ${AGENTS[a].gradient} flex items-center justify-center text-[6px] text-white font-bold ring-1 ring-black`}>{AGENTS[a].initials}</div>))}</div>
+                        <div className="flex -space-x-1">{d.agents.map((a) => (<div key={a} className={`w-4 h-4 bg-gradient-to-br ${AGENTS[a].gradient} flex items-center justify-center text-[6px] text-white font-bold ring-1 ring-black`}>{AGENTS[a].initials}</div>))}</div>
                       </div>
                     ))}
                   </div>
@@ -541,7 +540,7 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                     { label: "Avg / Cycle", value: `$${avgCost.toFixed(2)}`, sub: "trending stable", accent: true },
                     { label: "Revenue", value: "$0", sub: "pre-revenue", muted: true },
                   ].map((m) => (
-                    <div key={m.label} className="glass-card p-4">
+                    <div key={m.label} className="bg-zinc-950/80 border border-white/[0.08] p-4">
                       <div className="text-[10px] text-zinc-500 uppercase tracking-wider mb-1">{m.label}</div>
                       <div className={`text-2xl font-bold tabular-nums ${"muted" in m ? "text-zinc-600" : "accent" in m && m.accent ? "text-orange-400" : "text-white"}`}>{m.value}</div>
                       <div className="text-[10px] text-zinc-600 mt-0.5">{m.sub}</div>
@@ -549,21 +548,21 @@ function SideNavLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
                   ))}
                 </div>
                 {/* Cost bars */}
-                <div className="glass-card p-4">
+                <div className="bg-zinc-950/80 border border-white/[0.08] p-4">
                   <div className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-3">Cost per cycle</div>
                   <div className="flex items-end gap-1 h-28">
                     {CYCLE_HISTORY.slice(0, 14).reverse().map((c, i) => {
                       const max = Math.max(...CYCLE_HISTORY.slice(0, 14).map(x => x.cost));
                       return (
-                        <motion.div key={c.num} initial={{ height: 0 }} animate={{ height: `${(c.cost / max) * 100}%` }} transition={{ delay: i * 0.03, duration: 0.4 }} className="flex-1 bg-gradient-to-t from-orange-500/60 to-orange-400/20 rounded-t-sm relative group cursor-default">
-                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-1.5 py-0.5 bg-zinc-900 border border-white/10 rounded text-[9px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">${c.cost.toFixed(2)}</div>
+                        <motion.div key={c.num} initial={{ height: 0 }} animate={{ height: `${(c.cost / max) * 100}%` }} transition={{ delay: i * 0.03, duration: 0.4 }} className="flex-1 bg-gradient-to-t from-orange-500/60 to-orange-400/20 relative group cursor-default">
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1 px-1.5 py-0.5 bg-zinc-900 border border-white/10 text-[9px] text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">${c.cost.toFixed(2)}</div>
                         </motion.div>
                       );
                     })}
                   </div>
                 </div>
                 {/* Cycle history */}
-                <div className="glass-card">
+                <div className="bg-zinc-950/80 border border-white/[0.08]">
                   <div className="px-4 py-3 border-b border-white/[0.05]"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Cycle History</span></div>
                   <div className="divide-y divide-white/[0.03] max-h-[300px] overflow-y-auto">
                     {CYCLE_HISTORY.map((c) => (
@@ -611,8 +610,8 @@ function CompactLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
         </div>
         <div className="flex items-center gap-2">
           <div className="flex -space-x-1">
-            {ACTIVE_AGENTS.slice(0, 7).map((a) => (<div key={a.initials} className={`w-5 h-5 rounded bg-gradient-to-br ${a.gradient} flex items-center justify-center text-[6px] text-white font-bold ring-1 ring-black`}>{a.initials}</div>))}
-            <div className="w-5 h-5 rounded bg-white/[0.06] flex items-center justify-center text-[7px] text-zinc-500 font-bold ring-1 ring-black">+{ACTIVE_AGENTS.length - 7}</div>
+            {ACTIVE_AGENTS.slice(0, 7).map((a) => (<div key={a.initials} className={`w-5 h-5 bg-gradient-to-br ${a.gradient} flex items-center justify-center text-[6px] text-white font-bold ring-1 ring-black`}>{a.initials}</div>))}
+            <div className="w-5 h-5 bg-white/[0.06] flex items-center justify-center text-[7px] text-zinc-500 font-bold ring-1 ring-black">+{ACTIVE_AGENTS.length - 7}</div>
           </div>
           <a href="https://github.com/NikitaDmitrieff/auto-co-meta" target="_blank" rel="noopener noreferrer" className="text-xs text-zinc-600 hover:text-zinc-300">{stars !== null ? `${stars}★` : "GH"}</a>
         </div>
@@ -621,7 +620,7 @@ function CompactLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
       {/* Three columns */}
       <div className="grid grid-cols-12 gap-4 mb-5">
         <div className="col-span-12 lg:col-span-5">
-          <div className="glass-card">
+          <div className="bg-zinc-950/80 border border-white/[0.08]">
             <div className="px-4 py-2.5 border-b border-white/[0.05] flex items-center justify-between">
               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Activity</span>
               <div className="flex items-center gap-1 text-[10px] text-emerald-400"><span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" />LIVE</div>
@@ -640,7 +639,7 @@ function CompactLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
           </div>
         </div>
         <div className="col-span-12 lg:col-span-4 flex flex-col gap-4">
-          <div className="glass-card">
+          <div className="bg-zinc-950/80 border border-white/[0.08]">
             <div className="px-4 py-2.5 border-b border-white/[0.05]"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Decisions</span></div>
             <div className="divide-y divide-white/[0.03] max-h-[200px] overflow-y-auto">
               {DECISIONS.slice(0, 6).map((d) => (
@@ -651,7 +650,7 @@ function CompactLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
               ))}
             </div>
           </div>
-          <div className="glass-card">
+          <div className="bg-zinc-950/80 border border-white/[0.08]">
             <div className="px-4 py-2.5 border-b border-white/[0.05]"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Deploys</span></div>
             <div className="divide-y divide-white/[0.03]">
               {DEPLOY_HISTORY.slice(0, 5).map((d) => (
@@ -665,11 +664,11 @@ function CompactLayout({ stars, liveMetrics }: { stars: number | null; liveMetri
           </div>
         </div>
         <div className="col-span-12 lg:col-span-3">
-          <div className="glass-card">
+          <div className="bg-zinc-950/80 border border-white/[0.08]">
             <div className="px-4 py-2.5 border-b border-white/[0.05]"><span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Cycles</span></div>
             <div className="p-2 space-y-0 max-h-[420px] overflow-y-auto">
               {CYCLE_HISTORY.map((c) => (
-                <div key={c.num} className={`flex items-center gap-2 px-2 py-1.5 rounded ${c.phase === "current" ? "bg-orange-500/[0.06]" : ""}`}>
+                <div key={c.num} className={`flex items-center gap-2 px-2 py-1.5 ${c.phase === "current" ? "bg-orange-500/[0.06]" : ""}`}>
                   <span className={`text-[10px] font-mono w-5 flex-shrink-0 ${c.phase === "current" ? "text-orange-400 font-bold" : "text-zinc-600"}`}>C{c.num}</span>
                   <span className={`text-[11px] flex-1 truncate ${c.phase === "current" ? "text-white" : "text-zinc-500"}`}>{c.what}</span>
                   <span className={`text-[10px] tabular-nums ${c.phase === "current" ? "text-orange-400" : "text-zinc-700"}`}>${c.cost.toFixed(2)}</span>
@@ -695,26 +694,54 @@ export default function DemoPage() {
     <div className="min-h-screen bg-black text-white">
       <div className="fixed inset-0 bg-grid opacity-25 pointer-events-none" />
       <div className="relative">
+        {/* Landing page layer — rounded, glass */}
         <LayoutHeader active={layout} onChange={setLayout} />
 
-        <AnimatePresence mode="wait">
-          <motion.div key={layout} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-            {layout === "classic" && <ClassicLayout stars={stars} liveMetrics={liveMetrics} />}
-            {layout === "sidenav" && <SideNavLayout stars={stars} liveMetrics={liveMetrics} />}
-            {layout === "compact" && <CompactLayout stars={stars} liveMetrics={liveMetrics} />}
-          </motion.div>
-        </AnimatePresence>
+        {/* Browser frame — wraps the dashboard */}
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 pb-8">
+          <div className="rounded-xl border border-white/[0.08] overflow-hidden shadow-2xl shadow-black/50 bg-zinc-950">
+            {/* Browser chrome */}
+            <div className="flex items-center gap-3 px-4 py-2.5 bg-zinc-900/80 border-b border-white/[0.06]">
+              <div className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-500/60" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/60" />
+              </div>
+              <div className="flex-1 flex justify-center">
+                <div className="flex items-center gap-2 bg-black/40 border border-white/[0.06] rounded-md px-3 py-1 max-w-xs w-full">
+                  <svg className="w-3 h-3 text-emerald-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+                  <span className="text-[11px] text-zinc-500 truncate">app.runautoco.com/dashboard</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1.5 text-[10px] text-emerald-400">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                live
+              </div>
+            </div>
 
-        {/* CTA */}
-        <div className={`relative ${layout === "sidenav" ? "ml-16" : ""}`}>
-          <div className={`glass-card px-6 py-6 mx-6 mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 ${layout === "compact" ? "max-w-6xl mx-auto" : layout === "classic" ? "max-w-[1400px] mx-auto" : ""}`}>
+            {/* Dashboard content — neo-brutalist, rectangular */}
+            <div className="bg-black min-h-[600px]">
+              <AnimatePresence mode="wait">
+                <motion.div key={layout} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+                  {layout === "classic" && <ClassicLayout stars={stars} liveMetrics={liveMetrics} />}
+                  {layout === "sidenav" && <SideNavLayout stars={stars} liveMetrics={liveMetrics} />}
+                  {layout === "compact" && <CompactLayout stars={stars} liveMetrics={liveMetrics} />}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+
+        {/* CTA — landing page layer, outside frame */}
+        <div className="max-w-[1400px] mx-auto px-6 pb-12">
+          <div className="backdrop-blur-md bg-white/[0.03] border border-white/[0.08] rounded-xl px-6 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-lg shadow-black/20">
             <div>
               <div className="text-base font-bold text-white mb-1">Want this for your company?</div>
               <div className="text-sm text-zinc-500">auto-co is open source. Self-host free, or get the hosted version.</div>
             </div>
             <div className="flex items-center gap-3 flex-shrink-0">
-              <a href="https://github.com/NikitaDmitrieff/auto-co-meta" target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-400 hover:text-white border border-white/10 hover:border-white/20 px-4 py-2 rounded-[3px] transition-all">View on GitHub</a>
-              <Link href="/#waitlist" className="text-sm bg-orange-500 hover:bg-orange-400 text-black font-bold px-5 py-2 rounded-[3px] transition-colors">Get started</Link>
+              <a href="https://github.com/NikitaDmitrieff/auto-co-meta" target="_blank" rel="noopener noreferrer" className="text-sm text-zinc-400 hover:text-white border border-white/10 hover:border-white/20 px-4 py-2 rounded-lg transition-all">View on GitHub</a>
+              <Link href="/#waitlist" className="text-sm bg-orange-500 hover:bg-orange-400 text-black font-bold px-5 py-2 rounded-lg transition-colors">Get started</Link>
             </div>
           </div>
         </div>
