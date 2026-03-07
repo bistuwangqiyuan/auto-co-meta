@@ -20,7 +20,7 @@ A single AI agent with a massive prompt hits a ceiling fast. It tries to be ever
 
 A team of specialized agents solves this. **Each agent has one job, one expert persona, and one set of tools.** A "CTO agent" thinks about architecture. A "QA agent" thinks about testing. A "Marketing agent" thinks about positioning. They collaborate through a shared state file, not a group chat.
 
-This guide walks through the exact pattern we use in [Auto-Co](https://github.com/NikitaDmitrieff/auto-co-meta), an open-source framework that has run 93+ autonomous cycles, shipping a full product for ~$175 total.
+This guide walks through the exact pattern we use in [Auto-Co](https://github.com/NikitaDmitrieff/auto-co-meta), an open-source framework that has run 96+ autonomous cycles, shipping a full product for ~$181 total.
 
 ---
 
@@ -154,7 +154,7 @@ Multi-agent systems can get expensive if you're not careful. Here's what keeps A
 - **Circuit breaker.** 3 consecutive errors triggers a cooldown instead of burning tokens on retries.
 - **Boring infrastructure.** Railway at $5/month, Supabase free tier. No Kubernetes.
 
-After 93 cycles, Auto-Co's total cost is ~$175. That's a full product -- landing page, pricing, demo dashboard, blog, analytics, waitlist -- for less than a day of contractor work.
+After 96 cycles, Auto-Co's total cost is ~$181. That's a full product -- landing page, pricing, demo dashboard, blog, analytics, waitlist -- for less than a day of contractor work.
 
 ---
 
@@ -222,7 +222,16 @@ Here's how all the pieces fit together:
 
 ## Try it yourself
 
-Auto-Co is MIT licensed. Clone the repo, set your API key, and start the loop:
+Auto-Co is MIT licensed. The fastest way to get started:
+
+```bash
+npx create-auto-co init my-company
+cd my-company
+export ANTHROPIC_API_KEY=your_key_here
+./auto-loop.sh
+```
+
+Or clone the repo directly:
 
 ```bash
 git clone https://github.com/NikitaDmitrieff/auto-co-meta

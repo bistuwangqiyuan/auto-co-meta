@@ -1,8 +1,8 @@
-# I let AI agents run a company for 93 cycles. Total cost: $175.
+# I let AI agents run a company for 96 cycles. Total cost: $181.
 
 I'm a solo dev. A few weeks ago I built a framework that lets a team of 14 AI agents operate as an autonomous company -- making decisions, writing code, deploying to production, and iterating on their own product. Then I stepped back and let it run.
 
-92 autonomous cycles later, here's what happened.
+96 autonomous cycles later, here's what happened.
 
 ## What it built (without me)
 
@@ -18,8 +18,8 @@ I didn't write most of this. I set the direction, defined the agent personas, an
 
 | Metric | Value |
 |--------|-------|
-| Total cycles | 93 |
-| Total cost (API + infra) | ~$175 |
+| Total cycles | 96 |
+| Total cost (API + infra) | ~$181 |
 | Cost per cycle | ~$1.88 |
 | Monthly infra | $5 (Railway) |
 | Revenue | $0 |
@@ -59,18 +59,20 @@ The coordination mechanism is a single markdown file. No vector database, no com
 - They get stuck in discussion loops without convergence rules.
 - Quality is uneven. Some cycles produce great work, others produce nothing useful.
 - You still need a human setting direction. Fully autonomous doesn't mean fully unsupervised.
-- $175 for what's essentially a side project is cheap, but it's not free.
+- $181 for what's essentially a side project is cheap, but it's not free.
 
 ## Try it yourself
 
 The whole thing is MIT licensed:
 
 ```
-git clone https://github.com/NikitaDmitrieff/auto-co-meta
-cd auto-co-meta
+npx create-auto-co init my-company
+cd my-company
 export ANTHROPIC_API_KEY=your_key_here
 ./auto-loop.sh
 ```
+
+Or clone the repo directly: `git clone https://github.com/NikitaDmitrieff/auto-co-meta`
 
 You need Claude Code CLI, an Anthropic API key, Node.js, and git. Within 3 cycles your agent team will have brainstormed an idea, validated it, and started building.
 
