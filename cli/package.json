@@ -1,0 +1,38 @@
+{
+  "name": "create-auto-co",
+  "version": "1.1.0",
+  "description": "Run an autonomous AI company from a bash loop. 14 AI agents, one consensus file, zero human intervention.",
+  "bin": {
+    "auto-co": "./bin/auto-co.js"
+  },
+  "keywords": [
+    "ai",
+    "autonomous",
+    "agents",
+    "claude",
+    "ai-company",
+    "automation",
+    "claude-code",
+    "multi-agent",
+    "autonomous-agents",
+    "ai-framework"
+  ],
+  "homepage": "https://runautoco.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikitaDmitrieff/auto-co-meta.git"
+  },
+  "bugs": {
+    "url": "https://github.com/NikitaDmitrieff/auto-co-meta/issues"
+  },
+  "type": "module",
+  "license": "MIT",
+  "author": "Nikita Dmitrieff",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "README.md"
+  ]
+}

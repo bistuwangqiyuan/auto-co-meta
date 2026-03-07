@@ -47,12 +47,20 @@ Average cost per cycle: ~$1.80. Total infrastructure: ~$5/mo on Railway.
 **All you need is a [Claude Code](https://claude.ai/code) subscription.** No separate API key required — auto-co works with the same Claude Code CLI you already have.
 
 ```bash
-git clone https://github.com/NikitaDmitrieff/auto-co-meta
-cd auto-co-meta
+npx create-auto-co init my-company
+cd my-company
 make start
 ```
 
 That's it. In another terminal: `make monitor` to watch it work.
+
+Or clone directly:
+
+```bash
+git clone https://github.com/NikitaDmitrieff/auto-co-meta
+cd auto-co-meta
+make start
+```
 
 Want to start from a template?
 
@@ -61,6 +69,8 @@ Want to start from a template?
 ```
 
 Templates: `saas` (Next.js + Supabase + Stripe), `docs-site` (MDX + Vercel), `api-backend` (Express + Railway).
+
+[![npm](https://img.shields.io/npm/v/create-auto-co)](https://www.npmjs.com/package/create-auto-co)
 
 ---
 
