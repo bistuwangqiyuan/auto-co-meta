@@ -31,6 +31,7 @@
 #   ./auto-loop.sh --notify URL # POST JSON notification to webhook after each cycle
 #   ./auto-loop.sh --config     # Print all config values
 #   ./auto-loop.sh --metrics    # Quick KPI dashboard from cycle history
+#   ./auto-loop.sh --env        # Generate .env.example with all config options
 #   ./auto-loop.sh --version    # Show version
 #
 # Stop:
@@ -361,6 +362,8 @@ USAGE:
   ./auto-loop.sh --cycles N   Run at most N cycles, then exit cleanly
   ./auto-loop.sh --notify URL POST JSON notifications to webhook after each cycle
   ./auto-loop.sh --metrics    Quick KPI dashboard (cycles, cost, duration)
+  ./auto-loop.sh --env        Generate .env.example with all config options
+  ./auto-loop.sh --env FILE   Write template to custom path
   ./auto-loop.sh --selftest   Validate environment
   ./auto-loop.sh --dry-run    Preview prompt without running
 
@@ -732,6 +735,74 @@ if [ "${1:-}" = "--config" ]; then
     echo "--- Environment ---"
     echo ".env loaded:            $([ -f "$PROJECT_DIR/.env" ] && echo 'yes' || echo 'no')"
     echo "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS: ${CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS:-unset}"
+    exit 0
+fi
+
+# === Env flag (generate .env.example template) ===
+
+if [ "${1:-}" = "--env" ] || [ "${1:-}" = "-e" ]; then
+    TARGET="${2:-.env.example}"
+    if [ -f "$TARGET" ] && [ "${3:-}" != "--force" ]; then
+        echo "File '$TARGET' already exists. Use --force as third arg to overwrite."
+        echo "  ./auto-loop.sh --env $TARGET --force"
+        exit 1
+    fi
+    cat > "$TARGET" << 'ENVEOF'
+# ============================================================
+# Auto-Co Configuration
+# ============================================================
+# Copy this file to .env and adjust values as needed.
+# All variables are optional -- defaults are shown.
+# ============================================================
+
+# --- Claude Model ---
+# Which Claude model to use for each cycle.
+# Options: opus, sonnet, haiku
+# MODEL=opus
+
+# --- Loop Timing ---
+# Seconds to wait between cycles.
+# LOOP_INTERVAL=120
+
+# Max seconds a single cycle can run before being force-killed.
+# CYCLE_TIMEOUT_SECONDS=1800
+
+# --- Error Handling ---
+# How many consecutive errors before the circuit breaker trips.
+# MAX_CONSECUTIVE_ERRORS=3
+
+# Seconds to wait after circuit breaker trips before retrying.
+# COOLDOWN_SECONDS=300
+
+# Seconds to wait when hitting API usage limits.
+# LIMIT_WAIT_SECONDS=3600
+
+# Initial backoff (seconds) on transient failure. Doubles each retry.
+# RETRY_BASE_SECONDS=30
+
+# Maximum backoff cap (seconds).
+# RETRY_MAX_SECONDS=600
+
+# --- Cycle Limits ---
+# Max cycles to run before auto-stopping (0 = unlimited).
+# MAX_CYCLES=0
+
+# --- Log Management ---
+# Maximum number of cycle log files to keep.
+# MAX_LOGS=200
+
+# --- Notifications ---
+# Webhook URL to POST JSON notifications after each cycle.
+# Receives: {cycle, status, cost, duration_s, model, total_cost, timestamp}
+# Leave empty to disable.
+# NOTIFY_URL=
+
+# --- Advanced ---
+# Enable Agent Teams (experimental). Set by auto-loop.sh automatically.
+# CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+ENVEOF
+    echo "Generated $TARGET with all configuration options."
+    echo "Copy to .env and uncomment the values you want to change."
     exit 0
 fi
 
