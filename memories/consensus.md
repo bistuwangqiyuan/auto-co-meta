@@ -1,26 +1,29 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-07T12:00:00Z
+2026-03-07T13:00:00Z
 
 ## Current Phase
 Building -- app.runautoco.com dashboard
 
 ## What We Did This Cycle
-Cycle 117 -- Live page UX overhaul + GitHub traffic integration.
+Cycle 118 -- Dashboard nav redesign (human directive).
 
-1. **Live page UX overhaul** -- Converted to client component with collapsible cycle rows (click to expand/collapse), cycle duration bar chart (last 40 cycles), and search/filter controls (text search, status filter, agent filter with clear button)
-2. **GitHub traffic integration** -- Added getGitHubTraffic() to data pipeline pulling views+clones from GitHub API; added traffic section to GitHub page with totals + daily breakdown chart; 40 views (26 unique), 166 clones (74 unique) in last 14 days
-3. **Metrics enrichment** -- Appended cycle 117 entry to metrics.jsonl with page_views data (40)
-4. **Deployed to Railway** -- Build passes cleanly (9 static pages), pushed to app.runautoco.com
+1. **Floating collapsible nav** -- Replaced static white Sidebar with demo-pattern floating nav: dark bg (`bg-zinc-950`), collapses to 48px icon-only, expands to 170px on hover with `motion` animations
+2. **Real logo** -- Ported `/logo-ac.png` from landing to dashboard, replacing plain "AC" text square
+3. **Neo-brutalist styling** -- Sharp corners, `border-white/[0.1]`, `shadow-xl shadow-black/50`, orange active indicator (`border-l-2 border-l-orange-500` + `bg-orange-500/10 text-orange-400`)
+4. **Mobile dark nav** -- Updated MobileNav with dark theme drawer (animated slide-in), matching floating nav styling
+5. **Layout restructure** -- Removed fixed 56px sidebar layout, content now uses `lg:pl-16` to clear collapsed nav; TopBar is mobile-only with dark theme
+6. **Installed motion** -- Added framer-motion (`motion/react`) for smooth nav animations
 
 ## Key Decisions Made
-- Convert Live page to client component for interactive filters + collapsible rows — worth the 3KB JS cost for dramatically better UX at 95+ cycles
-- Add GitHub traffic API integration — real engagement data beyond vanity metrics
-- Skip distribution PR follow-ups — human directive says no marketing/distribution work
+- Port demo nav pattern to dashboard per human directive -- floating collapsible nav is the gold standard
+- Keep white content area -- dark nav floats over white pages for contrast
+- TopBar becomes mobile-only -- desktop gets clean floating nav with no top bar
+- Added ~31KB shared JS (motion library) -- worth it for the animation quality
 
 ## Active Projects
-- **dashboard**: `projects/dashboard/` -- DEPLOYED to Railway, live at `app.runautoco.com`, Live page overhauled with filters+collapsible+duration chart, GitHub page has traffic section
+- **dashboard**: `projects/dashboard/` -- DEPLOYED to Railway, live at `app.runautoco.com`, nav redesigned to floating collapsible dark pattern
 - auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1
 - npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1
 - landing page: LIVE at `https://runautoco.com`
@@ -47,28 +50,28 @@ Cycle 117 -- Live page UX overhaul + GitHub traffic integration.
 - npm package: create-auto-co v1.1.1
 - Deployed Services: Railway (landing, dashboard), npm
 - Cost/month: ~$7 (Railway -- 2 services)
-- Total cost: ~$226 (117 cycle runs)
+- Total cost: ~$228 (118 cycle runs)
 
 ## Next Action
-**Cycle 118: Overview page refresh + Settings/Config page.**
+**Cycle 119: Overview page refresh + polish.**
 1. Refresh the Overview (home) page: add traffic sparkline, improve layout of recent activity sections, show latest metrics snapshot
-2. Build a Settings/Config page showing current team roster (14 agents), skill inventory, and auto-loop configuration
-3. Consider adding a "Health" page that shows deployment status, last deploy time, and system health checks
+2. Consider adding a Settings/Config page showing team roster, skill inventory, and auto-loop configuration
+3. Consider a "Health" page with deployment status and system checks
 4. Keep enriching metrics.jsonl each cycle with fresh GitHub traffic data
 
 ## Company State
-- Product: auto-co framework + dashboard (real data, JSONL-enriched, mobile-ready, Finance+Live+GitHub with traffic) + demo + landing + pricing + blog + waitlist + admin + npm CLI
-- Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind + Railway + npm + GitHub Actions
+- Product: auto-co framework + dashboard (floating nav, real data, JSONL-enriched, mobile-ready, Finance+Live+GitHub with traffic) + demo + landing + pricing + blog + waitlist + admin + npm CLI
+- Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind + motion + Railway + npm + GitHub Actions
 - Business Model: Open-source core (MIT) + Hosted paid tier ($24.50/$49/$99/mo)
 - Revenue: $0
 - Users: 1 + 74 cloners
 
 ## Human Escalation
-- Pending Request: YES -- Railway project token for GitHub Actions auto-deploy
-- Last Response: 2026-03-08 (Deploy to Railway, not Vercel)
-- Awaiting Response Since: 2026-03-07
+- Pending Request: no
+- Last Response: 2026-03-08 (Railway token added, dashboard nav redesign directive)
+- Awaiting Response Since: N/A
 
 ## Open Questions
 - When should we start pursuing first paying customer vs. continuing to polish?
-- Should we add a "Health" page with deployment monitoring?
-- Worth adding a Settings page showing team roster and skill inventory?
+- Should we add a Settings page showing team roster and skill inventory?
+- Worth adding a Health page with deployment monitoring?

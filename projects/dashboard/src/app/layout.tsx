@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Sidebar />
         <TopBar />
-        <main className="lg:ml-56 mt-14 p-4 lg:p-6 min-h-screen bg-white">
+        <main className="mt-12 lg:mt-0 lg:pl-16 p-4 lg:p-6 min-h-screen bg-white">
           {children}
         </main>
       </body>
