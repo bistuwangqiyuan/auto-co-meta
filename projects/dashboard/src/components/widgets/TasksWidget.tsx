@@ -18,6 +18,7 @@ const STATUS_STYLES: Record<string, string> = {
 };
 
 export default function TasksWidget() {
+  const [expanded, setExpanded] = useState(false);
   const [showCompleted, setShowCompleted] = useState(false);
   const { tasks } = state;
 
@@ -27,61 +28,69 @@ export default function TasksWidget() {
 
   return (
     <div className="border border-slate-200">
-      <div className="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full px-4 py-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors"
+      >
         <h3 className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-widest">
           Tasks
         </h3>
-        <span className="text-[10px] font-mono text-slate-400">
-          {activeTasks.length} active
-        </span>
-      </div>
-      <div className="p-4 space-y-2">
-        {visibleTasks.length === 0 && (
-          <div className="text-sm text-slate-400 py-4 text-center">No tasks</div>
-        )}
-        {visibleTasks.map((task, i) => (
-          <div key={task.id || i} className="border border-slate-100 p-3">
-            <div className="flex items-start justify-between gap-2 mb-1.5">
-              <div className="text-sm text-slate-700 flex-1">{task.description}</div>
-              <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase flex-shrink-0 ${
-                PRIORITY_STYLES[task.priority] || PRIORITY_STYLES.medium
-              }`}>
-                {task.priority}
-              </span>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-mono text-slate-400">
+            {activeTasks.length} active
+          </span>
+          <span className="text-[10px] text-slate-400">{expanded ? "−" : "+"}</span>
+        </div>
+      </button>
+      {expanded && (
+        <div className="p-4 pt-0 space-y-2 border-t border-slate-200">
+          {visibleTasks.length === 0 && (
+            <div className="text-sm text-slate-400 py-4 text-center">No tasks</div>
+          )}
+          {visibleTasks.map((task, i) => (
+            <div key={task.id || i} className="border border-slate-100 p-3">
+              <div className="flex items-start justify-between gap-2 mb-1.5">
+                <div className="text-sm text-slate-700 flex-1">{task.description}</div>
+                <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase flex-shrink-0 ${
+                  PRIORITY_STYLES[task.priority] || PRIORITY_STYLES.medium
+                }`}>
+                  {task.priority}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase ${
+                  STATUS_STYLES[task.status] || STATUS_STYLES.todo
+                }`}>
+                  {task.status === "doing" ? "In Progress" : task.status}
+                </span>
+                <span className="text-[10px] font-mono text-slate-400">
+                  {task.owner}
+                </span>
+                <span className="text-[10px] font-mono text-slate-300 ml-auto">
+                  c{task.cycle}
+                </span>
+              </div>
             </div>
-            <div className="flex items-center gap-2">
-              <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase ${
-                STATUS_STYLES[task.status] || STATUS_STYLES.todo
-              }`}>
-                {task.status === "doing" ? "In Progress" : task.status}
-              </span>
-              <span className="text-[10px] font-mono text-slate-400">
-                {task.owner}
-              </span>
-              <span className="text-[10px] font-mono text-slate-300 ml-auto">
-                c{task.cycle}
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
 
-        {completedTasks.length > 0 && !showCompleted && (
-          <button
-            onClick={() => setShowCompleted(true)}
-            className="text-[10px] font-mono text-slate-400 hover:text-slate-600 pt-1"
-          >
-            + {completedTasks.length} completed
-          </button>
-        )}
-        {showCompleted && completedTasks.length > 0 && (
-          <button
-            onClick={() => setShowCompleted(false)}
-            className="text-[10px] font-mono text-slate-400 hover:text-slate-600 pt-1"
-          >
-            Hide completed
-          </button>
-        )}
-      </div>
+          {completedTasks.length > 0 && !showCompleted && (
+            <button
+              onClick={() => setShowCompleted(true)}
+              className="text-[10px] font-mono text-slate-400 hover:text-slate-600 pt-1"
+            >
+              + {completedTasks.length} completed
+            </button>
+          )}
+          {showCompleted && completedTasks.length > 0 && (
+            <button
+              onClick={() => setShowCompleted(false)}
+              className="text-[10px] font-mono text-slate-400 hover:text-slate-600 pt-1"
+            >
+              Hide completed
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

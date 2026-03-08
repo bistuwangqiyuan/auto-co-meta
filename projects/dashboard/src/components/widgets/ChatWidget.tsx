@@ -20,18 +20,25 @@ const INITIAL_MESSAGES = [
   },
 ];
 
-export default function ChatWidget() {
+export default function ChatWidget({ persistent }: { persistent?: boolean }) {
   const [messages] = useState(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
 
   return (
-    <div className="border border-slate-200 flex flex-col">
-      <div className="px-4 py-2.5 border-b border-slate-200">
+    <div className={`border-slate-200 flex flex-col ${
+      persistent
+        ? "h-full"
+        : "border"
+    }`}>
+      <div className="px-4 py-2.5 border-b border-slate-200 flex items-center gap-2">
+        <span className="w-1.5 h-1.5 bg-green-400 animate-pulse" />
         <h3 className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-widest">
           Talk to your CEO
         </h3>
       </div>
-      <div className="flex-1 p-4 space-y-3 min-h-[200px] max-h-[350px] overflow-y-auto">
+      <div className={`flex-1 p-4 space-y-3 overflow-y-auto ${
+        persistent ? "min-h-0" : "min-h-[200px] max-h-[350px]"
+      }`}>
         {messages.map((msg, i) => (
           <div key={i} className={`flex gap-2 ${msg.role === "human" ? "flex-row-reverse" : ""}`}>
             <div className={`flex-shrink-0 w-6 h-6 flex items-center justify-center text-[9px] font-mono font-bold ${
@@ -39,7 +46,7 @@ export default function ChatWidget() {
             }`}>
               {msg.role === "ceo" ? "CEO" : "YOU"}
             </div>
-            <div className={`max-w-[80%] ${msg.role === "human" ? "text-right" : ""}`}>
+            <div className={`max-w-[85%] ${msg.role === "human" ? "text-right" : ""}`}>
               <div className={`text-sm p-2.5 ${
                 msg.role === "ceo"
                   ? "bg-slate-50 text-slate-700"

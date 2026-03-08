@@ -27,8 +27,24 @@ const LAYER_COLORS: Record<string, string> = {
   Intelligence: "bg-cyan-50 text-cyan-600",
 };
 
+// Build interaction feed from decisions
+function buildInteractions() {
+  const interactions: { agent: string; action: string; cycle: number }[] = [];
+
+  for (const d of state.decisions.slice(-12)) {
+    interactions.push({
+      agent: d.agent,
+      action: d.decision.length > 80 ? d.decision.slice(0, 80) + "..." : d.decision,
+      cycle: d.cycle || state.cycle,
+    });
+  }
+
+  return interactions.slice(-6);
+}
+
 export default function TeamWidget() {
   const { agentActivity, cycle } = state;
+  const interactions = buildInteractions();
 
   return (
     <div className="border border-slate-200">
@@ -39,7 +55,8 @@ export default function TeamWidget() {
         <span className="text-[10px] font-mono text-slate-400">14 agents</span>
       </div>
       <div className="p-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+        {/* Agent roster */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-1.5 mb-4">
           {AGENTS.map((agent) => {
             const activity = agentActivity[agent.id];
             const isRecent = activity && (cycle - activity.lastCycle) <= 2;
@@ -47,29 +64,41 @@ export default function TeamWidget() {
             return (
               <div
                 key={agent.id}
-                className={`flex items-center gap-3 p-2.5 border ${
+                className={`flex items-center gap-2 p-2 border ${
                   isRecent ? "border-accent/30 bg-accent/5" : "border-slate-100"
                 }`}
               >
                 <span className={`w-1.5 h-1.5 flex-shrink-0 ${isRecent ? "bg-accent" : "bg-slate-300"}`} />
                 <div className="min-w-0 flex-1">
-                  <div className="text-xs font-mono text-slate-700 truncate">{agent.name}</div>
-                  <div className="text-[10px] text-slate-400 truncate">{agent.expert}</div>
-                </div>
-                <div className="flex flex-col items-end flex-shrink-0">
-                  <span className={`text-[9px] font-mono px-1.5 py-0.5 ${LAYER_COLORS[agent.layer]}`}>
-                    {agent.layer}
-                  </span>
-                  {activity && (
-                    <span className="text-[9px] font-mono text-slate-400 mt-0.5">
-                      c{activity.lastCycle}
-                    </span>
-                  )}
+                  <div className="text-[10px] font-mono text-slate-700 truncate">{agent.name}</div>
+                  <div className="text-[9px] text-slate-400 truncate">{agent.expert}</div>
                 </div>
               </div>
             );
           })}
         </div>
+
+        {/* Recent interactions */}
+        {interactions.length > 0 && (
+          <div>
+            <div className="text-[10px] font-mono text-slate-400 uppercase tracking-wide mb-2">
+              Recent Activity
+            </div>
+            <div className="space-y-1.5">
+              {interactions.map((ix, i) => (
+                <div key={i} className="flex items-start gap-2 text-xs">
+                  <span className="text-accent font-mono font-bold flex-shrink-0">
+                    {ix.agent}
+                  </span>
+                  <span className="text-slate-500">{ix.action}</span>
+                  <span className="text-[9px] font-mono text-slate-300 flex-shrink-0 ml-auto">
+                    c{ix.cycle}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

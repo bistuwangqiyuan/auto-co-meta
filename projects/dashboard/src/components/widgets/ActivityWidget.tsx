@@ -64,17 +64,20 @@ const TAG_COLORS: Record<string, string> = {
 export default function ActivityWidget() {
   const [expanded, setExpanded] = useState(false);
   const log = buildActivityLog();
-  const visible = expanded ? log : log.slice(0, 15);
+  const visible = expanded ? log : log.slice(0, 20);
 
   return (
     <div className="border border-slate-200">
       <div className="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
-        <h3 className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-widest">
-          Activity
-        </h3>
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 bg-green-400 animate-pulse" />
+          <h3 className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-widest">
+            Live Activity
+          </h3>
+        </div>
         <span className="text-[10px] font-mono text-slate-400">{log.length} entries</span>
       </div>
-      <div className="bg-zinc-950 p-4 font-mono text-xs leading-relaxed max-h-[400px] overflow-y-auto">
+      <div className="bg-zinc-950 p-4 font-mono text-xs leading-relaxed max-h-[500px] overflow-y-auto">
         {visible.map((entry, i) => (
           <div key={i} className="flex gap-2 py-0.5">
             <span className="text-zinc-600 flex-shrink-0 w-12 hidden sm:block">{entry.time}</span>
@@ -82,8 +85,8 @@ export default function ActivityWidget() {
               [{entry.tag}]
             </span>
             {entry.agent && (
-              <span className="text-accent flex-shrink-0">
-                {entry.agent.split("-").pop()}:
+              <span className="text-accent flex-shrink-0 font-bold">
+                {entry.agent}:
               </span>
             )}
             <span className="text-zinc-300 break-words">{entry.message}</span>
@@ -93,12 +96,12 @@ export default function ActivityWidget() {
           <div className="text-zinc-600">No activity yet.</div>
         )}
       </div>
-      {log.length > 15 && (
+      {log.length > 20 && (
         <button
           onClick={() => setExpanded(!expanded)}
           className="w-full px-4 py-2 text-[10px] font-mono text-slate-400 hover:text-slate-600 bg-zinc-950 border-t border-zinc-800 text-left"
         >
-          {expanded ? "Show less" : `+ ${log.length - 15} more entries`}
+          {expanded ? "Show less" : `+ ${log.length - 20} more entries`}
         </button>
       )}
     </div>

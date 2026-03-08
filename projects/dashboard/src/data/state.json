@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-03-08T04:02:14.406Z",
-  "cycle": 124,
+  "generatedAt": "2026-03-08T04:09:44.656Z",
+  "cycle": 125,
   "phase": "Building",
   "metrics": {
-    "totalCost": 240,
+    "totalCost": 242,
     "avgCostPerCycle": 1.94,
     "revenue": "$0",
     "users": "1 (creator) + 74 cloners",
@@ -12,24 +12,29 @@
     "cloners": 74,
     "openIssues": 0
   },
-  "nextAction": "Cycle 125: Dashboard polish + verify Railway deploy.",
+  "nextAction": "Cycle 126: Deploy dashboard polish + check awesome-list PR status + dev.to publish if API key received.",
   "whatWeDid": [
-    "Human directive received -- Dashboard redesign based on NanoCorp competitor analysis. Overrides planned cross-posting work.",
-    "Sidebar navigation removed -- Ripped out Sidebar, TopBar, MobileNav components and 6 separate pages (live, team, finance, github, health, settings).",
-    "Portfolio page built -- \"/\" now shows \"Your Companies\" with company cards + \"+ New Company\" card. Conglomerate-style view like NanoCorp."
+    "Railway deploy verified -- app.runautoco.com returns 200, served via Railway edge through Cloudflare proxy. DNS resolves correctly.",
+    "Mobile responsive polish -- Fixed 4 widgets for mobile breakpoints:",
+    "Build passes -- 6/6 static pages generated, all widgets compile cleanly"
   ],
   "projects": [
     {
       "name": "dashboard",
-      "status": "`projects/dashboard/` -- REDESIGNED, deploying to Railway at `app.runautoco.com`, 2 routes (portfolio + company)"
+      "status": "`projects/dashboard/` -- POLISHED for mobile, deploying to Railway at `app.runautoco.com`, 2 routes (portfolio + company, 8 widgets)"
     }
   ],
-  "pendingEscalation": false,
+  "pendingEscalation": true,
   "distribution": [
     {
       "channel": "npm (create-auto-co)",
       "status": "LIVE v1.1.1",
       "url": "https://www.npmjs.com/package/create-auto-co"
+    },
+    {
+      "channel": "dev.to",
+      "status": "ARTICLE READY (awaiting API key)",
+      "url": "docs/marketing/devto-120-cycles.md"
     },
     {
       "channel": "awesome-claude-code",
@@ -64,6 +69,16 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "1dabdfa",
+        "msg": "cycle 125: Dashboard mobile polish + dev.to article prep",
+        "date": "2026-03-07 20:06:42 -0800"
+      },
+      {
+        "hash": "32c5f5d",
+        "msg": "chore: refresh dashboard data",
+        "date": "2026-03-08 03:57:54 +0000"
+      },
       {
         "hash": "a387e7f",
         "msg": "chore: cycle 124 state update — dashboard redesign completed",
@@ -153,16 +168,6 @@
         "hash": "b96fd20",
         "msg": "chore: refresh dashboard data",
         "date": "2026-03-07 18:52:55 -0800"
-      },
-      {
-        "hash": "751dd50",
-        "msg": "chore: refresh dashboard data",
-        "date": "2026-03-08 02:51:59 +0000"
-      },
-      {
-        "hash": "8912351",
-        "msg": "cycle 117: Live page UX overhaul + GitHub traffic integration",
-        "date": "2026-03-07 18:51:23 -0800"
       }
     ],
     "openPRs": []
@@ -1183,6 +1188,13 @@
       "duration": 542,
       "model": "opus",
       "totalCost": 173.8114
+    },
+    {
+      "cycle": 125,
+      "timestamp": "2026-03-08T06:30:00Z",
+      "status": "completed",
+      "cost": 1.9,
+      "model": "claude-opus-4-6"
     }
   ],
   "decisions": [
@@ -1428,6 +1440,24 @@
       "rationale": "Human directive specified complete redesign based on NanoCorp competitor analysis. Executed all 8 widgets, portfolio view, and company header as specified.",
       "confidence": 0.95,
       "outcome": "success"
+    },
+    {
+      "timestamp": "2026-03-08T06:30:00Z",
+      "cycle": 125,
+      "agent": "fullstack-dhh",
+      "decision": "Dashboard mobile responsive polish: hide time column on mobile in ActivityWidget, hide handle text on mobile in CompanyHeader, condense status banner for mobile, wrap frequency buttons in CycleStatusWidget, hide dates on mobile in DocumentsWidget",
+      "rationale": "Dashboard redesign from cycle 124 needed mobile breakpoint polish — widgets overflowed on narrow screens",
+      "confidence": 0.9,
+      "outcome": "success"
+    },
+    {
+      "timestamp": "2026-03-08T06:30:00Z",
+      "cycle": 125,
+      "agent": "marketing-godin",
+      "decision": "Prepared dev.to cross-post article as markdown, escalated for dev.to API key",
+      "rationale": "Blog content marketing — dev.to is a key distribution channel for developer audience, but no API key available",
+      "confidence": 0.7,
+      "outcome": "pending"
     }
   ],
   "tasks": [
@@ -1817,6 +1847,24 @@
       "status": "done",
       "priority": "critical",
       "cycleCompleted": 124
+    },
+    {
+      "id": "t-125-1",
+      "cycle": 125,
+      "description": "Dashboard mobile responsive polish (4 widget fixes)",
+      "owner": "fullstack-dhh",
+      "status": "done",
+      "priority": "high",
+      "cycleCompleted": 125
+    },
+    {
+      "id": "t-125-2",
+      "cycle": 125,
+      "description": "Cross-post 120+ Cycles blog to dev.to",
+      "owner": "marketing-godin",
+      "status": "blocked",
+      "priority": "medium",
+      "cycleCompleted": null
     }
   ],
   "artifacts": [
@@ -2148,6 +2196,13 @@
       "ref": "railway-dashboard",
       "path": "app.runautoco.com",
       "createdBy": "devops-hightower"
+    },
+    {
+      "cycle": 125,
+      "type": "file",
+      "ref": "docs/marketing/devto-120-cycles.md",
+      "path": "docs/marketing/devto-120-cycles.md",
+      "createdBy": "marketing-godin"
     }
   ],
   "agentActivity": {
@@ -2157,9 +2212,9 @@
       "tasks": 15
     },
     "fullstack-dhh": {
-      "decisions": 17,
-      "lastCycle": 124,
-      "tasks": 22
+      "decisions": 18,
+      "lastCycle": 125,
+      "tasks": 23
     },
     "cfo-campbell": {
       "decisions": 1,
@@ -2170,9 +2225,9 @@
       "lastCycle": 117
     },
     "marketing-godin": {
-      "decisions": 3,
-      "lastCycle": 123,
-      "tasks": 4
+      "decisions": 4,
+      "lastCycle": 125,
+      "tasks": 5
     },
     "qa-bach": {
       "decisions": 0,
@@ -2328,6 +2383,17 @@
       "pageViews": 40,
       "costCycle": 1.9,
       "costTotal": 240
+    },
+    {
+      "date": "2026-03-08",
+      "cycle": 125,
+      "revenue": 0,
+      "users": 1,
+      "signups": 2,
+      "githubStars": 13,
+      "pageViews": 40,
+      "costCycle": 1.9,
+      "costTotal": 242
     }
   ],
   "traffic": {
@@ -2356,69 +2422,68 @@
         "url": "runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 108,
-        "checkedAt": "2026-03-08T04:02:13.924Z"
+        "responseMs": 71,
+        "checkedAt": "2026-03-08T04:09:44.162Z"
       },
       {
         "service": "Dashboard",
         "url": "app.runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 69,
-        "checkedAt": "2026-03-08T04:02:13.994Z"
+        "responseMs": 81,
+        "checkedAt": "2026-03-08T04:09:44.244Z"
       },
       {
         "service": "Demo Dashboard",
         "url": "runautoco.com/demo",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 45,
-        "checkedAt": "2026-03-08T04:02:14.039Z"
+        "responseMs": 44,
+        "checkedAt": "2026-03-08T04:09:44.288Z"
       },
       {
         "service": "Blog",
         "url": "runautoco.com/blog",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 40,
-        "checkedAt": "2026-03-08T04:02:14.079Z"
+        "responseMs": 39,
+        "checkedAt": "2026-03-08T04:09:44.327Z"
       },
       {
         "service": "Pricing",
         "url": "runautoco.com/pricing",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 39,
-        "checkedAt": "2026-03-08T04:02:14.118Z"
+        "responseMs": 53,
+        "checkedAt": "2026-03-08T04:09:44.380Z"
       },
       {
         "service": "Admin",
         "url": "runautoco.com/admin",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 46,
-        "checkedAt": "2026-03-08T04:02:14.164Z"
+        "responseMs": 39,
+        "checkedAt": "2026-03-08T04:09:44.419Z"
       },
       {
         "service": "npm Package",
         "url": "npmjs.com/package/create-auto-co",
         "status": "healthy",
         "statusCode": 403,
-        "responseMs": 241,
-        "checkedAt": "2026-03-08T04:02:14.405Z"
+        "responseMs": 237,
+        "checkedAt": "2026-03-08T04:09:44.656Z"
       }
     ],
     "loopHealth": {
-      "totalCycles": 109,
+      "totalCycles": 110,
       "successRate": 0,
       "avgDuration": 446,
-      "avgCost": 1.95,
+      "avgCost": 1.94,
       "lastCycle": {
-        "number": 105,
-        "timestamp": "2026-03-08T03:57:59Z",
-        "status": "ok",
-        "duration": 542,
-        "cost": 2.4090404500000004
+        "number": 125,
+        "timestamp": "2026-03-08T06:30:00Z",
+        "status": "completed",
+        "cost": 1.9
       },
       "recentFailures": 10
     }

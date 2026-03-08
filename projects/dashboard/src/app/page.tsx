@@ -1,7 +1,8 @@
 import state from "@/data";
 
 export default function PortfolioPage() {
-  const { cycle, metrics, phase } = state;
+  const { cycle, metrics, phase, traffic } = state;
+  const cloneCount = traffic?.clones?.unique ?? 0;
 
   return (
     <div className="max-w-4xl mx-auto px-4 lg:px-6 py-12">
@@ -36,6 +37,16 @@ export default function PortfolioPage() {
             <span>${metrics.totalCost.toFixed(2)} spent</span>
             <span>&middot;</span>
             <span>{phase}</span>
+          </div>
+
+          {/* Clone button */}
+          <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+            <span className="text-[10px] font-mono text-slate-400">
+              {cloneCount} GitHub clones (14d)
+            </span>
+            <span className="text-[10px] font-mono font-bold px-3 py-1 bg-slate-100 text-slate-600 hover:bg-accent hover:text-white transition-colors uppercase tracking-wide">
+              Clone &middot; {cloneCount}
+            </span>
           </div>
         </a>
 

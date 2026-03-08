@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 const DOCUMENTS = [
   { title: "NanoCorp Competitor Analysis", author: "research-thompson", date: "2026-03-08", type: "research" },
   { title: "CEO Daily Briefing", author: "ceo-bezos", date: "2026-03-07", type: "briefing" },
@@ -21,35 +23,45 @@ const TYPE_COLORS: Record<string, string> = {
 };
 
 export default function DocumentsWidget() {
+  const [expanded, setExpanded] = useState(false);
+
   return (
     <div className="border border-slate-200">
-      <div className="px-4 py-2.5 border-b border-slate-200 flex items-center justify-between">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="w-full px-4 py-2.5 flex items-center justify-between hover:bg-slate-50 transition-colors"
+      >
         <h3 className="text-[10px] font-mono font-semibold text-slate-400 uppercase tracking-widest">
           Documents
         </h3>
-        <span className="text-[10px] font-mono text-slate-400">{DOCUMENTS.length} files</span>
-      </div>
-      <div className="p-4 space-y-1.5">
-        {DOCUMENTS.map((doc, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-3 py-2 border-b border-slate-50 last:border-0 cursor-pointer hover:bg-slate-50 -mx-2 px-2 transition-colors"
-          >
-            <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase flex-shrink-0 ${
-              TYPE_COLORS[doc.type] || "bg-slate-100 text-slate-500"
-            }`}>
-              {doc.type}
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="text-sm text-slate-700 truncate">{doc.title}</div>
+        <div className="flex items-center gap-2">
+          <span className="text-[10px] font-mono text-slate-400">{DOCUMENTS.length} files</span>
+          <span className="text-[10px] text-slate-400">{expanded ? "−" : "+"}</span>
+        </div>
+      </button>
+      {expanded && (
+        <div className="p-4 pt-0 space-y-1.5 border-t border-slate-200">
+          {DOCUMENTS.map((doc, i) => (
+            <div
+              key={i}
+              className="flex items-center gap-3 py-2 border-b border-slate-50 last:border-0 cursor-pointer hover:bg-slate-50 -mx-2 px-2 transition-colors"
+            >
+              <span className={`text-[9px] font-mono font-bold px-1.5 py-0.5 uppercase flex-shrink-0 ${
+                TYPE_COLORS[doc.type] || "bg-slate-100 text-slate-500"
+              }`}>
+                {doc.type}
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm text-slate-700 truncate">{doc.title}</div>
+              </div>
+              <div className="flex items-center gap-2 flex-shrink-0">
+                <span className="text-[10px] font-mono text-slate-400">{doc.author.split("-").pop()}</span>
+                <span className="text-[10px] font-mono text-slate-300 hidden sm:inline">{doc.date}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <span className="text-[10px] font-mono text-slate-400">{doc.author.split("-").pop()}</span>
-              <span className="text-[10px] font-mono text-slate-300 hidden sm:inline">{doc.date}</span>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

@@ -101,7 +101,7 @@ export interface DashboardState {
         number: number;
         timestamp: string;
         status: string;
-        duration: number;
+        duration?: number;
         cost: number;
       } | null;
       recentFailures: number;

@@ -43,3 +43,4 @@
 {"id":"t-124-1","cycle_created":124,"description":"Dashboard redesign — single scrollable page with 8 widgets, portfolio view, remove sidebar","owner":"fullstack-dhh","status":"done","priority":"critical","cycle_completed":124}
 {"id":"t-125-1","cycle_created":125,"description":"Dashboard mobile responsive polish (4 widget fixes)","owner":"fullstack-dhh","status":"done","priority":"high","cycle_completed":125}
 {"id":"t-125-2","cycle_created":125,"description":"Cross-post 120+ Cycles blog to dev.to","owner":"marketing-godin","status":"blocked","priority":"medium","cycle_completed":null}
+{"id":"t-125-3","cycle_created":125,"description":"Dashboard Round 2 refinements per human directive (widget reorder, chat panel, clone button, metrics labeling, collapsible widgets)","owner":"fullstack-dhh","status":"done","priority":"critical","cycle_completed":125}

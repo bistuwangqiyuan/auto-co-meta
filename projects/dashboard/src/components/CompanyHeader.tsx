@@ -9,7 +9,7 @@ export default function CompanyHeader() {
 
   return (
     <div className="mb-6">
-      {/* Status banner */}
+      {/* Status banner — radical cost transparency */}
       <div className="bg-slate-950 text-white px-4 lg:px-6 py-2.5 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2 sm:gap-3 text-xs font-mono min-w-0">
           <span className="inline-flex items-center gap-1.5 flex-shrink-0">
@@ -19,8 +19,10 @@ export default function CompanyHeader() {
           </span>
           <span className="text-white/40">&middot;</span>
           <span className="flex-shrink-0">Cycle {cycle}</span>
+          <span className="text-white/40">&middot;</span>
+          <span className="flex-shrink-0">${lastCycleCost.toFixed(2)} last</span>
           <span className="text-white/40 hidden sm:inline">&middot;</span>
-          <span className="hidden sm:inline">${lastCycleCost.toFixed(2)} last cycle</span>
+          <span className="hidden sm:inline">${metrics.totalCost.toFixed(2)} total</span>
         </div>
         <span className={`text-[10px] font-mono px-2 py-0.5 uppercase tracking-wide ${
           status === "completed" ? "bg-green-500/20 text-green-400" : "bg-amber-500/20 text-amber-400"
