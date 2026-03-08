@@ -6,7 +6,7 @@
  * Run: node scripts/generate-data.mjs
  */
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { execSync } from "node:child_process";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -169,6 +169,35 @@ function getGitData() {
   return { commits, openPRs, repoStats };
 }
 
+// ── Cycle history (real per-cycle costs from auto-loop) ─────────────
+function getCycleHistory() {
+  const historyFile = resolve(ROOT, "logs/cycle-history.jsonl");
+  if (!existsSync(historyFile)) return [];
+
+  const raw = readFileSync(historyFile, "utf-8").trim();
+  if (!raw) return [];
+
+  return raw
+    .split("\n")
+    .map((line) => {
+      try {
+        const entry = JSON.parse(line);
+        return {
+          cycle: entry.cycle,
+          timestamp: entry.timestamp,
+          status: entry.status,
+          cost: entry.cost,
+          duration: entry.duration_s,
+          model: entry.model,
+          totalCost: entry.total_cost,
+        };
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+}
+
 // ── Deployments (static list -- could query Vercel API later) ───────
 const DEPLOYMENTS = [
   { service: "Landing Page", url: "runautoco.com", status: "live" },
@@ -183,6 +212,7 @@ const DEPLOYMENTS = [
 // ── Main ────────────────────────────────────────────────────────────
 const consensus = parseConsensus();
 const git = getGitData();
+const cycleHistory = getCycleHistory();
 
 const state = {
   generatedAt: new Date().toISOString(),
@@ -208,8 +238,9 @@ const state = {
     openPRs: git.openPRs,
   },
   deployments: DEPLOYMENTS,
+  cycleHistory,
 };
 
 writeFileSync(OUT, JSON.stringify(state, null, 2));
 console.log(`[generate-data] Wrote ${OUT}`);
-console.log(`[generate-data] Cycle #${state.cycle}, ${state.git.commits.length} commits, ${state.git.openPRs.length} PRs`);
+console.log(`[generate-data] Cycle #${state.cycle}, ${state.git.commits.length} commits, ${state.git.openPRs.length} PRs, ${state.cycleHistory.length} cycle history entries`);

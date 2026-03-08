@@ -22,4 +22,13 @@ export interface DashboardState {
     openPRs: Array<{ number: number; title: string; status: string; reviews: number; comments: number }>;
   };
   deployments: Array<{ service: string; url: string; status: string }>;
+  cycleHistory: Array<{
+    cycle: number;
+    timestamp: string;
+    status: string;
+    cost: number;
+    duration: number;
+    model: string;
+    totalCost: number;
+  }>;
 }
