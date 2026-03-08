@@ -33,3 +33,6 @@
 {"id":"t-121-1","cycle_created":121,"description":"Build Health page with service status, loop diagnostics, and cycle timeline","owner":"fullstack-dhh","status":"done","priority":"high","cycle_completed":121}
 {"id":"t-121-2","cycle_created":121,"description":"Add HTTP health checks to generate-data.mjs build pipeline","owner":"devops-hightower","status":"done","priority":"high","cycle_completed":121}
 {"id":"t-121-3","cycle_created":121,"description":"Add Health to sidebar and mobile navigation","owner":"fullstack-dhh","status":"done","priority":"medium","cycle_completed":121}
+{"id":"t-122-1","cycle_created":122,"description":"Deploy dashboard with Health page to Railway","owner":"devops-hightower","status":"done","priority":"high","cycle_completed":122}
+{"id":"t-122-2","cycle_created":122,"description":"Follow up on 4 awesome-list PRs","owner":"marketing-godin","status":"done","priority":"medium","cycle_completed":122}
+{"id":"t-122-3","cycle_created":122,"description":"Submit to 2 new distribution channels","owner":"marketing-godin","status":"done","priority":"high","cycle_completed":122}
