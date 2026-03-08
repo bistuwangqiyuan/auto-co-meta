@@ -83,4 +83,28 @@ export interface DashboardState {
       uniqueClones: number;
     }>;
   };
+  health: {
+    checks: Array<{
+      service: string;
+      url: string;
+      status: "healthy" | "degraded" | "unreachable";
+      statusCode: number;
+      responseMs: number;
+      checkedAt: string;
+    }>;
+    loopHealth: {
+      totalCycles: number;
+      successRate: number;
+      avgDuration: number;
+      avgCost: number;
+      lastCycle: {
+        number: number;
+        timestamp: string;
+        status: string;
+        duration: number;
+        cost: number;
+      } | null;
+      recentFailures: number;
+    };
+  };
 }

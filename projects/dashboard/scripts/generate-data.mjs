@@ -340,6 +340,86 @@ const DEPLOYMENTS = [
   { service: "npm Package", url: "npmjs.com/package/create-auto-co", status: "live" },
 ];
 
+// ── Health checks (HTTP HEAD against each service) ───────────────────
+async function checkServiceHealth() {
+  const results = [];
+  for (const dep of DEPLOYMENTS) {
+    const url = `https://${dep.url}`;
+    const start = Date.now();
+    try {
+      let res = await fetch(url, {
+        method: "HEAD",
+        signal: AbortSignal.timeout(8000),
+        redirect: "follow",
+      });
+      // Some services (npm) reject HEAD -- fall back to GET
+      if (!res.ok) {
+        res = await fetch(url, {
+          method: "GET",
+          signal: AbortSignal.timeout(8000),
+          redirect: "follow",
+        });
+      }
+      // 2xx/3xx = healthy, 4xx = healthy (service is up, just rejecting bots), 5xx = degraded
+      const status = res.status >= 500 ? "degraded" : "healthy";
+      results.push({
+        service: dep.service,
+        url: dep.url,
+        status,
+        statusCode: res.status,
+        responseMs: Date.now() - start,
+        checkedAt: new Date().toISOString(),
+      });
+    } catch {
+      results.push({
+        service: dep.service,
+        url: dep.url,
+        status: "unreachable",
+        statusCode: 0,
+        responseMs: Date.now() - start,
+        checkedAt: new Date().toISOString(),
+      });
+    }
+  }
+  return results;
+}
+
+// ── Loop health (derived from cycle history) ─────────────────────────
+function computeLoopHealth(cycleHistory) {
+  if (!cycleHistory.length) {
+    return {
+      totalCycles: 0,
+      successRate: 0,
+      avgDuration: 0,
+      avgCost: 0,
+      lastCycle: null,
+      recentFailures: 0,
+    };
+  }
+
+  const successes = cycleHistory.filter((c) => c.status === "success");
+  const last10 = cycleHistory.slice(-10);
+  const recentFailures = last10.filter((c) => c.status !== "success").length;
+  const durations = cycleHistory.filter((c) => c.duration > 0).map((c) => c.duration);
+  const costs = cycleHistory.filter((c) => c.cost > 0).map((c) => c.cost);
+  const last = cycleHistory[cycleHistory.length - 1];
+
+  return {
+    totalCycles: cycleHistory.length,
+    successRate: Math.round((successes.length / cycleHistory.length) * 1000) / 10,
+    avgDuration: durations.length ? Math.round(durations.reduce((a, b) => a + b, 0) / durations.length) : 0,
+    avgCost: costs.length ? Math.round((costs.reduce((a, b) => a + b, 0) / costs.length) * 100) / 100 : 0,
+    lastCycle: last ? {
+      number: last.cycle,
+      timestamp: last.timestamp,
+      status: last.status,
+      duration: last.duration,
+      cost: last.cost,
+    } : null,
+    recentFailures,
+  };
+}
+
 // ── Main ────────────────────────────────────────────────────────────
 // Skip generation if repo root doesn't exist (e.g., Railway build)
 if (!existsSync(resolve(ROOT, "memories/consensus.md"))) {
@@ -353,6 +433,8 @@ const cycleHistory = getCycleHistory();
 const stateData = getStateData();
 const metricsHistory = getMetricsHistory();
 const traffic = getGitHubTraffic();
+const healthChecks = await checkServiceHealth();
+const loopHealth = computeLoopHealth(cycleHistory);
 
 const state = {
   generatedAt: new Date().toISOString(),
@@ -385,8 +467,13 @@ const state = {
   agentActivity: stateData.agentActivity,
   metricsHistory,
   traffic,
+  health: {
+    checks: healthChecks,
+    loopHealth,
+  },
 };
 
 writeFileSync(OUT, JSON.stringify(state, null, 2));
 console.log(`[generate-data] Wrote ${OUT}`);
 console.log(`[generate-data] Cycle #${state.cycle}, ${state.git.commits.length} commits, ${state.git.openPRs.length} PRs, ${state.cycleHistory.length} cycle history entries`);
+console.log(`[generate-data] Health: ${healthChecks.filter(h => h.status === "healthy").length}/${healthChecks.length} services healthy`);

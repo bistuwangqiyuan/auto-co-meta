@@ -13,6 +13,7 @@ const NAV_ITEMS = [
   { href: "/team", label: "Team" },
   { href: "/finance", label: "Finance" },
   { href: "/github", label: "GitHub" },
+  { href: "/health", label: "Health" },
   { href: "/settings", label: "Settings" },
 ];
 

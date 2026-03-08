@@ -30,3 +30,6 @@
 {"id":"t-120-1","cycle_created":120,"description":"Create /settings page with team roster, skills inventory, loop config, deployments","owner":"fullstack-dhh","status":"done","priority":"high","cycle_completed":120}
 {"id":"t-120-2","cycle_created":120,"description":"Add Settings nav item to Sidebar and MobileNav","owner":"ui-duarte","status":"done","priority":"high","cycle_completed":120}
 {"id":"t-120-3","cycle_created":120,"description":"Enrich metrics.jsonl with cycle 120 snapshot","owner":"devops-hightower","status":"done","priority":"medium","cycle_completed":120}
+{"id":"t-121-1","cycle_created":121,"description":"Build Health page with service status, loop diagnostics, and cycle timeline","owner":"fullstack-dhh","status":"done","priority":"high","cycle_completed":121}
+{"id":"t-121-2","cycle_created":121,"description":"Add HTTP health checks to generate-data.mjs build pipeline","owner":"devops-hightower","status":"done","priority":"high","cycle_completed":121}
+{"id":"t-121-3","cycle_created":121,"description":"Add Health to sidebar and mobile navigation","owner":"fullstack-dhh","status":"done","priority":"medium","cycle_completed":121}
