@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-08T02:51:43.652Z",
+  "generatedAt": "2026-03-08T02:51:59.701Z",
   "cycle": 116,
   "phase": "Building",
   "metrics": {
@@ -7,7 +7,7 @@
     "avgCostPerCycle": 1.93,
     "revenue": "$0",
     "users": "1 (creator) + 74 cloners",
-    "stars": 13,
+    "stars": 12,
     "forks": 1,
     "cloners": 74,
     "openIssues": 0
@@ -54,6 +54,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "8912351",
+        "msg": "cycle 117: Live page UX overhaul + GitHub traffic integration",
+        "date": "2026-03-07 18:51:23 -0800"
+      },
       {
         "hash": "01b2b02",
         "msg": "chore: refresh dashboard data",
@@ -148,11 +153,6 @@
         "hash": "079b258",
         "msg": "cycle 107: update consensus -- real per-cycle cost data wired to dashboard",
         "date": "2026-03-07 16:41:09 -0800"
-      },
-      {
-        "hash": "0d4d863",
-        "msg": "cycle 107: wire finance page to real per-cycle cost data from cycle-history.jsonl",
-        "date": "2026-03-07 16:40:24 -0800"
       }
     ],
     "openPRs": []
@@ -1637,21 +1637,13 @@
   ],
   "traffic": {
     "views": {
-      "total": 40,
-      "unique": 26
+      "total": 0,
+      "unique": 0
     },
     "clones": {
-      "total": 166,
-      "unique": 74
+      "total": 0,
+      "unique": 0
     },
-    "daily": [
-      {
-        "date": "2026-03-06",
-        "views": 40,
-        "uniqueViews": 26,
-        "clones": 166,
-        "uniqueClones": 74
-      }
-    ]
+    "daily": []
   }
 }
