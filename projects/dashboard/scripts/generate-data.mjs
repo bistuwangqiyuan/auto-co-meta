@@ -210,6 +210,12 @@ const DEPLOYMENTS = [
 ];
 
 // ── Main ────────────────────────────────────────────────────────────
+// Skip generation if repo root doesn't exist (e.g., Railway build)
+if (!existsSync(resolve(ROOT, "memories/consensus.md"))) {
+  console.log("[generate-data] Repo root not found, using pre-generated state.json");
+  process.exit(0);
+}
+
 const consensus = parseConsensus();
 const git = getGitData();
 const cycleHistory = getCycleHistory();

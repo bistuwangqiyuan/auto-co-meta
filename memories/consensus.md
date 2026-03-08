@@ -1,27 +1,28 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-09T14:00:00Z
+2026-03-07T15:00:00Z
 
 ## Current Phase
 Building -- app.runautoco.com dashboard
 
 ## What We Did This Cycle
-Cycle 109 -- Enhanced dashboard overview with GitHub activity section + regenerated data.
+Cycle 110 -- Deployed dashboard to Railway (per human directive).
 
-1. **Merged "Recent Commits" and "Open PRs" into a unified "GitHub Activity" section** on the overview page
-2. **Open PRs now show as a detailed list** with PR number, title, and status badge (not just a count in the header)
-3. **Regenerated state.json** with latest git data (20 commits, 69 cycle history entries)
-4. **Received human response**: Deploy dashboard to Railway (NOT Vercel), delete Vercel deployment
-5. **Build passes** -- all 8 routes compile as static pages
+1. **Deployed dashboard to Railway** as a new project (`auto-co-dashboard`), accessible at `https://auto-co-dashboard-production.up.railway.app/`
+2. **Removed Vercel config** (`vercel.json` deleted, standalone mode tested then simplified to standard Next.js server)
+3. **Added custom domain** `app.runautoco.com` in Railway -- requires Cloudflare DNS update (escalated to human)
+4. **Made generate-data.mjs resilient** -- gracefully skips when repo root not available (Railway builds use pre-generated state.json)
+5. **Fixed PORT binding** -- start script now uses Railway's dynamic PORT env variable
 
 ## Key Decisions Made
-- Combined commits + PRs into a single "GitHub Activity" panel for a cleaner overview layout
-- Human directive received: use Railway for dashboard hosting, not Vercel -- will execute next cycle
-- Kept static site generation approach (no API routes)
+- Dashboard deployed as a **separate Railway project** (not a service under auto-co-landing) for clean isolation
+- Dropped `output: "standalone"` in favor of standard Next.js server mode -- simpler and Railway handles it natively
+- Pre-generate state.json locally; Railway builds skip data generation gracefully
+- Escalated DNS change to human: Cloudflare CNAME `app` → `ls0pn1cq.up.railway.app` (currently points to Vercel IP 76.76.21.21)
 
 ## Active Projects
-- **dashboard**: `projects/dashboard/` -- GitHub activity section added, needs Railway deployment (per human directive)
+- **dashboard**: `projects/dashboard/` -- DEPLOYED to Railway, awaiting DNS switch to `app.runautoco.com`
 - auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1
 - npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1
 - landing page: LIVE at `https://runautoco.com`
@@ -44,17 +45,15 @@ Cycle 109 -- Enhanced dashboard overview with GitHub activity section + regenera
 - GitHub stars: 10
 - GitHub forks: 1
 - npm package: create-auto-co v1.1.1
-- Deployed Services: Railway (landing), npm
-- Cost/month: ~$5 (Railway)
-- Total cost: ~$210 (109 cycle runs)
+- Deployed Services: Railway (landing, dashboard), npm
+- Cost/month: ~$7 (Railway -- 2 projects)
+- Total cost: ~$212 (110 cycle runs)
 
 ## Next Action
-**Cycle 110: Deploy dashboard to Railway (per human directive).**
-1. Deploy `projects/dashboard/` as a Railway service (same project as landing page, or new service)
-2. Configure custom domain `app.runautoco.com` on the Railway service
-3. If Railway needs a different CNAME/IP, escalate to human for Cloudflare DNS update
-4. Delete any existing Vercel deployment for this project
-5. **DO NOT** touch landing page or demo page
+**Cycle 111: Commit dashboard Railway deployment changes and continue dashboard improvements.**
+1. Commit the Railway deployment changes (vercel.json removal, PORT fix, generate-data resilience)
+2. Once human updates DNS, verify `app.runautoco.com` resolves to Railway
+3. If DNS is not updated yet, continue with dashboard feature work (e.g., add auto-rebuild mechanism, health check endpoint)
 
 ## Company State
 - Product: auto-co framework + dashboard (real data) + demo + landing + pricing + blog + waitlist + admin + npm CLI
@@ -64,9 +63,9 @@ Cycle 109 -- Enhanced dashboard overview with GitHub activity section + regenera
 - Users: 1 + 74 cloners
 
 ## Human Escalation
-- Pending Request: NO (response received and processed)
+- Pending Request: YES
 - Last Response: 2026-03-08 (Deploy to Railway, not Vercel)
-- Awaiting Response Since: N/A
+- Awaiting Response Since: 2026-03-07 (DNS update for app.runautoco.com)
 
 ## Open Questions
 - Should the dashboard auto-rebuild on a schedule (e.g., GitHub Action cron)?

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-03-08T00:48:14.203Z",
-  "cycle": 108,
+  "generatedAt": "2026-03-08T00:59:13.341Z",
+  "cycle": 109,
   "phase": "Building",
   "metrics": {
-    "totalCost": 205,
-    "avgCostPerCycle": 1.9,
+    "totalCost": 210,
+    "avgCostPerCycle": 1.93,
     "revenue": "$0",
     "users": "1 (creator) + 74 cloners",
     "stars": 11,
@@ -12,19 +12,19 @@
     "cloners": 74,
     "openIssues": 0
   },
-  "nextAction": "Cycle 109: Add GitHub activity section to the dashboard overview page.",
+  "nextAction": "Cycle 110: Deploy dashboard to Railway (per human directive).",
   "whatWeDid": [
-    "Rewrote `/live` page to display real cycle history from `cycleHistory` data instead of synthetic log lines",
-    "Timeline entries show status indicator (green/red dot), cycle number, timestamp, model badge (opus=purple, sonnet=blue), duration, cost, and running total",
-    "Summary stats row at top: total cycles (68), success rate, avg duration, avg cost per cycle"
+    "Merged \"Recent Commits\" and \"Open PRs\" into a unified \"GitHub Activity\" section on the overview page",
+    "Open PRs now show as a detailed list with PR number, title, and status badge (not just a count in the header)",
+    "Regenerated state.json with latest git data (20 commits, 69 cycle history entries)"
   ],
   "projects": [
     {
       "name": "dashboard",
-      "status": "`projects/dashboard/` -- DEPLOYED, live page now shows real cycle timeline, awaiting DNS for app.runautoco.com"
+      "status": "`projects/dashboard/` -- GitHub activity section added, needs Railway deployment (per human directive)"
     }
   ],
-  "pendingEscalation": true,
+  "pendingEscalation": false,
   "distribution": [
     {
       "channel": "npm (create-auto-co)",
@@ -54,6 +54,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "556c4af",
+        "msg": "cycle 109: add GitHub activity section to dashboard overview",
+        "date": "2026-03-07 16:49:01 -0800"
+      },
       {
         "hash": "d079a83",
         "msg": "cycle 108: update consensus -- live page wired to real cycle history",
@@ -148,11 +153,6 @@
         "hash": "f09e715",
         "msg": "cycle 94: update consensus -- distribution content ready, awaiting human posting",
         "date": "2026-03-07 14:31:03 -0800"
-      },
-      {
-        "hash": "a89a6a5",
-        "msg": "cycle 94: update distribution content numbers (93 cycles/$175) + escalate for posting",
-        "date": "2026-03-07 14:30:24 -0800"
       }
     ],
     "openPRs": []
@@ -815,6 +815,15 @@
       "duration": 106,
       "model": "opus",
       "totalCost": 138.7752
+    },
+    {
+      "cycle": 90,
+      "timestamp": "2026-03-08T00:49:06Z",
+      "status": "ok",
+      "cost": 0.7432447499999999,
+      "duration": 117,
+      "model": "opus",
+      "totalCost": 139.5184
     }
   ]
 }
