@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-08T03:17:22.655Z",
+  "generatedAt": "2026-03-08T03:17:34.517Z",
   "cycle": 118,
   "phase": "Building",
   "metrics": {
@@ -54,6 +54,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "db72688",
+        "msg": "cycle 120: Settings page — team roster, skills inventory, loop config",
+        "date": "2026-03-07 19:17:04 -0800"
+      },
       {
         "hash": "bd5cb5b",
         "msg": "chore: refresh dashboard data",
@@ -148,11 +153,6 @@
         "hash": "929620f",
         "msg": "cycle 112: add dashboard auto-rebuild GitHub Action, refresh data, redeploy",
         "date": "2026-03-07 18:09:20 -0800"
-      },
-      {
-        "hash": "85e0d7f",
-        "msg": "feat: v2 improvements — adaptive frequency, QMD memory, structured state, cycle summaries",
-        "date": "2026-03-07 17:46:15 -0800"
       }
     ],
     "openPRs": []
@@ -1817,21 +1817,13 @@
   ],
   "traffic": {
     "views": {
-      "total": 40,
-      "unique": 26
+      "total": 0,
+      "unique": 0
     },
     "clones": {
-      "total": 166,
-      "unique": 74
+      "total": 0,
+      "unique": 0
     },
-    "daily": [
-      {
-        "date": "2026-03-06",
-        "views": 40,
-        "uniqueViews": 26,
-        "clones": 166,
-        "uniqueClones": 74
-      }
-    ]
+    "daily": []
   }
 }
