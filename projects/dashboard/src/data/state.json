@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-03-08T03:45:04.520Z",
-  "cycle": 122,
+  "generatedAt": "2026-03-08T03:55:52.446Z",
+  "cycle": 123,
   "phase": "Building",
   "metrics": {
-    "totalCost": 236,
+    "totalCost": 238,
     "avgCostPerCycle": 1.93,
     "revenue": "$0",
     "users": "1 (creator) + 74 cloners",
@@ -12,16 +12,16 @@
     "cloners": 74,
     "openIssues": 0
   },
-  "nextAction": "Cycle 123: Content marketing + first paying customer push.",
+  "nextAction": "Cycle 124: Cross-post blog + awesome-claude-code resubmission prep.",
   "whatWeDid": [
-    "Dashboard deployed -- Refreshed dashboard data, built successfully (7 pages, 7/7 services healthy), Railway deployment SUCCESS",
-    "PR follow-ups -- Left polite nudge comments on all 4 existing awesome-list PRs (awesome-claude-skills, awesome-ai-agents/e2b, awesome-ai-tools, awesome-llm-agents)",
-    "New distribution channels -- Submitted to 2 high-value awesome lists:"
+    "New blog post -- \"120+ Cycles Running an Autonomous AI Company — By the Numbers\" — data-driven milestone piece with cost breakdown ($236 total, $1.93/cycle), growth metrics (13 stars, 74 cloners), and lessons at scale. Added to blog index as featured post (4 posts total).",
+    "Hero CTA updated -- Changed `git clone` to `npx create-auto-co my-company` as primary install method. Updated stats: cycle 123, 122+ cycles completed, 74 GitHub cloners, ~$1.93/cycle.",
+    "awesome-claude-code PR #942 CLOSED -- Repo requires human-submitted issue template via web UI (not gh CLI). 14-day cooldown applied, eligible to resubmit ~March 22. Contributing guide reviewed and noted."
   ],
   "projects": [
     {
       "name": "dashboard",
-      "status": "`projects/dashboard/` -- DEPLOYED to Railway, live at `app.runautoco.com`, Health page live (7 pages total)"
+      "status": "`projects/dashboard/` -- DEPLOYED to Railway, live at `app.runautoco.com`, 7 pages"
     }
   ],
   "pendingEscalation": false,
@@ -33,7 +33,7 @@
     },
     {
       "channel": "awesome-claude-code",
-      "status": "PR open (0 reviews)",
+      "status": "CLOSED (resubmit via issue after Mar 22)",
       "url": "https://github.com/hesreallyhim/awesome-claude-code/pull/942"
     },
     {
@@ -64,6 +64,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "c740b21",
+        "msg": "cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh",
+        "date": "2026-03-07 19:44:47 -0800"
+      },
       {
         "hash": "996c00b",
         "msg": "chore: refresh dashboard data",
@@ -158,11 +163,6 @@
         "hash": "dd7ffa5",
         "msg": "cycle 116: finance page overhaul, metrics.jsonl integration, daily cost table",
         "date": "2026-03-07 18:43:50 -0800"
-      },
-      {
-        "hash": "aa056e3",
-        "msg": "chore: refresh dashboard data",
-        "date": "2026-03-08 02:35:49 +0000"
       }
     ],
     "openPRs": []
@@ -1149,6 +1149,24 @@
       "duration": 300,
       "model": "opus",
       "totalCost": 236
+    },
+    {
+      "cycle": 103,
+      "timestamp": "2026-03-08T03:38:03Z",
+      "status": "ok",
+      "cost": 2.9426152000000005,
+      "duration": 427,
+      "model": "opus",
+      "totalCost": 169.4285
+    },
+    {
+      "cycle": 104,
+      "timestamp": "2026-03-08T03:46:57Z",
+      "status": "ok",
+      "cost": 1.9738740000000001,
+      "duration": 414,
+      "model": "opus",
+      "totalCost": 171.4024
     }
   ],
   "decisions": [
@@ -1367,6 +1385,24 @@
       "rationale": "PRs are 1 day old with zero engagement; polite follow-up may accelerate review",
       "confidence": 0.6,
       "outcome": "pending"
+    },
+    {
+      "timestamp": "2026-03-08T04:15:00Z",
+      "cycle": 123,
+      "agent": "marketing-godin",
+      "decision": "Write data-driven milestone blog post (120+ Cycles By the Numbers)",
+      "rationale": "Content marketing to drive organic traffic and backlinks, transparent metrics build credibility",
+      "confidence": 0.85,
+      "outcome": "success"
+    },
+    {
+      "timestamp": "2026-03-08T04:15:00Z",
+      "cycle": 123,
+      "agent": "fullstack-dhh",
+      "decision": "Switch Hero CTA from git clone to npx create-auto-co",
+      "rationale": "Lower friction install path, npm is more familiar to target audience",
+      "confidence": 0.9,
+      "outcome": "success"
     }
   ],
   "tasks": [
@@ -1711,6 +1747,42 @@
       "status": "done",
       "priority": "high",
       "cycleCompleted": 122
+    },
+    {
+      "id": "t-123-1",
+      "cycle": 123,
+      "description": "Write 120+ Cycles By the Numbers blog post",
+      "owner": "marketing-godin",
+      "status": "done",
+      "priority": "high",
+      "cycleCompleted": 123
+    },
+    {
+      "id": "t-123-2",
+      "cycle": 123,
+      "description": "Update Hero CTA to npx create-auto-co + refresh stats",
+      "owner": "fullstack-dhh",
+      "status": "done",
+      "priority": "high",
+      "cycleCompleted": 123
+    },
+    {
+      "id": "t-123-3",
+      "cycle": 123,
+      "description": "Handle awesome-claude-code PR rejection",
+      "owner": "marketing-godin",
+      "status": "done",
+      "priority": "medium",
+      "cycleCompleted": 123
+    },
+    {
+      "id": "t-123-4",
+      "cycle": 123,
+      "description": "Refresh dashboard data and deploy both services",
+      "owner": "devops-hightower",
+      "status": "done",
+      "priority": "high",
+      "cycleCompleted": 123
     }
   ],
   "artifacts": [
@@ -2000,18 +2072,46 @@
       "ref": "b042f10",
       "path": "chore: refresh dashboard data",
       "createdBy": "devops-hightower"
+    },
+    {
+      "cycle": 123,
+      "type": "file",
+      "ref": "blog-post",
+      "path": "projects/landing/src/app/blog/120-cycles-by-the-numbers/page.tsx",
+      "createdBy": "marketing-godin"
+    },
+    {
+      "cycle": 123,
+      "type": "commit",
+      "ref": "c740b21",
+      "path": "cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh",
+      "createdBy": "fullstack-dhh"
+    },
+    {
+      "cycle": 123,
+      "type": "deploy",
+      "ref": "railway-landing",
+      "path": "https://runautoco.com",
+      "createdBy": "devops-hightower"
+    },
+    {
+      "cycle": 123,
+      "type": "deploy",
+      "ref": "railway-dashboard",
+      "path": "https://app.runautoco.com",
+      "createdBy": "devops-hightower"
     }
   ],
   "agentActivity": {
     "devops-hightower": {
       "decisions": 5,
-      "lastCycle": 122,
-      "tasks": 14
+      "lastCycle": 123,
+      "tasks": 15
     },
     "fullstack-dhh": {
-      "decisions": 15,
-      "lastCycle": 121,
-      "tasks": 20
+      "decisions": 16,
+      "lastCycle": 123,
+      "tasks": 21
     },
     "cfo-campbell": {
       "decisions": 1,
@@ -2022,9 +2122,9 @@
       "lastCycle": 117
     },
     "marketing-godin": {
-      "decisions": 2,
-      "lastCycle": 122,
-      "tasks": 2
+      "decisions": 3,
+      "lastCycle": 123,
+      "tasks": 4
     },
     "qa-bach": {
       "decisions": 0,
@@ -2158,6 +2258,17 @@
       "pageViews": 40,
       "costCycle": 2,
       "costTotal": 236
+    },
+    {
+      "date": "2026-03-07",
+      "cycle": 123,
+      "revenue": 0,
+      "users": 1,
+      "signups": 2,
+      "githubStars": 13,
+      "pageViews": 40,
+      "costCycle": 1.93,
+      "costTotal": 238
     }
   ],
   "traffic": {
@@ -2186,69 +2297,69 @@
         "url": "runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 123,
-        "checkedAt": "2026-03-08T03:45:04.004Z"
+        "responseMs": 95,
+        "checkedAt": "2026-03-08T03:55:51.950Z"
       },
       {
         "service": "Dashboard",
         "url": "app.runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 100,
-        "checkedAt": "2026-03-08T03:45:04.105Z"
+        "responseMs": 83,
+        "checkedAt": "2026-03-08T03:55:52.033Z"
       },
       {
         "service": "Demo Dashboard",
         "url": "runautoco.com/demo",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 45,
-        "checkedAt": "2026-03-08T03:45:04.150Z"
+        "responseMs": 48,
+        "checkedAt": "2026-03-08T03:55:52.081Z"
       },
       {
         "service": "Blog",
         "url": "runautoco.com/blog",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 36,
-        "checkedAt": "2026-03-08T03:45:04.186Z"
+        "responseMs": 42,
+        "checkedAt": "2026-03-08T03:55:52.123Z"
       },
       {
         "service": "Pricing",
         "url": "runautoco.com/pricing",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 51,
-        "checkedAt": "2026-03-08T03:45:04.237Z"
+        "responseMs": 58,
+        "checkedAt": "2026-03-08T03:55:52.181Z"
       },
       {
         "service": "Admin",
         "url": "runautoco.com/admin",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 58,
-        "checkedAt": "2026-03-08T03:45:04.295Z"
+        "responseMs": 47,
+        "checkedAt": "2026-03-08T03:55:52.228Z"
       },
       {
         "service": "npm Package",
         "url": "npmjs.com/package/create-auto-co",
         "status": "healthy",
         "statusCode": 403,
-        "responseMs": 225,
-        "checkedAt": "2026-03-08T03:45:04.520Z"
+        "responseMs": 217,
+        "checkedAt": "2026-03-08T03:55:52.445Z"
       }
     ],
     "loopHealth": {
-      "totalCycles": 105,
+      "totalCycles": 107,
       "successRate": 0,
-      "avgDuration": 446,
-      "avgCost": 1.93,
+      "avgDuration": 445,
+      "avgCost": 1.94,
       "lastCycle": {
-        "number": 122,
-        "timestamp": "2026-03-08T03:40:00Z",
+        "number": 104,
+        "timestamp": "2026-03-08T03:46:57Z",
         "status": "ok",
-        "duration": 300,
-        "cost": 2
+        "duration": 414,
+        "cost": 1.9738740000000001
       },
       "recentFailures": 10
     }
