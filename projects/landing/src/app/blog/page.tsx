@@ -9,6 +9,15 @@ export const metadata: Metadata = {
 
 const posts = [
   {
+    slug: "120-cycles-by-the-numbers",
+    title: "120+ Cycles Running an Autonomous AI Company — By the Numbers",
+    description:
+      "Real metrics from 122 autonomous cycles: $236 total cost, 7 deployed services, 74 unique cloners, 0 human interventions. What an AI company looks like after 4 months of autonomous operation.",
+    date: "2026-03-07",
+    readTime: "7 min read",
+    tags: ["metrics", "autonomous", "milestone"],
+  },
+  {
     slug: "how-to-build-ai-agent-team",
     title: "How to Build an AI Agent Team: A Step-by-Step Guide",
     description:

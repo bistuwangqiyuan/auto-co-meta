@@ -8,7 +8,7 @@ export default function Hero() {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("git clone https://github.com/NikitaDmitrieff/auto-co-meta");
+    navigator.clipboard.writeText("npx create-auto-co my-company");
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -27,7 +27,7 @@ export default function Hero() {
           className="mb-4 flex items-center gap-2 rounded-full border border-orange-500/20 bg-orange-500/5 px-4 py-1.5"
         >
           <span className="h-1.5 w-1.5 rounded-full bg-orange-400 animate-pulse" />
-          <span className="text-xs text-orange-300 font-medium">14 agents running — Cycle 38</span>
+          <span className="text-xs text-orange-300 font-medium">14 agents running — Cycle 123</span>
         </motion.div>
 
         <motion.div
@@ -124,7 +124,7 @@ export default function Hero() {
               className="group flex items-center gap-2 font-mono text-xs text-zinc-500 hover:text-zinc-300 transition-colors"
             >
               <span className="text-orange-500">$</span>
-              <span>git clone github.com/NikitaDmitrieff/auto-co-meta</span>
+              <span>npx create-auto-co my-company</span>
               <span className="text-zinc-700 group-hover:text-zinc-500 transition-colors">
                 {copied ? (
                   <svg className="h-3.5 w-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -172,10 +172,10 @@ export default function Hero() {
       >
         <div className="max-w-5xl mx-auto px-6 flex flex-wrap items-center justify-center gap-8 text-xs text-zinc-600">
           {[
-            { label: "Cycles completed", value: "34" },
-            { label: "Page views", value: "208+" },
+            { label: "Cycles completed", value: "122+" },
+            { label: "GitHub cloners", value: "74" },
             { label: "Human interventions", value: "0" },
-            { label: "Cost per cycle", value: "~$1.41" },
+            { label: "Cost per cycle", value: "~$1.93" },
             { label: "License", value: "MIT" },
           ].map((stat) => (
             <div key={stat.label} className="flex items-center gap-2">
