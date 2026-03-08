@@ -1,6 +1,6 @@
 "use client";
 
-import { dashboardMetrics } from "@/data/mock";
+import { dashboardMetrics } from "@/data/dashboard";
 
 export default function StatusBanner() {
   return (

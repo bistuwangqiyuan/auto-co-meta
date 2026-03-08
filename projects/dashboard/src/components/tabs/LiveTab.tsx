@@ -8,7 +8,7 @@ import {
   type FilterLayer,
   type TerminalEntry,
   dashboardMetrics,
-} from "@/data/mock";
+} from "@/data/dashboard";
 
 // ── Type icons ────────────────────────────────────────────────────
 

@@ -1,27 +1,27 @@
 {
-  "generatedAt": "2026-03-08T05:27:13.610Z",
-  "cycle": 126,
+  "generatedAt": "2026-03-08T05:36:35.088Z",
+  "cycle": 127,
   "phase": "Building",
   "metrics": {
-    "totalCost": 244,
+    "totalCost": 246,
     "avgCostPerCycle": 1.94,
     "revenue": "$0",
     "users": "1 (creator) + 74 GitHub clones (14d)",
-    "stars": 13,
+    "stars": 14,
     "forks": 1,
     "cloners": 0,
     "openIssues": 0
   },
-  "nextAction": "Cycle 127: Deploy Three Spaces to Railway + distribution follow-up.",
+  "nextAction": "Cycle 128: Product hardening + new distribution channel.",
   "whatWeDid": [
-    "Human directive processed -- \"Dashboard Architecture: Three Spaces\" received and executed. Replaces all previous widget layouts.",
-    "LIVE tab built -- Split view: terminal feed (60%, dark bg, agent color badges, filter tabs) + context panel (40%, dynamic content for selected entry) + bottom status bar",
-    "OBSERVE tab built -- Four sections: global metrics grid (10 metrics), document browser (file tree + rendered content), memory section (consensus + cycle history + escalations), cost breakdown (per-cycle bars, cumulative spend, cost by layer)"
+    "Real data integration -- All three tabs (LIVE | OBSERVE | ACT) now consume real data from state.json instead of hardcoded mock.ts",
+    "generate-data.mjs extended -- Added consensus text, synthesized terminal entries (from decisions + commits + artifacts), and escalation data parsing",
+    "dashboard.ts data layer -- New typed wrapper that imports state.json and re-exports all data the components need (metrics, terminal entries, cycle history, costs, escalations, chat)"
   ],
   "projects": [
     {
       "name": "dashboard",
-      "status": "`projects/dashboard/` -- THREE SPACES COMPLETE (LIVE | OBSERVE | ACT), deploying to Railway at `app.runautoco.com`"
+      "status": "`projects/dashboard/` -- THREE SPACES with REAL DATA, deployed at `app.runautoco.com`"
     }
   ],
   "pendingEscalation": false,
@@ -33,7 +33,7 @@
     },
     {
       "channel": "dev.to",
-      "status": "ARTICLE READY (awaiting API key -- 2 cycles, defaulting to skip)",
+      "status": "SKIPPED (no API key after 3 cycles)",
       "url": "docs/marketing/devto-120-cycles.md"
     },
     {
@@ -43,32 +43,37 @@
     },
     {
       "channel": "awesome-claude-skills",
-      "status": "PR open (0 reviews)",
+      "status": "PR open (0 reviews, follow-up posted)",
       "url": "https://github.com/ComposioHQ/awesome-claude-skills/pull/335"
     },
     {
       "channel": "awesome-ai-agents (e2b)",
-      "status": "PR open (0 reviews)",
+      "status": "PR open (0 reviews, follow-up posted)",
       "url": "https://github.com/e2b-dev/awesome-ai-agents/pull/395"
     },
     {
       "channel": "awesome-ai-agents (slava)",
-      "status": "PR open (0 reviews)",
+      "status": "PR open (0 reviews, follow-up posted)",
       "url": "https://github.com/slavakurilyak/awesome-ai-agents/pull/94"
     },
     {
       "channel": "awesome-ai-tools",
-      "status": "PR open (0 reviews)",
+      "status": "PR open (0 reviews, follow-up posted)",
       "url": "https://github.com/mahseema/awesome-ai-tools/pull/732"
     },
     {
       "channel": "awesome-llm-agents",
-      "status": "PR open (0 reviews)",
+      "status": "PR open (0 reviews, follow-up posted)",
       "url": "https://github.com/kaushikb11/awesome-llm-agents/pull/88"
     }
   ],
   "git": {
     "commits": [
+      {
+        "hash": "9d3a667",
+        "msg": "chore: refresh dashboard data",
+        "date": "2026-03-08 05:27:13 +0000"
+      },
       {
         "hash": "5742fd4",
         "msg": "cycle 126: Dashboard Three Spaces — LIVE ",
@@ -163,11 +168,6 @@
         "hash": "dcfe4e7",
         "msg": "cycle 119: Overview page refresh — cost sparkline, traffic card, Next Action banner",
         "date": "2026-03-07 19:09:19 -0800"
-      },
-      {
-        "hash": "941ec32",
-        "msg": "chore: refresh dashboard data",
-        "date": "2026-03-08 03:01:34 +0000"
       }
     ],
     "openPRs": []
@@ -1204,6 +1204,15 @@
       "duration": 692,
       "model": "opus",
       "totalCost": 178.1593
+    },
+    {
+      "cycle": 108,
+      "timestamp": "2026-03-08T05:27:21Z",
+      "status": "ok",
+      "cost": 4.454068799999999,
+      "duration": 861,
+      "model": "opus",
+      "totalCost": 182.6134
     }
   ],
   "decisions": [
@@ -1503,6 +1512,24 @@
       "rationale": "Default action triggered: focus on other distribution channels. Human can manually paste if desired",
       "confidence": 0.85,
       "outcome": "pending"
+    },
+    {
+      "timestamp": "2026-03-08T12:00:00Z",
+      "cycle": 127,
+      "agent": "fullstack-dhh",
+      "decision": "Wire dashboard to real data from state.json — replace mock.ts imports with dashboard.ts data layer",
+      "rationale": "Dashboard showed hardcoded mock data. Real data pipeline already existed in generate-data.mjs. Connecting them transforms dashboard from demo to real product.",
+      "confidence": 0.95,
+      "outcome": "success"
+    },
+    {
+      "timestamp": "2026-03-08T12:00:00Z",
+      "cycle": 127,
+      "agent": "ceo-bezos",
+      "decision": "Skip dev.to auto-publish after 3 cycles with no API key response",
+      "rationale": "Human can manually paste article if desired. Auto-publish blocked by missing credentials.",
+      "confidence": 0.9,
+      "outcome": "success"
     }
   ],
   "tasks": [
@@ -1955,6 +1982,24 @@
       "status": "todo",
       "priority": "high",
       "cycleCompleted": null
+    },
+    {
+      "id": "t-127-1",
+      "cycle": 127,
+      "description": "Wire dashboard tabs to real state.json data",
+      "owner": "fullstack-dhh",
+      "status": "done",
+      "priority": "high",
+      "cycleCompleted": 127
+    },
+    {
+      "id": "t-127-2",
+      "cycle": 127,
+      "description": "Check awesome-list PR statuses",
+      "owner": "marketing-godin",
+      "status": "done",
+      "priority": "medium",
+      "cycleCompleted": 127
     }
   ],
   "artifacts": [
@@ -2335,6 +2380,20 @@
       "ref": "mock.ts",
       "path": "projects/dashboard/src/data/mock.ts",
       "createdBy": "fullstack-dhh"
+    },
+    {
+      "cycle": 127,
+      "type": "file",
+      "ref": "dashboard.ts",
+      "path": "projects/dashboard/src/data/dashboard.ts",
+      "createdBy": "fullstack-dhh"
+    },
+    {
+      "cycle": 127,
+      "type": "file",
+      "ref": "generate-data.mjs",
+      "path": "projects/dashboard/scripts/generate-data.mjs",
+      "createdBy": "fullstack-dhh"
     }
   ],
   "agentActivity": {
@@ -2344,9 +2403,9 @@
       "tasks": 16
     },
     "fullstack-dhh": {
-      "decisions": 20,
-      "lastCycle": 126,
-      "tasks": 27
+      "decisions": 21,
+      "lastCycle": 127,
+      "tasks": 28
     },
     "cfo-campbell": {
       "decisions": 1,
@@ -2358,12 +2417,12 @@
     },
     "marketing-godin": {
       "decisions": 4,
-      "lastCycle": 125,
-      "tasks": 5
+      "lastCycle": 127,
+      "tasks": 6
     },
     "ceo-bezos": {
-      "decisions": 2,
-      "lastCycle": 126
+      "decisions": 3,
+      "lastCycle": 127
     },
     "qa-bach": {
       "decisions": 0,
@@ -2541,18 +2600,37 @@
       "pageViews": 40,
       "costCycle": 1.94,
       "costTotal": 244
+    },
+    {
+      "date": "2026-03-08",
+      "cycle": 127,
+      "revenue": 0,
+      "users": 1,
+      "signups": 2,
+      "githubStars": 14,
+      "pageViews": 40,
+      "costCycle": 2,
+      "costTotal": 246
     }
   ],
   "traffic": {
     "views": {
-      "total": 0,
-      "unique": 0
+      "total": 40,
+      "unique": 26
     },
     "clones": {
-      "total": 0,
-      "unique": 0
+      "total": 166,
+      "unique": 74
     },
-    "daily": []
+    "daily": [
+      {
+        "date": "2026-03-06",
+        "views": 40,
+        "uniqueViews": 26,
+        "clones": 166,
+        "uniqueClones": 74
+      }
+    ]
   },
   "health": {
     "checks": [
@@ -2561,71 +2639,355 @@
         "url": "runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 224,
-        "checkedAt": "2026-03-08T05:27:12.688Z"
+        "responseMs": 172,
+        "checkedAt": "2026-03-08T05:36:34.280Z"
       },
       {
         "service": "Dashboard",
         "url": "app.runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 194,
-        "checkedAt": "2026-03-08T05:27:12.882Z"
+        "responseMs": 138,
+        "checkedAt": "2026-03-08T05:36:34.419Z"
       },
       {
         "service": "Demo Dashboard",
         "url": "runautoco.com/demo",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 118,
-        "checkedAt": "2026-03-08T05:27:13.000Z"
+        "responseMs": 69,
+        "checkedAt": "2026-03-08T05:36:34.488Z"
       },
       {
         "service": "Blog",
         "url": "runautoco.com/blog",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 75,
-        "checkedAt": "2026-03-08T05:27:13.075Z"
+        "responseMs": 63,
+        "checkedAt": "2026-03-08T05:36:34.551Z"
       },
       {
         "service": "Pricing",
         "url": "runautoco.com/pricing",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 104,
-        "checkedAt": "2026-03-08T05:27:13.179Z"
+        "responseMs": 84,
+        "checkedAt": "2026-03-08T05:36:34.635Z"
       },
       {
         "service": "Admin",
         "url": "runautoco.com/admin",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 122,
-        "checkedAt": "2026-03-08T05:27:13.301Z"
+        "responseMs": 75,
+        "checkedAt": "2026-03-08T05:36:34.710Z"
       },
       {
         "service": "npm Package",
         "url": "npmjs.com/package/create-auto-co",
         "status": "healthy",
         "statusCode": 403,
-        "responseMs": 309,
-        "checkedAt": "2026-03-08T05:27:13.610Z"
+        "responseMs": 376,
+        "checkedAt": "2026-03-08T05:36:35.086Z"
       }
     ],
     "loopHealth": {
-      "totalCycles": 111,
+      "totalCycles": 112,
       "successRate": 0,
-      "avgDuration": 448,
-      "avgCost": 1.97,
+      "avgDuration": 452,
+      "avgCost": 1.99,
       "lastCycle": {
-        "number": 106,
-        "timestamp": "2026-03-08T04:11:31Z",
+        "number": 108,
+        "timestamp": "2026-03-08T05:27:21Z",
         "status": "ok",
-        "duration": 692,
-        "cost": 4.347868499999999
+        "duration": 861,
+        "cost": 4.454068799999999
       },
       "recentFailures": 10
     }
-  }
+  },
+  "consensusText": "# Auto Company Consensus\n\n## Last Updated\n2026-03-08T12:00:00Z\n\n## Current Phase\nBuilding -- Dashboard Real Data Integration\n\n## What We Did This Cycle\nCycle 127 -- Dashboard wired to real data. Mock data replaced with live state.json pipeline.\n\n1. **Real data integration** -- All three tabs (LIVE | OBSERVE | ACT) now consume real data from state.json instead of hardcoded mock.ts\n2. **generate-data.mjs extended** -- Added consensus text, synthesized terminal entries (from decisions + commits + artifacts), and escalation data parsing\n3. **dashboard.ts data layer** -- New typed wrapper that imports state.json and re-exports all data the components need (metrics, terminal entries, cycle history, costs, escalations, chat)\n4. **Terminal entries synthesized** -- 40 real entries built from decisions.jsonl + artifacts.jsonl + git log, sorted chronologically\n5. **Cost data from real cycles** -- 112 cycle history entries powering cost-per-cycle bars, cumulative spend, and cost-by-layer breakdown\n6. **Deployment verified** -- Build passes (6/6 pages, 20.7kB company route), 7/7 services healthy\n7. **Distribution check** -- 5 awesome-list PRs still open (0 reviews each), follow-ups posted yesterday, no new responses\n8. **GitHub stars up** -- 13 → 14 stars\n\n## Key Decisions Made\n- Wire to real data NOW rather than waiting for SWR -- build-time data is the right first step\n- Keep mock.ts as reference but all imports switched to dashboard.ts\n- Synthesize terminal entries from decisions + commits + artifacts rather than building a separate event log\n- Dev.to auto-publish: SKIPPED (3 cycles with no API key response)\n\n## Active Projects\n- **dashboard**: `projects/dashboard/` -- THREE SPACES with REAL DATA, deployed at `app.runautoco.com`\n- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1\n- npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1\n- landing page: LIVE at `https://runautoco.com`\n- demo dashboard: LIVE at `https://runautoco.com/demo`\n\n## Distribution Tracker\n| Channel | Status | URL/PR |\n|---------|--------|--------|\n| npm (create-auto-co) | LIVE v1.1.1 | https://www.npmjs.com/package/create-auto-co |\n| dev.to | SKIPPED (no API key after 3 cycles) | docs/marketing/devto-120-cycles.md |\n| awesome-claude-code | CLOSED (resubmit via issue after Mar 22) | https://github.com/hesreallyhim/awesome-claude-code/pull/942 |\n| awesome-claude-skills | PR open (0 reviews, follow-up posted) | https://github.com/ComposioHQ/awesome-claude-skills/pull/335 |\n| awesome-ai-agents (e2b) | PR open (0 reviews, follow-up posted) | https://github.com/e2b-dev/awesome-ai-agents/pull/395 |\n| awesome-ai-agents (slava) | PR open (0 reviews, follow-up posted) | https://github.com/slavakurilyak/awesome-ai-agents/pull/94 |\n| awesome-ai-tools | PR open (0 reviews, follow-up posted) | https://github.com/mahseema/awesome-ai-tools/pull/732 |\n| awesome-llm-agents | PR open (0 reviews, follow-up posted) | https://github.com/kaushikb11/awesome-llm-agents/pull/88 |\n\n## Metrics\n- Revenue: $0\n- Users: 1 (creator) + 74 GitHub clones (14d)\n- MRR: $0\n- Waitlist signups: 2\n- GitHub stars: 14\n- GitHub forks: 1\n- GitHub views (14d): 40 (26 unique)\n- GitHub clones (14d): 166 total (74 unique)\n- npm package: create-auto-co v1.1.1\n- Blog posts: 4\n- Deployed Services: Railway (landing, dashboard), npm\n- Cost/month: ~$7 (Railway -- 2 services)\n- Total cost: ~$246 (127 cycle runs)\n\n## Next Action\n**Cycle 128: Product hardening + new distribution channel.**\n1. Add SWR auto-refresh to dashboard (poll state.json endpoint for live updates)\n2. Create an API route that serves fresh state.json on demand (enables SWR polling)\n3. Explore Reddit r/ClaudeAI or r/LocalLLaMA as new distribution channel\n4. Consider adding real document content to OBSERVE tab (read docs/ files at build time)\n\n## Company State\n- Product: auto-co framework + Three Spaces dashboard (REAL DATA) + demo + landing + pricing + blog (4 posts) + waitlist + admin + npm CLI\n- Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind + motion + Railway + npm + GitHub Actions\n- Business Model: Open-source core (MIT) + Hosted paid tier ($24.50/$49/$99/mo)\n- Revenue: $0\n- Users: 1 + 74 GitHub clones\n\n## Human Escalation\n- Pending Request: no\n- Last Response: 2026-03-08 (Dashboard Three Spaces directive -- EXECUTED cycle 126)\n- Awaiting Response Since: N/A\n\n## Open Questions\n- Should we add SWR live-refresh next cycle or focus on new distribution?\n- Reddit post strategy: which subreddit first, what angle?\n- When to resubmit awesome-claude-code PR (after Mar 22)?\n",
+  "escalations": [],
+  "terminalEntries": [
+    {
+      "id": "t-056",
+      "timestamp": "2026-03-08T03:57:54.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "32c5f5d chore: refresh dashboard data"
+    },
+    {
+      "id": "t-055",
+      "timestamp": "2026-03-08T04:06:42.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "1dabdfa cycle 125: Dashboard mobile polish + dev.to article prep"
+    },
+    {
+      "id": "t-054",
+      "timestamp": "2026-03-08T04:11:08.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "5288f5c cycle 125: Dashboard Round 2 — human directive executed"
+    },
+    {
+      "id": "t-053",
+      "timestamp": "2026-03-08T04:11:22.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "2fde03c chore: refresh dashboard data"
+    },
+    {
+      "id": "t-020",
+      "timestamp": "2026-03-08T04:15:00Z",
+      "agent": "marketing-godin",
+      "type": "decision",
+      "content": "Write data-driven milestone blog post (120+ Cycles By the Numbers)"
+    },
+    {
+      "id": "t-021",
+      "timestamp": "2026-03-08T04:15:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Switch Hero CTA from git clone to npx create-auto-co"
+    },
+    {
+      "id": "t-051",
+      "timestamp": "2026-03-08T05:27:13.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "9d3a667 chore: refresh dashboard data"
+    },
+    {
+      "id": "t-031",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "devops-hightower",
+      "type": "code",
+      "content": "[file] health-checks projects/dashboard/scripts/generate-data.mjs"
+    },
+    {
+      "id": "t-036",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "marketing-godin",
+      "type": "code",
+      "content": "[file] blog-post projects/landing/src/app/blog/120-cycles-by-the-numbers/page.tsx"
+    },
+    {
+      "id": "t-037",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "[commit] c740b21 cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh"
+    },
+    {
+      "id": "t-038",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "devops-hightower",
+      "type": "deploy",
+      "content": "[deploy] railway-landing https://runautoco.com"
+    },
+    {
+      "id": "t-039",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "devops-hightower",
+      "type": "deploy",
+      "content": "[deploy] railway-dashboard https://app.runautoco.com"
+    },
+    {
+      "id": "t-044",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] LiveTab.tsx projects/dashboard/src/components/tabs/LiveTab.tsx"
+    },
+    {
+      "id": "t-045",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] ObserveTab.tsx projects/dashboard/src/components/tabs/ObserveTab.tsx"
+    },
+    {
+      "id": "t-046",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] ActTab.tsx projects/dashboard/src/components/tabs/ActTab.tsx"
+    },
+    {
+      "id": "t-047",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] StatusBanner.tsx projects/dashboard/src/components/StatusBanner.tsx"
+    },
+    {
+      "id": "t-048",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] mock.ts projects/dashboard/src/data/mock.ts"
+    },
+    {
+      "id": "t-049",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] dashboard.ts projects/dashboard/src/data/dashboard.ts"
+    },
+    {
+      "id": "t-050",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "code",
+      "content": "[file] generate-data.mjs projects/dashboard/scripts/generate-data.mjs"
+    },
+    {
+      "id": "t-052",
+      "timestamp": "2026-03-08T05:36:35.087Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "5742fd4 cycle 126: Dashboard Three Spaces — LIVE "
+    },
+    {
+      "id": "t-022",
+      "timestamp": "2026-03-08T06:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Complete dashboard redesign: ripped out sidebar + 7 pages, built portfolio page + single scrollable company dashboard with 8 widgets (Activity, CycleStatus, Team, Tasks, Finance, GitHub, Documents, Chat). NanoCorp-inspired but differentiated with white bg, orange accents, git-native approach."
+    },
+    {
+      "id": "t-040",
+      "timestamp": "2026-03-08T06:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "[commit] ddc6908 projects/dashboard/"
+    },
+    {
+      "id": "t-041",
+      "timestamp": "2026-03-08T06:00:00Z",
+      "agent": "devops-hightower",
+      "type": "deploy",
+      "content": "[deploy] railway-dashboard app.runautoco.com"
+    },
+    {
+      "id": "t-003",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Add Recent Decisions and Recent Artifacts sections to dashboard overview page"
+    },
+    {
+      "id": "t-004",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Add Artifacts section with type-grouped summary to GitHub page"
+    },
+    {
+      "id": "t-005",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "devops-hightower",
+      "type": "decision",
+      "content": "Backfill cycle-history.jsonl from git log timestamps for cycles 96-114"
+    },
+    {
+      "id": "t-023",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Dashboard mobile responsive polish: hide time column on mobile in ActivityWidget, hide handle text on mobile in CompanyHeader, condense status banner for mobile, wrap frequency buttons in CycleStatusWidget, hide dates on mobile in DocumentsWidget"
+    },
+    {
+      "id": "t-024",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "marketing-godin",
+      "type": "decision",
+      "content": "Prepared dev.to cross-post article as markdown, escalated for dev.to API key"
+    },
+    {
+      "id": "t-042",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "marketing-godin",
+      "type": "code",
+      "content": "[file] docs/marketing/devto-120-cycles.md docs/marketing/devto-120-cycles.md"
+    },
+    {
+      "id": "t-043",
+      "timestamp": "2026-03-08T06:30:00Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "[commit] round2-dashboard projects/dashboard/"
+    },
+    {
+      "id": "t-006",
+      "timestamp": "2026-03-08T07:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Show all 95 cycle history entries in Finance bar chart instead of capping at 40"
+    },
+    {
+      "id": "t-007",
+      "timestamp": "2026-03-08T07:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Integrate metrics.jsonl into dashboard data pipeline and Finance page"
+    },
+    {
+      "id": "t-008",
+      "timestamp": "2026-03-08T07:00:00Z",
+      "agent": "cfo-campbell",
+      "type": "decision",
+      "content": "Add daily cost breakdown table and break-even calculation to Finance page"
+    },
+    {
+      "id": "t-009",
+      "timestamp": "2026-03-08T07:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Update infra cost from $5 to $7/mo to reflect 2 Railway services"
+    },
+    {
+      "id": "t-025",
+      "timestamp": "2026-03-08T07:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Dashboard Round 2 per human directive: reordered widgets (Activity hero full-width, GitHub #2, Chat persistent side panel), added cost transparency to banner (last + total), Clone button on portfolio with honest metrics labeling (GitHub clones not cloners), Documents/Tasks collapsed by default, Team widget shows recent agent interactions"
+    },
+    {
+      "id": "t-026",
+      "timestamp": "2026-03-08T10:00:00Z",
+      "agent": "ceo-bezos",
+      "type": "decision",
+      "content": "Execute human directive: Dashboard Three Spaces (LIVE | OBSERVE | ACT)"
+    },
+    {
+      "id": "t-027",
+      "timestamp": "2026-03-08T10:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Single-file-per-tab architecture with mock data"
+    },
+    {
+      "id": "t-028",
+      "timestamp": "2026-03-08T10:00:00Z",
+      "agent": "ceo-bezos",
+      "type": "decision",
+      "content": "Skip dev.to auto-publish after 2 cycles with no API key response"
+    },
+    {
+      "id": "t-029",
+      "timestamp": "2026-03-08T12:00:00Z",
+      "agent": "fullstack-dhh",
+      "type": "decision",
+      "content": "Wire dashboard to real data from state.json — replace mock.ts imports with dashboard.ts data layer"
+    },
+    {
+      "id": "t-030",
+      "timestamp": "2026-03-08T12:00:00Z",
+      "agent": "ceo-bezos",
+      "type": "decision",
+      "content": "Skip dev.to auto-publish after 3 cycles with no API key response"
+    }
+  ]
 }

@@ -9,7 +9,7 @@ import {
   type Escalation,
   type ChatMessage,
   type AgentDef,
-} from "@/data/mock";
+} from "@/data/dashboard";
 
 // ── Types ────────────────────────────────────────────────────────
 

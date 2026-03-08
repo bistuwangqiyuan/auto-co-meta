@@ -420,6 +420,99 @@ function computeLoopHealth(cycleHistory) {
   };
 }
 
+// ── Raw consensus text ───────────────────────────────────────────────
+function getConsensusText() {
+  try {
+    return readFileSync(resolve(ROOT, "memories/consensus.md"), "utf-8");
+  } catch {
+    return "";
+  }
+}
+
+// ── Escalation data from memories/ ───────────────────────────────────
+function getEscalations() {
+  const escalations = [];
+
+  // Parse human-request.md for pending escalation
+  try {
+    const req = readFileSync(resolve(ROOT, "memories/human-request.md"), "utf-8").trim();
+    if (req) {
+      const dateMatch = req.match(/\*\*Date:\*\*\s*(.+)/);
+      const fromMatch = req.match(/\*\*From:\*\*\s*(.+)/);
+      const contextMatch = req.match(/\*\*Context:\*\*\s*(.+)/);
+      const questionMatch = req.match(/\*\*Question:\*\*\s*(.+)/);
+      const defaultMatch = req.match(/\*\*Default Action:\*\*\s*(.+)/);
+      escalations.push({
+        id: `esc-pending`,
+        date: dateMatch?.[1]?.trim() || new Date().toISOString().split("T")[0],
+        from: fromMatch?.[1]?.trim() || "ceo-bezos",
+        context: contextMatch?.[1]?.trim() || "",
+        question: questionMatch?.[1]?.trim() || req.slice(0, 200),
+        defaultAction: defaultMatch?.[1]?.trim() || "Make autonomous decision",
+        resolved: false,
+      });
+    }
+  } catch {
+    // No pending request
+  }
+
+  return escalations;
+}
+
+// ── Synthesize terminal entries from decisions + commits + artifacts ──
+function synthesizeTerminalEntries(decisions, artifacts, commits, cycleHistory) {
+  const entries = [];
+  let id = 1;
+
+  // Map decision types to terminal entry types
+  const typeMap = {
+    commit: "commit",
+    deploy: "deploy",
+    file: "code",
+    pr: "action",
+  };
+
+  // Add decisions as terminal entries (most recent 30)
+  for (const d of decisions.slice(-30)) {
+    entries.push({
+      id: `t-${String(id++).padStart(3, "0")}`,
+      timestamp: d.timestamp || new Date().toISOString(),
+      agent: d.agent || "ceo-bezos",
+      type: "decision",
+      content: d.decision || "",
+    });
+  }
+
+  // Add artifacts as terminal entries (most recent 20)
+  for (const a of artifacts.slice(-20)) {
+    const lastHistory = cycleHistory.find((c) => c.cycle === a.cycle);
+    entries.push({
+      id: `t-${String(id++).padStart(3, "0")}`,
+      timestamp: lastHistory?.timestamp || new Date().toISOString(),
+      agent: a.createdBy || "fullstack-dhh",
+      type: typeMap[a.type] || "action",
+      content: `[${a.type}] ${a.ref || ""} ${a.path || ""}`.trim(),
+    });
+  }
+
+  // Add git commits as terminal entries (most recent 15)
+  for (const c of commits.slice(0, 15)) {
+    entries.push({
+      id: `t-${String(id++).padStart(3, "0")}`,
+      timestamp: (() => { try { const d = new Date(c.date); return isNaN(d.getTime()) ? new Date().toISOString() : d.toISOString(); } catch { return new Date().toISOString(); } })(),
+      agent: "fullstack-dhh",
+      type: "commit",
+      content: `${c.hash} ${c.msg}`,
+    });
+  }
+
+  // Sort by timestamp, most recent last
+  entries.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
+  // Deduplicate and limit to 40
+  return entries.slice(-40);
+}
+
 // ── Main ────────────────────────────────────────────────────────────
 // Skip generation if repo root doesn't exist (e.g., Railway build)
 if (!existsSync(resolve(ROOT, "memories/consensus.md"))) {
@@ -435,6 +528,14 @@ const metricsHistory = getMetricsHistory();
 const traffic = getGitHubTraffic();
 const healthChecks = await checkServiceHealth();
 const loopHealth = computeLoopHealth(cycleHistory);
+const consensusText = getConsensusText();
+const escalations = getEscalations();
+const terminalEntries = synthesizeTerminalEntries(
+  stateData.decisions,
+  stateData.artifacts,
+  git.commits,
+  cycleHistory,
+);
 
 const state = {
   generatedAt: new Date().toISOString(),
@@ -471,6 +572,9 @@ const state = {
     checks: healthChecks,
     loopHealth,
   },
+  consensusText,
+  escalations,
+  terminalEntries,
 };
 
 writeFileSync(OUT, JSON.stringify(state, null, 2));

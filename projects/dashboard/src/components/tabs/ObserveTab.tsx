@@ -12,7 +12,7 @@ import {
   costByLayer,
   AGENT_COLORS,
   type DocFile,
-} from "@/data/mock";
+} from "@/data/dashboard";
 
 // ── Layer colors for cost breakdown ──────────────────────────────
 const LAYER_COLORS: Record<string, string> = {
