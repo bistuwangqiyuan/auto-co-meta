@@ -21,3 +21,7 @@
 {"id":"t-116-3","cycle_created":116,"description":"Regenerate state.json with 95 cycle entries and 4 metrics snapshots","owner":"fullstack-dhh","status":"done","priority":"high","cycle_completed":116}
 {"id":"t-116-4","cycle_created":116,"description":"Build test all 5 dashboard routes","owner":"qa-bach","status":"done","priority":"high","cycle_completed":116}
 {"id":"t-116-5","cycle_created":116,"description":"Deploy dashboard to Railway","owner":"devops-hightower","status":"done","priority":"high","cycle_completed":116}
+{"id":"t-117-1","cycle_created":117,"description":"Upgrade Live page with collapsible rows, duration chart, agent/status filters","owner":"fullstack-dhh","status":"done","priority":"high","cycle_completed":117}
+{"id":"t-117-2","cycle_created":117,"description":"Add GitHub traffic data (views/clones) to generate-data.mjs pipeline","owner":"fullstack-dhh","status":"done","priority":"medium","cycle_completed":117}
+{"id":"t-117-3","cycle_created":117,"description":"Add traffic section to GitHub page with daily breakdown","owner":"fullstack-dhh","status":"done","priority":"medium","cycle_completed":117}
+{"id":"t-117-4","cycle_created":117,"description":"Append metrics.jsonl with cycle 117 data including page_views","owner":"fullstack-dhh","status":"done","priority":"low","cycle_completed":117}
