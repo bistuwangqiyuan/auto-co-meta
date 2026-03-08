@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-08T03:09:53.131Z",
+  "generatedAt": "2026-03-08T03:17:22.655Z",
   "cycle": 118,
   "phase": "Building",
   "metrics": {
@@ -54,6 +54,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "bd5cb5b",
+        "msg": "chore: refresh dashboard data",
+        "date": "2026-03-08 03:09:53 +0000"
+      },
       {
         "hash": "dcfe4e7",
         "msg": "cycle 119: Overview page refresh — cost sparkline, traffic card, Next Action banner",
@@ -148,11 +153,6 @@
         "hash": "85e0d7f",
         "msg": "feat: v2 improvements — adaptive frequency, QMD memory, structured state, cycle summaries",
         "date": "2026-03-07 17:46:15 -0800"
-      },
-      {
-        "hash": "0e874ec",
-        "msg": "cycle 111: update consensus",
-        "date": "2026-03-07 17:07:28 -0800"
       }
     ],
     "openPRs": []
@@ -1802,17 +1802,36 @@
       "pageViews": 40,
       "costCycle": 0,
       "costTotal": 228
+    },
+    {
+      "date": "2026-03-07",
+      "cycle": 120,
+      "revenue": 0,
+      "users": 1,
+      "signups": 2,
+      "githubStars": 13,
+      "pageViews": 40,
+      "costCycle": 2,
+      "costTotal": 232
     }
   ],
   "traffic": {
     "views": {
-      "total": 0,
-      "unique": 0
+      "total": 40,
+      "unique": 26
     },
     "clones": {
-      "total": 0,
-      "unique": 0
+      "total": 166,
+      "unique": 74
     },
-    "daily": []
+    "daily": [
+      {
+        "date": "2026-03-06",
+        "views": 40,
+        "uniqueViews": 26,
+        "clones": 166,
+        "uniqueClones": 74
+      }
+    ]
   }
 }
