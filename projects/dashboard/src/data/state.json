@@ -1,0 +1,197 @@
+{
+  "generatedAt": "2026-03-08T00:34:20.580Z",
+  "cycle": 105,
+  "phase": "Building",
+  "metrics": {
+    "totalCost": 199,
+    "avgCostPerCycle": 1.9,
+    "revenue": "$0",
+    "users": "1 (creator) + 74 cloners",
+    "stars": 10,
+    "forks": 1,
+    "cloners": 74,
+    "openIssues": 0
+  },
+  "nextAction": "Cycle 106: Wire dashboard to real data.",
+  "whatWeDid": [
+    "Added responsive breakpoints to all 5 pages:",
+    "Deployed to Vercel -- build passes, all 5 pages verified live:",
+    "Added `app.runautoco.com` domain to Vercel project"
+  ],
+  "projects": [
+    {
+      "name": "dashboard",
+      "status": "`projects/dashboard/` -- DEPLOYED to Vercel, awaiting DNS for app.runautoco.com"
+    }
+  ],
+  "pendingEscalation": true,
+  "distribution": [
+    {
+      "channel": "npm (create-auto-co)",
+      "status": "LIVE v1.1.1",
+      "url": "https://www.npmjs.com/package/create-auto-co"
+    },
+    {
+      "channel": "awesome-claude-skills",
+      "status": "PR open",
+      "url": "https://github.com/ComposioHQ/awesome-claude-skills/pull/335"
+    },
+    {
+      "channel": "awesome-ai-agents",
+      "status": "PR open",
+      "url": "https://github.com/e2b-dev/awesome-ai-agents/pull/395"
+    },
+    {
+      "channel": "awesome-ai-tools",
+      "status": "PR open",
+      "url": "https://github.com/mahseema/awesome-ai-tools/pull/732"
+    },
+    {
+      "channel": "awesome-llm-agents",
+      "status": "PR open",
+      "url": "https://github.com/kaushikb11/awesome-llm-agents/pull/88"
+    }
+  ],
+  "git": {
+    "commits": [
+      {
+        "hash": "0df7437",
+        "msg": "cycle 105: deploy dashboard to Vercel + responsive design",
+        "date": "2026-03-07 16:25:38 -0800"
+      },
+      {
+        "hash": "3fd87e4",
+        "msg": "cycle 103: update consensus -- npm v1.1.1 published, visual banner added",
+        "date": "2026-03-07 15:18:54 -0800"
+      },
+      {
+        "hash": "d87b8f3",
+        "msg": "cycle 103: visual startup banner + publish npm v1.1.1",
+        "date": "2026-03-07 15:18:00 -0800"
+      },
+      {
+        "hash": "dac7972",
+        "msg": "cycle 102: improve create-auto-co onboarding UX",
+        "date": "2026-03-07 15:12:49 -0800"
+      },
+      {
+        "hash": "a441095",
+        "msg": "cycle 101: draft awesome-claude-code issue form, analyze cloner gap",
+        "date": "2026-03-07 15:06:42 -0800"
+      },
+      {
+        "hash": "4134cf2",
+        "msg": "cycle 100: sharpen README differentiation -- \"50 lines of bash, not a framework\"",
+        "date": "2026-03-07 15:00:58 -0800"
+      },
+      {
+        "hash": "353fbd2",
+        "msg": "cycle 99: investigate HN traffic, create Quick Start discussion",
+        "date": "2026-03-07 14:56:43 -0800"
+      },
+      {
+        "hash": "a474569",
+        "msg": "cycle 97: update consensus",
+        "date": "2026-03-07 14:46:19 -0800"
+      },
+      {
+        "hash": "8933331",
+        "msg": "cycle 97: update distribution content -- 96 cycles/$181, add npx create-auto-co quickstart",
+        "date": "2026-03-07 14:45:34 -0800"
+      },
+      {
+        "hash": "8d8a272",
+        "msg": "cycle 96: publish create-auto-co npm package + update README quickstart",
+        "date": "2026-03-07 14:41:15 -0800"
+      },
+      {
+        "hash": "44e5b64",
+        "msg": "README: convert project showcase to table format",
+        "date": "2026-03-07 14:36:00 -0800"
+      },
+      {
+        "hash": "7db4c61",
+        "msg": "Rewrite README: simpler, showcase real products, mention Claude Code subscription",
+        "date": "2026-03-07 14:34:30 -0800"
+      },
+      {
+        "hash": "f09e715",
+        "msg": "cycle 94: update consensus -- distribution content ready, awaiting human posting",
+        "date": "2026-03-07 14:31:03 -0800"
+      },
+      {
+        "hash": "a89a6a5",
+        "msg": "cycle 94: update distribution content numbers (93 cycles/$175) + escalate for posting",
+        "date": "2026-03-07 14:30:24 -0800"
+      },
+      {
+        "hash": "53d7d11",
+        "msg": "cycle 93: embed demo video on landing page + fix human-actions.sh bug + distribution prep",
+        "date": "2026-03-07 14:24:51 -0800"
+      },
+      {
+        "hash": "f4a7d0e",
+        "msg": "Replace back button with AC logo linking to home on demo page",
+        "date": "2026-03-07 14:22:53 -0800"
+      },
+      {
+        "hash": "78c8708",
+        "msg": "Restore YouTube thumbnail + link for demo video in README",
+        "date": "2026-03-07 14:20:30 -0800"
+      },
+      {
+        "hash": "cb4f938",
+        "msg": "Embed demo video inline in README (auto-renders as video player on GitHub)",
+        "date": "2026-03-07 14:19:30 -0800"
+      },
+      {
+        "hash": "fd33040",
+        "msg": "Polish README: centered logo header, star badge, social preview image",
+        "date": "2026-03-07 14:15:39 -0800"
+      },
+      {
+        "hash": "aafe04e",
+        "msg": "Add YouTube demo embed to README + update human response with video URL",
+        "date": "2026-03-07 14:10:24 -0800"
+      }
+    ],
+    "openPRs": []
+  },
+  "deployments": [
+    {
+      "service": "Landing Page",
+      "url": "runautoco.com",
+      "status": "live"
+    },
+    {
+      "service": "Dashboard",
+      "url": "app.runautoco.com",
+      "status": "live"
+    },
+    {
+      "service": "Demo Dashboard",
+      "url": "runautoco.com/demo",
+      "status": "live"
+    },
+    {
+      "service": "Blog",
+      "url": "runautoco.com/blog",
+      "status": "live"
+    },
+    {
+      "service": "Pricing",
+      "url": "runautoco.com/pricing",
+      "status": "live"
+    },
+    {
+      "service": "Admin",
+      "url": "runautoco.com/admin",
+      "status": "live"
+    },
+    {
+      "service": "npm Package",
+      "url": "npmjs.com/package/create-auto-co",
+      "status": "live"
+    }
+  ]
+}
