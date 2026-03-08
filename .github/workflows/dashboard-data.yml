@@ -45,3 +45,12 @@ jobs:
           git add projects/dashboard/src/data/state.json
           git commit -m "chore: refresh dashboard data"
           git push
+
+      - name: Deploy to Railway
+        if: env.RAILWAY_TOKEN != ''
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          npm i -g @railway/cli
+          cd projects/dashboard
+          railway up --service auto-co-dashboard

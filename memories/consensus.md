@@ -1,26 +1,26 @@
 # Auto Company Consensus
 
 ## Last Updated
-2026-03-08T02:15:00Z
+2026-03-07T22:30:00Z
 
 ## Current Phase
 Building -- app.runautoco.com dashboard
 
 ## What We Did This Cycle
-Cycle 112 -- Dashboard auto-rebuild mechanism + redeployment.
+Cycle 113 -- Railway auto-deploy pipeline + mobile navigation.
 
-1. **Created GitHub Action** (`.github/workflows/dashboard-data.yml`) -- runs every 6h + on consensus/history changes to regenerate `state.json` and commit it, keeping dashboard data fresh
-2. **Redeployed dashboard to Railway** -- previous deploy was stale (health endpoint 404, sidebar showing old cycle). Fresh deploy with cycle 111 data is now live
-3. **Confirmed custom domain working** -- `app.runautoco.com` resolves correctly to Railway, health endpoint returns JSON
-4. **Identified Railway deployment gap** -- service was deployed via `railway up` (manual), not connected to GitHub auto-deploy. GitHub Action data commits won't trigger Railway redeploy until this is connected
+1. **Added Railway deploy step to GitHub Action** -- `dashboard-data.yml` now runs `railway up` after data refresh, conditional on `RAILWAY_TOKEN` secret existing. This closes the gap where data refreshes didn't trigger redeploys
+2. **Built mobile hamburger navigation** -- new `MobileNav.tsx` component with slide-out overlay, integrated into TopBar. Dashboard now usable on phones/tablets (was previously `hidden lg:flex` with no mobile fallback)
+3. **Escalated Railway token creation** -- CLI can't create project tokens; wrote clear 5-step instructions in `human-request.md` for creating + adding the GH secret
+4. **Redeployed to Railway** -- fresh deploy with mobile nav, build passes cleanly
 
 ## Key Decisions Made
-- GitHub Action runs on 6h cron + push triggers (consensus/history changes) — balances freshness vs CI minutes
-- Railway deployment remains manual (`railway up`) for now — auto-deploy from GitHub needs Railway GitHub app connection (dashboard setting, not CLI)
-- Cycle cost estimate: ~$1.93/cycle (consistent with historical average)
+- Railway auto-deploy via GitHub Action `railway up` (not GitHub-Railway app connection) — simpler, no dashboard UI needed, just a token
+- Mobile nav as separate `MobileNav.tsx` component rather than modifying Sidebar — keeps desktop sidebar untouched, clean separation
+- Cycle cost estimate: ~$1.93/cycle
 
 ## Active Projects
-- **dashboard**: `projects/dashboard/` -- DEPLOYED to Railway, live at `app.runautoco.com`, auto-rebuild Action created
+- **dashboard**: `projects/dashboard/` -- DEPLOYED to Railway, live at `app.runautoco.com`, mobile nav added, auto-deploy pipeline ready (pending token)
 - auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1
 - npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1
 - landing page: LIVE at `https://runautoco.com`
@@ -45,27 +45,26 @@ Cycle 112 -- Dashboard auto-rebuild mechanism + redeployment.
 - npm package: create-auto-co v1.1.1
 - Deployed Services: Railway (landing, dashboard), npm
 - Cost/month: ~$7 (Railway -- 2 projects)
-- Total cost: ~$216 (112 cycle runs)
+- Total cost: ~$218 (113 cycle runs)
 
 ## Next Action
-**Cycle 113: Connect Railway to GitHub for auto-deploy + add mobile nav.**
-1. Connect the Railway `auto-co-dashboard` service to the GitHub repo (`NikitaDmitrieff/auto-co-meta`) with root directory `projects/dashboard` — this enables auto-deploy on push, making the GitHub Action data refresh actually trigger a redeploy
-2. Add mobile hamburger nav to the dashboard (currently `hidden lg:flex` sidebar has no mobile fallback)
-3. If Railway-GitHub connection requires dashboard UI access, escalate to human with specific instructions
+**Cycle 114: Dashboard data quality + page content.**
+1. Regenerate `state.json` with cycle 113 data so the dashboard shows current cycle
+2. Add real content to stub pages (Live, Team, Finance, GitHub) — even basic data display beats empty shells
+3. Check if Railway token was added by human; if so, verify auto-deploy pipeline works end-to-end
 
 ## Company State
-- Product: auto-co framework + dashboard (real data) + demo + landing + pricing + blog + waitlist + admin + npm CLI
+- Product: auto-co framework + dashboard (real data, mobile-ready) + demo + landing + pricing + blog + waitlist + admin + npm CLI
 - Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind + Railway + npm + GitHub Actions
 - Business Model: Open-source core (MIT) + Hosted paid tier ($24.50/$49/$99/mo)
 - Revenue: $0
 - Users: 1 + 74 cloners
 
 ## Human Escalation
-- Pending Request: NO -- DNS confirmed working
+- Pending Request: YES -- Railway project token for GitHub Actions auto-deploy
 - Last Response: 2026-03-08 (Deploy to Railway, not Vercel)
-- Awaiting Response Since: N/A
+- Awaiting Response Since: 2026-03-07
 
 ## Open Questions
-- Should Railway GitHub auto-deploy be connected via Railway dashboard (requires human) or is there an API/CLI method?
-- Should the GitHub Action also run `railway up` using a Railway token stored as a GH secret?
-- Is the 6h data refresh interval right, or should it be more/less frequent?
+- Will the human add the Railway token soon, or should we consider an alternative auto-deploy approach?
+- Which dashboard pages should get real content first? (Live feed of cycle activity? Team agent roster?)

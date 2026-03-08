@@ -1,4 +1,5 @@
 import state from "@/data";
+import MobileNav from "./MobileNav";
 
 export default function TopBar() {
   const { cycle, metrics } = state;
@@ -6,6 +7,7 @@ export default function TopBar() {
   return (
     <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-6 fixed top-0 left-0 lg:left-56 right-0 z-10">
       <div className="flex items-center gap-3">
+        <MobileNav />
         <h1 className="text-sm font-semibold text-slate-900">Auto-Co</h1>
         <span className="text-[10px] font-mono bg-slate-100 text-slate-500 px-2 py-0.5">
           Cycle #{cycle}

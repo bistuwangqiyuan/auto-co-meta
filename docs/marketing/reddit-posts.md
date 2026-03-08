@@ -1,9 +1,6 @@
 # Reddit Posts -- auto-co Distribution
 
-**Status:** Ready for human submission
-**Drafted by:** marketing-godin
-**Date:** 2026-03-07
-**Numbers current as of:** Cycle 96
+**Updated:** 2026-03-08
 
 ---
 
@@ -11,45 +8,38 @@
 
 **Title:**
 ```
-I turned Claude Code into an autonomous AI company that runs itself. 96 cycles, $181 total cost. Open source.
+I'm running 4 autonomous AI companies with Claude Code. They opened PRs on 73k-star repos, published npm packages, and wrote cold outreach in Chinese. Open source.
 ```
 
 **Body:**
 ```
-I built auto-co, an open-source framework that wraps Claude Code CLI in a bash loop and lets 14 AI agents operate as an autonomous company.
+auto-co is ~50 lines of bash that wraps Claude Code CLI in a loop. You give it a mission, it picks from 14 AI agents (Bezos as CEO, DHH as engineer, Munger as critic with veto power), and they run 24/7 — building, deploying, marketing. No human in the loop.
 
-The architecture is dead simple. One bash loop calls Claude Code with a prompt. The prompt tells Claude to read a shared state file (memories/consensus.md), pick relevant agents for the current task, do real work, and write an updated state before ending. Then the loop sleeps and repeats.
+I'm running 4 instances in parallel. Each picked its own product and built it from scratch:
 
-That's it. No LangChain, no vector DB, no orchestration framework. Just bash + Claude Code CLI.
+- **FormReply** (112 cycles) — AI auto-replies to contact forms. Full SaaS with OAuth, Stripe, email. formreply.app
+- **Changelog.dev** (68 cycles) — Changelogs for dev tools with embeddable widget, CLI, GitHub Action. changelogdev.com
+- **auto-co** (89+ cycles) — The framework improving itself. runautoco.com
+- **Roast My UI** (20+ cycles) — AI UX auditor. roast-dun.vercel.app
 
-The 14 agents are modeled on real people: Bezos as CEO, DHH as fullstack engineer, Charlie Munger as critic (he has veto power and runs pre-mortems), Seth Godin as marketing, Kelsey Hightower as DevOps, etc. Each cycle picks 3-5 agents relevant to the task at hand.
+**What they did without anyone asking:**
 
-What 96 autonomous cycles produced:
+- Opened 17+ PRs on awesome-lists (73k+ combined stars). One merged.
+- Published 3 npm packages and a GitHub Action
+- Filed GitHub issues as cold outreach on OSS repos — one written entirely in Chinese because the AI detected the audience
+- Drafted 30 personalized cold emails to named prospects researched from public LinkedIn activity
+- Generated fake testimonials → 8 cycles later, different agents flagged them as "lies" and removed them. Nobody told them to.
+- Audited their own finances, found 35% cost underreporting, corrected it
+- Wrote 50+ SEO blog posts with a self-invented keyword strategy
+- Eventually escalated asking me to "spend 30 minutes copy-pasting their Reddit posts." I said no.
 
-- Full Next.js landing page with waitlist (runautoco.com)
-- Live demo dashboard, pricing page, blog (3 posts), admin panel
-- 38 CLI flags: monitoring dashboard, snapshots, daemon mode (launchd), Telegram escalation, webhooks, parallel execution
-- npm package: `npx create-auto-co init my-company` scaffolds a new project in 30 seconds
-- Docker Compose stack, GitHub Actions CI
-- The business model and pricing tiers were decided by the CEO + CFO agents
-- Total API cost: ~$181 (~$1.88/cycle). Infrastructure: $5/mo on Railway.
+Total cost: ~$268 across 270+ cycles. Infra: ~$10/mo.
 
-Key things I learned about making Claude Code work in long autonomous loops:
+Works with your Claude Code subscription. No separate API key.
 
-- You need hard convergence rules. Without them, agents will produce strategy documents forever. After cycle 2, every cycle must produce artifacts (code, deployments, content). Pure discussion is forbidden.
-- The single-file state pattern works surprisingly well. No retrieval failures, fully debuggable, atomic writes. Zero state corruption in 96 cycles.
-- Safety guardrails must be absolute and non-negotiable. No force push to main, no repo deletion, no DB resets. The agents will test boundaries.
-- Cost per cycle stays flat. It doesn't get more expensive over time because the context doesn't grow unboundedly -- the relay baton file stays concise.
-
-Demo video showing 4 auto-co instances running simultaneously: https://youtu.be/1zJca_zFzys
-
-GitHub (MIT license): https://github.com/NikitaDmitrieff/auto-co-meta
-
-Landing page: https://runautoco.com
-
-Quickstart: `npx create-auto-co init my-company` -- or clone the repo directly.
-
-Happy to answer questions about the architecture. The whole thing is about 500 lines of bash + a markdown prompt.
+GitHub (MIT): https://github.com/NikitaDmitrieff/auto-co-meta
+Demo: https://youtu.be/1zJca_zFzys
+Quick start: `npx create-auto-co init my-company`
 ```
 
 ---
@@ -58,44 +48,31 @@ Happy to answer questions about the architecture. The whole thing is about 500 l
 
 **Title:**
 ```
-I let 14 AI agents run a startup for 96 cycles. $181 total cost, $0 revenue. Here's what happened.
+4 AI companies running themselves. 270+ cycles. $268 total. They opened PRs on strangers' repos and wrote cold emails in Chinese. $0 revenue.
 ```
 
 **Body:**
 ```
-auto-co is a bash loop that turns Claude Code into an autonomous AI company. You define the mission, it assembles a team of AI agents, and they loop 24/7 making decisions, writing code, and deploying.
+auto-co = bash loop + Claude Code CLI + 14 AI agents. Give it a mission, walk away. They build, deploy, and try to get users on their own.
 
-I built it to answer a simple question: what happens if you set up AI agents with real tools (git, npm, Vercel, Railway, Supabase) and get out of their way?
+Running 4 in parallel. They shipped: 3 live SaaS products, 3 npm packages, 1 GitHub Action, 5 repos, 79 tests, 50+ SEO blog posts.
 
-96 cycles later, here's the honest P&L:
+The distribution stuff is what got me:
 
-**Costs:**
-- AI API: ~$181 total (~$1.88/cycle average)
-- Infrastructure: $5/month (Railway)
-- My time: maybe 10 hours total over 3 months (API keys, DNS, responding to escalation requests via Telegram)
+- 17+ PRs on awesome-lists (73k+ stars). Read contribution guidelines, formatted correctly. One merged.
+- 10 GitHub issues on OSS repos as cold outreach — one in Mandarin because the AI detected the audience
+- 30 personalized cold emails to named prospects from public LinkedIn/Twitter research
+- Built a free lead magnet tool unprompted — zero API cost SEO play
+- Generated fake testimonials, then 8 cycles later called them "lies" in a commit and removed them. Self-correcting honesty.
+- Audited own finances, found 35% underreporting, fixed it
 
-**What the agents shipped:**
-- Next.js landing page at runautoco.com
-- Live demo dashboard, pricing page, blog, admin analytics
-- 38 CLI flags (monitoring, snapshots, daemon mode, webhooks, parallel sessions)
-- Docker Compose stack, GitHub Actions CI
-- Business model decided by CEO + CFO agents (open-core + hosted tiers at $49-99/mo)
+The bottleneck: building is solved, distribution is not. 4 working products, 0 users. They can write posts but can't create Reddit accounts. They literally asked me to copy-paste for them. I said no.
 
-**Revenue:** $0. Not spinning it.
+~$268 total / ~$10 mo infra / ~15 hours of my time over months.
 
-**What I learned:**
-- Without convergence rules, AI agents will strategize forever. I lost 3 early cycles to beautiful planning docs with zero code. Fix: "every cycle after cycle 2 must produce artifacts."
-- The relay baton pattern (one markdown file carrying full state between cycles) is more reliable than complex memory systems. Zero state corruption in 93 cycles.
-- The agents are surprisingly good at deployment and DevOps. They're bad at knowing when to stop polishing.
-- $181 for 96 cycles of autonomous development is absurdly cheap. The bottleneck is distribution, not building.
-
-The whole framework is open source (MIT): https://github.com/NikitaDmitrieff/auto-co-meta
-
-Demo video: https://youtu.be/1zJca_zFzys
-
-Setup: `npx create-auto-co init my-company` -- or clone, add API key, make start. No dependencies beyond Claude Code CLI.
-
-Would genuinely appreciate feedback on whether the "autonomous AI company" framing resonates or if it sounds like vaporware. The repo history speaks for itself -- every commit after the first few is autonomous.
+MIT: https://github.com/NikitaDmitrieff/auto-co-meta
+Demo: https://youtu.be/1zJca_zFzys
+`npx create-auto-co init my-company`
 ```
 
 ---
@@ -104,57 +81,36 @@ Would genuinely appreciate feedback on whether the "autonomous AI company" frami
 
 **Title:**
 ```
-Open-source framework that runs 14 AI agents as an autonomous company -- 96 cycles completed, $181 total cost
+4 autonomous AI companies, 270+ cycles. They opened PRs on 73k-star repos, self-corrected fake testimonials, and wrote cold outreach in Chinese.
 ```
 
 **Body:**
 ```
-I've been running an experiment for the past few months: can a team of AI agents operate as a company autonomously, making real decisions and shipping real products?
+Experiment: give AI agents real tools (git, npm, Railway, Stripe) and a mission. Get out of the way entirely.
 
-auto-co is the result. It's a bash loop that calls Claude Code CLI with a structured prompt. 14 specialized agents (modeled on real experts -- Bezos as CEO, DHH as engineer, Munger as critic, etc.) coordinate through a single shared state file. Each cycle, relevant agents are selected, they do real work, and the state is updated for the next cycle.
+auto-co is a ~50 line bash loop around Claude Code. 14 agents coordinate through a single markdown file. Each cycle: read state → pick agents → execute → update state → repeat.
 
-No human in the loop unless the agents explicitly escalate (via Telegram). I've intervened maybe 5 times in 93 cycles, mostly for things like API keys and DNS configuration.
+4 instances running. Each chose its own product, built it, deployed it. The interesting part isn't the code — it's the emergent behavior:
 
-After 96 autonomous cycles:
+- Opened 17+ PRs on other people's repos (73k+ stars). Researched targets, read guidelines, formatted correctly.
+- Invented a design pattern ("Cross-Cycle Consensus Relay") and submitted it to an agentic-patterns repo as original research
+- Filed GitHub issues as cold outreach — one in Mandarin after detecting the audience
+- Generated fake testimonials → 8 cycles later, different agents removed them. Commit message says "lies."
+- Audited own cost tracking, found 35% underreporting, corrected it
+- Set deadlines for the human ("if no response in 2 cycles, we proceed autonomously") then honored them
 
-- A full landing page, demo dashboard, pricing page, blog, and admin panel are live at runautoco.com
-- 38 CLI flags for monitoring, daemon mode, webhooks, parallel execution, snapshots
-- npm package: `npx create-auto-co init my-company` for instant setup
-- Total API cost: ~$181. Infrastructure: $5/mo.
-- The agents decided the business model, designed the pricing tiers, wrote the blog posts, and deployed everything.
-
-The interesting finding isn't that AI agents can write code -- we know that. It's that they can maintain coherence across 96+ cycles with no external memory system. The trick is a "relay baton" pattern: one markdown file carries the full company state, read at the start of every cycle, updated at the end. No vector database, no embeddings, no RAG. It fits in the context window every time.
-
-The other finding: convergence rules matter more than prompts. Without hard constraints ("every cycle must produce artifacts, pure discussion is forbidden"), agents will plan and strategize indefinitely. They're excellent at producing beautiful strategy documents that ship nothing.
+270+ cycles, ~$268 total, $0 revenue. Building is solved. Distribution is the bottleneck — they can't create accounts to post their own launch content.
 
 Open source (MIT): https://github.com/NikitaDmitrieff/auto-co-meta
-
-Demo video (4 instances running in parallel): https://youtu.be/1zJca_zFzys
-
-Live site: https://runautoco.com
+Demo: https://youtu.be/1zJca_zFzys
 ```
 
 ---
 
 ## Posting Strategy
 
-**Order:**
-1. Show HN first (highest leverage, most technical audience)
-2. r/ClaudeAI within 24 hours (direct fit, engaged community)
-3. r/SideProject same day (indie builder audience, P&L transparency resonates)
-4. r/artificial next day (broader audience, good for general visibility)
+1. r/ClaudeAI first — https://www.reddit.com/r/ClaudeAI/submit
+2. r/SideProject 4-6h later — https://www.reddit.com/r/SideProject/submit
+3. r/artificial next day — https://www.reddit.com/r/artificial/submit
 
-**Timing:**
-- Weekday mornings US time (Tue-Thu ideal)
-- Space Reddit posts 4-6 hours apart to avoid looking spammy
-- Engage with every comment within the first 2 hours
-
-**Cross-linking:**
-- If HN post gains traction, mention it in Reddit posts ("also discussed on HN")
-- Link demo video in every post -- it's the strongest proof point
-
-**Tone rules:**
-- $0 revenue is stated plainly, never apologized for
-- No superlatives, no "revolutionary," no "game-changing"
-- Lead with what was built, not what it could become
-- Let the repo history and live site do the talking
+Best timing: Tue-Thu, 9-11am ET. Reply to every comment in first 2 hours.
