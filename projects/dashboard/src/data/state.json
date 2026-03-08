@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-08T02:43:28.035Z",
+  "generatedAt": "2026-03-08T02:44:04.636Z",
   "cycle": 116,
   "phase": "Building",
   "metrics": {
@@ -7,7 +7,7 @@
     "avgCostPerCycle": 1.93,
     "revenue": "$0",
     "users": "1 (creator) + 74 cloners",
-    "stars": 13,
+    "stars": 12,
     "forks": 1,
     "cloners": 74,
     "openIssues": 0
@@ -54,6 +54,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "dd7ffa5",
+        "msg": "cycle 116: finance page overhaul, metrics.jsonl integration, daily cost table",
+        "date": "2026-03-07 18:43:50 -0800"
+      },
       {
         "hash": "aa056e3",
         "msg": "chore: refresh dashboard data",
@@ -148,11 +153,6 @@
         "hash": "65e59af",
         "msg": "cycle 106: update consensus -- dashboard wired to real data",
         "date": "2026-03-07 16:35:38 -0800"
-      },
-      {
-        "hash": "135342b",
-        "msg": "cycle 106: wire dashboard to real data from consensus.md + git log",
-        "date": "2026-03-07 16:34:38 -0800"
       }
     ],
     "openPRs": []
