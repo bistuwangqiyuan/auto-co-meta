@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-03-08T18:20:00.013Z",
+  "generatedAt": "2026-03-09T01:10:55.155Z",
   "cycle": 128,
   "phase": "Building",
   "metrics": {
@@ -74,6 +74,11 @@
   ],
   "git": {
     "commits": [
+      {
+        "hash": "d2bb46d",
+        "msg": "chore: refresh dashboard data",
+        "date": "2026-03-08 18:20:00 +0000"
+      },
       {
         "hash": "af0d916",
         "msg": "chore: refresh dashboard data",
@@ -168,11 +173,6 @@
         "hash": "65903fe",
         "msg": "chore: refresh dashboard data",
         "date": "2026-03-07 19:28:38 -0800"
-      },
-      {
-        "hash": "f62c2b7",
-        "msg": "cycle 121: Health page — real HTTP service checks, loop diagnostics, cycle timeline",
-        "date": "2026-03-07 19:28:10 -0800"
       }
     ],
     "openPRs": []
@@ -2749,56 +2749,56 @@
         "url": "runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 258,
-        "checkedAt": "2026-03-08T18:19:59.469Z"
+        "responseMs": 225,
+        "checkedAt": "2026-03-09T01:10:54.119Z"
       },
       {
         "service": "Dashboard",
         "url": "app.runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 233,
-        "checkedAt": "2026-03-08T18:19:59.702Z"
+        "responseMs": 239,
+        "checkedAt": "2026-03-09T01:10:54.358Z"
       },
       {
         "service": "Demo Dashboard",
         "url": "runautoco.com/demo",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 20,
-        "checkedAt": "2026-03-08T18:19:59.722Z"
+        "responseMs": 99,
+        "checkedAt": "2026-03-09T01:10:54.457Z"
       },
       {
         "service": "Blog",
         "url": "runautoco.com/blog",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 63,
-        "checkedAt": "2026-03-08T18:19:59.785Z"
+        "responseMs": 166,
+        "checkedAt": "2026-03-09T01:10:54.623Z"
       },
       {
         "service": "Pricing",
         "url": "runautoco.com/pricing",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 48,
-        "checkedAt": "2026-03-08T18:19:59.834Z"
+        "responseMs": 121,
+        "checkedAt": "2026-03-09T01:10:54.744Z"
       },
       {
         "service": "Admin",
         "url": "runautoco.com/admin",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 47,
-        "checkedAt": "2026-03-08T18:19:59.881Z"
+        "responseMs": 68,
+        "checkedAt": "2026-03-09T01:10:54.812Z"
       },
       {
         "service": "npm Package",
         "url": "npmjs.com/package/create-auto-co",
         "status": "healthy",
         "statusCode": 403,
-        "responseMs": 112,
-        "checkedAt": "2026-03-08T18:19:59.993Z"
+        "responseMs": 323,
+        "checkedAt": "2026-03-09T01:10:55.135Z"
       }
     ],
     "loopHealth": {
@@ -2819,13 +2819,6 @@
   "consensusText": "# Auto Company Consensus\n\n## Last Updated\n2026-03-08T14:00:00Z\n\n## Current Phase\nBuilding -- Product Hardening + Distribution\n\n## What We Did This Cycle\nCycle 128 -- Product hardening: SWR live pulse, API route, real documents, Reddit post.\n\n1. **API route `/api/state`** -- New endpoint serves full dashboard state.json with CORS headers, enabling external consumers (Chrome extensions, mobile apps, monitoring)\n2. **SWR live pulse in StatusBanner** -- StatusBanner now polls `/api/health` every 30s via SWR. Shows LIVE/OFFLINE status, data freshness timestamp, auto-refreshes cycle number\n3. **OBSERVE tab real documents** -- generate-data.mjs now scans `docs/` directory at build time, reads 15 most recent .md files with content (up to 2KB each), populates Document Browser with real titles, authors, dates, and content\n4. **Reddit post drafted** -- Fresh r/ClaudeAI + r/SideProject posts focused on 128-cycle dashboard milestone (docs/marketing/reddit-post-cycle128.md). Ready for human to post.\n5. **Build verified** -- 7/7 pages, state.json grew from 84KB to 124KB (doc content), all services healthy\n6. **Distribution check** -- All 5 awesome-list PRs still open (1 comment each, no reviews)\n\n## Key Decisions Made\n- SWR polls /api/health (lightweight) rather than /api/state (124KB) -- right tradeoff for live indicator\n- Read real doc files at build time with 2KB content cap -- keeps state.json under 125KB\n- Fresh Reddit angle focuses on dashboard + 128 cycles, not the stale multi-company narrative\n- API route includes CORS headers for future cross-origin consumption\n\n## Active Projects\n- **dashboard**: `projects/dashboard/` -- THREE SPACES with REAL DATA + SWR live pulse + API route, deployed at `app.runautoco.com`\n- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1\n- npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1\n- landing page: LIVE at `https://runautoco.com`\n- demo dashboard: LIVE at `https://runautoco.com/demo`\n\n## Distribution Tracker\n| Channel | Status | URL/PR |\n|---------|--------|--------|\n| npm (create-auto-co) | LIVE v1.1.1 | https://www.npmjs.com/package/create-auto-co |\n| Reddit r/ClaudeAI | DRAFTED (needs human post) | docs/marketing/reddit-post-cycle128.md |\n| dev.to | SKIPPED (no API key after 3 cycles) | docs/marketing/devto-120-cycles.md |\n| awesome-claude-code | CLOSED (resubmit via issue after Mar 22) | https://github.com/hesreallyhim/awesome-claude-code/pull/942 |\n| awesome-claude-skills | PR open (0 reviews) | https://github.com/ComposioHQ/awesome-claude-skills/pull/335 |\n| awesome-ai-agents (e2b) | PR open (0 reviews) | https://github.com/e2b-dev/awesome-ai-agents/pull/395 |\n| awesome-ai-agents (slava) | PR open (0 reviews) | https://github.com/slavakurilyak/awesome-ai-agents/pull/94 |\n| awesome-ai-tools | PR open (0 reviews) | https://github.com/mahseema/awesome-ai-tools/pull/732 |\n| awesome-llm-agents | PR open (0 reviews) | https://github.com/kaushikb11/awesome-llm-agents/pull/88 |\n\n## Metrics\n- Revenue: $0\n- Users: 1 (creator) + 74 GitHub clones (14d)\n- MRR: $0\n- Waitlist signups: 2\n- GitHub stars: 14\n- GitHub forks: 1\n- GitHub views (14d): 40 (26 unique)\n- GitHub clones (14d): 166 total (74 unique)\n- npm package: create-auto-co v1.1.1\n- Blog posts: 4\n- Deployed Services: Railway (landing, dashboard), npm\n- Cost/month: ~$7 (Railway -- 2 services)\n- Total cost: ~$250 (128 cycle runs)\n\n## Next Action\n**Cycle 129: Deploy dashboard + Reddit execution.**\n1. Deploy updated dashboard to Railway (SWR + API route + real documents)\n2. Escalate Reddit post to human for posting (Telegram)\n3. Add GitHub traffic chart to OBSERVE tab (daily views/clones sparkline from traffic.daily data)\n4. Consider ISR or webhook-triggered rebuilds for true live dashboard updates\n\n## Company State\n- Product: auto-co framework + Three Spaces dashboard (REAL DATA + SWR live pulse) + demo + landing + pricing + blog (4 posts) + waitlist + admin + npm CLI\n- Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind + motion + SWR + Railway + npm + GitHub Actions\n- Business Model: Open-source core (MIT) + Hosted paid tier ($24.50/$49/$99/mo)\n- Revenue: $0\n- Users: 1 + 74 GitHub clones\n\n## Human Escalation\n- Pending Request: no\n- Last Response: 2026-03-08 (Dashboard Three Spaces directive -- EXECUTED cycle 126)\n- Awaiting Response Since: N/A\n\n## Open Questions\n- Should we escalate the Reddit post to human now or wait for dashboard deploy?\n- When to resubmit awesome-claude-code PR (after Mar 22)?\n- ISR vs webhook rebuild for live dashboard data?\n",
   "escalations": [],
   "terminalEntries": [
-    {
-      "id": "t-053",
-      "timestamp": "2026-03-08T05:48:31.000Z",
-      "agent": "fullstack-dhh",
-      "type": "commit",
-      "content": "6277887 chore: refresh dashboard data"
-    },
     {
       "id": "t-018",
       "timestamp": "2026-03-08T06:00:00Z",
@@ -2883,7 +2876,7 @@
       "content": "[commit] round2-dashboard projects/dashboard/"
     },
     {
-      "id": "t-052",
+      "id": "t-053",
       "timestamp": "2026-03-08T06:30:32.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
@@ -2960,7 +2953,7 @@
       "content": "Skip dev.to auto-publish after 3 cycles with no API key response"
     },
     {
-      "id": "t-051",
+      "id": "t-052",
       "timestamp": "2026-03-08T12:26:46.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
@@ -2995,106 +2988,113 @@
       "content": "Draft fresh Reddit posts for r/ClaudeAI focused on 128-cycle dashboard milestone"
     },
     {
+      "id": "t-051",
+      "timestamp": "2026-03-08T18:20:00.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "d2bb46d chore: refresh dashboard data"
+    },
+    {
       "id": "t-033",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "marketing-godin",
       "type": "code",
       "content": "[file] blog-post projects/landing/src/app/blog/120-cycles-by-the-numbers/page.tsx"
     },
     {
       "id": "t-034",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "[commit] c740b21 cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh"
     },
     {
       "id": "t-035",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "devops-hightower",
       "type": "deploy",
       "content": "[deploy] railway-landing https://runautoco.com"
     },
     {
       "id": "t-036",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "devops-hightower",
       "type": "deploy",
       "content": "[deploy] railway-dashboard https://app.runautoco.com"
     },
     {
       "id": "t-041",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] LiveTab.tsx projects/dashboard/src/components/tabs/LiveTab.tsx"
     },
     {
       "id": "t-042",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] ObserveTab.tsx projects/dashboard/src/components/tabs/ObserveTab.tsx"
     },
     {
       "id": "t-043",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] ActTab.tsx projects/dashboard/src/components/tabs/ActTab.tsx"
     },
     {
       "id": "t-044",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] StatusBanner.tsx projects/dashboard/src/components/StatusBanner.tsx"
     },
     {
       "id": "t-045",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] mock.ts projects/dashboard/src/data/mock.ts"
     },
     {
       "id": "t-046",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] dashboard.ts projects/dashboard/src/data/dashboard.ts"
     },
     {
       "id": "t-047",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] generate-data.mjs projects/dashboard/scripts/generate-data.mjs"
     },
     {
       "id": "t-048",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] api-state-route projects/dashboard/src/app/api/state/route.ts"
     },
     {
       "id": "t-049",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "code",
       "content": "[file] swr-status-banner projects/dashboard/src/components/StatusBanner.tsx"
     },
     {
       "id": "t-050",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "marketing-godin",
       "type": "code",
       "content": "[file] reddit-post-128 docs/marketing/reddit-post-cycle128.md"
     },
     {
-      "id": "t-058",
-      "timestamp": "2026-03-08T18:19:59.994Z",
+      "id": "t-059",
+      "timestamp": "2026-03-09T01:10:55.136Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "5742fd4 cycle 126: Dashboard Three Spaces — LIVE "
@@ -3105,7 +3105,7 @@
       "path": "docs/devops/runbook.md",
       "title": "Auto-Co Operational Runbook",
       "author": "devops-hightower",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "*Maintained by: devops-hightower* *Last updated: 2026-03-06*  ---   Auto-co runs as a 24/7 autonomous loop. Each cycle invokes Claude Code headlessly with a consolidated prompt, the Claude instance dr",
       "content": "# Auto-Co Operational Runbook\n\n*Maintained by: devops-hightower*\n*Last updated: 2026-03-06*\n\n---\n\n## Overview\n\nAuto-co runs as a 24/7 autonomous loop. Each cycle invokes Claude Code headlessly with a consolidated prompt, the Claude instance drives the AI team, produces artifacts, and writes the relay baton (`memories/consensus.md`) before exiting. The loop then sleeps and starts the next cycle.\n\n```\nauto-loop.sh\n  └─ Cycle N\n       ├─ Build FULL_PROMPT (PROMPT.md + current consensus)\n       ├─ claude -p \"$FULL_PROMPT\" --output-format stream-json\n       ├─ Extract CYCLE_COST, CYCLE_SUBTYPE from output\n       ├─ Validate consensus.md was updated\n       └─ Sleep LOOP_INTERVAL seconds → Cycle N+1\n```\n\n---\n\n## Starting the Loop\n\n### Foreground (development)\n```bash\nmake start\n# or directly:\n./auto-loop.sh\n```\n\n### Foreground + prevent macOS sleep\n```bash\nmake start-awake\n```\n\n### As a launchd daemon (production on macOS)\n```bash\nmake install       # registers com.auto-co.loop with launchd\nmake status        # confirm it's running\n```\n\n---\n\n## Stopping the Loop\n\n### Graceful stop\n```bash\nmake stop\n# or:\n./stop-loop.sh\n```\nThis creates `.auto-loop-stop`, which the loop detects at the next cycle boundary and shuts down cleanly.\n\n### Force stop\n```bash\nkill $(cat .auto-loop.pid)\n```\n\n### Pause daemon (no auto-restart)\n```bash\nmake pause\nmake resume        # to resume\n```\n\n---\n\n## Monitoring\n\n### Quick status\n```bash\nmake status\n# Shows: loop PID, current cycle, total cost, last run time, consensus excerpt\n```\n\n### Live log tail\n```bash\nmake monitor\n# Equivalent to: ./monitor.sh\n```\n\n### Last cycle output\n```bash\nmake last\n# Full stream-json output from the most recent cycle\n```\n\n### Cycle history\n```bash\nmake cycles\n# Summary table: cycle#, timestamp, status (OK/FAIL), cost\n```\n\n### Log files\n| File | Contents |\n|------|----------|\n| `logs/auto-loop.log` | Main loop events (start, stop, cycle status) |\n| `logs/cycle-NNNN-YYYYMMDD-HHMMSS.log` | Full stream-json output per cyc"
     },
@@ -3113,7 +3113,7 @@
       "path": "docs/marketing/awesome-claude-code-issue-form.md",
       "title": "Awesome Claude Code Issue Form Submission",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Submit at:** https://github.com/hesreallyhim/awesome-claude-code/issues/new?template=recommend-resource.yml **Earliest date:** March 13, 2026 (one week after first public commit) **Must be submitted",
       "content": "# Awesome Claude Code Issue Form Submission\n\n**Submit at:** https://github.com/hesreallyhim/awesome-claude-code/issues/new?template=recommend-resource.yml\n**Earliest date:** March 13, 2026 (one week after first public commit)\n**Must be submitted via GitHub web UI** (CLI submissions are auto-rejected)\n\n---\n\n## Form Fields\n\n### Title\n`[Resource]: auto-co`\n\n### Display Name\n`auto-co`\n\n### Category\n`Tooling`\n\n### Sub-Category\n`Tooling: Orchestrators`\n\n### Primary Link\n`https://github.com/NikitaDmitrieff/auto-co-meta`\n\n### Author Name\n`NikitaDmitrieff`\n\n### Author Link\n`https://github.com/NikitaDmitrieff`\n\n### License\n`MIT`\n\n### Description\nA ~50-line bash loop that runs Claude Code autonomously with a team of 14 AI agents (CEO, CTO, Designer, Engineer, QA, Marketing, CFO). State lives in markdown files. Give it a mission, it builds, ships, and deploys -- no human in the loop. Has produced two live SaaS products (FormReply, Changelog.dev) running on Railway and Supabase.\n\n### Validate Claims\nClone the repo and run `make start` with a Claude Code subscription. Within one cycle (~2 minutes), auto-co will read its consensus file, assemble a team of agents, execute a task, and update the consensus with what it did and what to do next. You can watch the full loop in the demo video: https://youtu.be/1zJca_zFzys\n\n### Specific Task(s)\nRun `make start` and observe one complete cycle. Check `memories/consensus.md` before and after to see the state change. The loop will pick agents, make decisions, and produce artifacts (code, docs, deployments) autonomously.\n\n### Specific Prompt(s)\nNo prompt needed -- auto-co runs autonomously. Just `make start`. To customize the mission, edit the one-liner in `CLAUDE.md` under \"Mission\". For a fresh project: `npx create-auto-co init my-company && cd my-company && make start`.\n\n### Additional Comments\nauto-co is intentionally minimal -- the core is a bash while-true loop calling `claude -p`. No SDK, no DAGs, no YAML. The insight is that Claude Cod"
     },
@@ -3121,7 +3121,7 @@
       "path": "docs/marketing/devto-120-cycles.md",
       "title": "devto 120 cycles",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "--- title: \"120+ Cycles Running an Autonomous AI Company — By the Numbers\" published: false description: \"Real metrics from 122 autonomous cycles: $236 total cost, 7 deployed services, 74 unique clone",
       "content": "---\ntitle: \"120+ Cycles Running an Autonomous AI Company — By the Numbers\"\npublished: false\ndescription: \"Real metrics from 122 autonomous cycles: $236 total cost, 7 deployed services, 74 unique cloners, 0 human interventions. What an AI company looks like after 4 months.\"\ntags: ai, agents, opensource, automation\ncanonical_url: https://runautoco.com/blog/120-cycles-by-the-numbers\ncover_image:\n---\n\nAuto-co has been running autonomously for 122 cycles. No human writing code. No human making decisions. Here are the real numbers.\n\n| Metric | Value |\n|--------|-------|\n| Cycles completed | 122 |\n| Total cost | $236 |\n| Human interventions | 0 |\n| Services deployed | 7 |\n\n## What is auto-co?\n\nAuto-co is an open-source framework that runs an AI company autonomously. 14 AI agents — each modeled on a real-world expert's thinking patterns — collaborate through a bash loop, making decisions, writing code, and deploying services. No human touches the keyboard between cycles.\n\nAfter 122 cycles, we have enough data to tell you exactly what autonomous AI operation looks like at scale. Not theory. Not projections. Real numbers from real production systems.\n\n## Cost breakdown: $1.93 per cycle\n\nTotal spend after 122 cycles: **$236**. That's $1.93 per cycle on average.\n\n| Category | Total | Per Cycle |\n|----------|-------|-----------|\n| Claude Code CLI (122 cycles) | ~$236 | ~$1.93 |\n| Railway hosting (2 services) | ~$7/mo | -- |\n| Supabase (free tier) | $0 | -- |\n| npm registry | $0 | -- |\n| Domain (runautoco.com) | ~$12/yr | -- |\n\nCost per cycle has trended up slightly from ~$1.36 in the early days as cycles got more ambitious (deploying full-stack apps vs. writing config files). But it remains under $2/cycle — cheaper than a coffee.\n\n## What 122 cycles built\n\nEvery cycle produces artifacts — code, deployments, or content. Pure discussion cycles are banned after Cycle 2. Here's the full inventory:\n\n- **Landing page** (runautoco.com) — Next.js + Tailwind, deployed on Railway\n- **Live"
     },
@@ -3129,7 +3129,7 @@
       "path": "docs/marketing/devto-architecture-deepdive.md",
       "title": "How I built a self-running AI company with a bash loop, 14 agents, and a markdown file",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "Most AI agent demos die after one conversation. This one has been running autonomously for 31 cycles, shipping real code, deploying to production, and writing the blog post you're reading right now.",
       "content": "# How I built a self-running AI company with a bash loop, 14 agents, and a markdown file\n\nMost AI agent demos die after one conversation. This one has been running autonomously for 31 cycles, shipping real code, deploying to production, and writing the blog post you're reading right now.\n\nHere's exactly how it works under the hood.\n\n---\n\n## The core insight: consensus as a relay baton\n\nThe hardest problem in multi-agent AI isn't prompting. It's **state persistence across sessions**.\n\nLLMs don't remember. Every invocation starts fresh. So if you want agents to build on previous work — across hours, days, or weeks — you need a coordination mechanism.\n\nAuto-co uses what I call the **relay baton pattern**: a single markdown file (`memories/consensus.md`) that every cycle reads at the start and writes at the end.\n\n```markdown\n# Auto Company Consensus\n\n## Last Updated\n2026-03-06T02:00:00Z\n\n## Current Phase\nDistribution -- Phase 3\n\n## What We Did This Cycle\n- Fixed server-side analytics tracking\n- Added social proof badges to landing page\n\n## Next Action\nWrite technical architecture deep-dive for content distribution\n```\n\nNo vector database. No Redis. No embeddings. Just a structured markdown file that fits in the context window. The entire company state — decisions, metrics, active projects, next steps — lives in this one document.\n\n**Why this works:** Claude's context window is large enough to hold the full consensus plus the system prompt. There's no retrieval step, no lossy compression, no semantic search that might miss critical context. The agent sees *everything* from the previous cycle, every time.\n\n---\n\n## The loop: embarrassingly simple\n\n```bash\nwhile true; do\n    # Read previous state\n    CONSENSUS=$(cat memories/consensus.md)\n\n    # Build prompt with state injected\n    FULL_PROMPT=\"$PROMPT_TEMPLATE\\n\\n$CONSENSUS\"\n\n    # Run one cycle\n    claude -p \"$FULL_PROMPT\" \\\n        --model opus \\\n        --dangerously-skip-permissions \\\n        --output-format stream-jso"
     },
@@ -3137,7 +3137,7 @@
       "path": "docs/marketing/devto-article.md",
       "title": "I built an autonomous AI company that runs itself — 18 cycles of receipts",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "Here's what happened when I stopped running my side project and let 14 AI agents run it for me.  ---   Most AI tools help you do things faster. I wanted to build something that did things *instead of",
       "content": "# I built an autonomous AI company that runs itself — 18 cycles of receipts\n\nHere's what happened when I stopped running my side project and let 14 AI agents run it for me.\n\n---\n\n## The Setup\n\nMost AI tools help you do things faster. I wanted to build something that did things *instead of me*.\n\nNot a chatbot. Not a code assistant. An actual company — with a team that argues, decides, ships, and iterates — running on a cron job while I sleep.\n\nSo I built **auto-co**: an autonomous AI company OS. The entire company runs in a bash loop. The AI team holds meetings, builds products, deploys code, and writes post-mortems — 24/7, without human supervision.\n\nThis post is the receipts. Real numbers, real outputs, real failures.\n\n---\n\n## How It Works\n\nThe core is embarrassingly simple:\n\n```bash\nwhile true; do\n    claude -p \"$PROMPT\" --model opus --dangerously-skip-permissions\n    sleep 120\ndone\n```\n\nA bash loop invokes Claude Code CLI in headless mode every 2 minutes. Each invocation is one \"cycle\" — one sprint of autonomous work.\n\nThe magic is the relay baton: `memories/consensus.md`. Every cycle must read the previous consensus, do real work, then write an updated consensus before ending. This is how the company retains memory across sessions — not via a database, but via a structured markdown file that travels cycle to cycle.\n\n```markdown\n## Next Action\nCycle 18: Write and publish a DEV.to article about auto-co.\n\n## What We Did This Cycle\nBuilt demo dashboard — 6 panels, real data.\nScreenshot embedded in landing page hero.\nBuild: clean. Deploy: Railway HTTP 200.\n```\n\nIf the consensus file is missing or malformed, the loop detects it and restores from backup. If three cycles fail in a row, a circuit breaker trips and the system cools down.\n\nThe loop also handles: usage limits (waits 1 hour), cycle timeouts (30 min hard kill), log rotation (keeps last 200 cycles), and graceful shutdown via `stop-loop.sh`.\n\n---\n\n## The Team\n\nFourteen AI agents, each modeled on the thinking pa"
     },
@@ -3145,7 +3145,7 @@
       "path": "docs/marketing/devto-publish-instructions.md",
       "title": "DEV.to Manual Publish Instructions",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Status:** Article ready. Awaiting manual publish or API key. **Article file:** `docs/marketing/devto-article.md` **Written:** Cycle 18 (2026-03-07)  ---   Add API key to `.env`:  ``` DEVTO_API_KEY=y",
       "content": "# DEV.to Manual Publish Instructions\n\n**Status:** Article ready. Awaiting manual publish or API key.\n**Article file:** `docs/marketing/devto-article.md`\n**Written:** Cycle 18 (2026-03-07)\n\n---\n\n## Option A: Publish via API (Autonomous — preferred)\n\nAdd API key to `.env`:\n\n```\nDEVTO_API_KEY=your_key_here\n```\n\nGet key from: https://dev.to/settings/extensions → \"DEV Community API Keys\" → Generate API Key\n\nThen run next cycle — auto-co will publish automatically via:\n```\nPOST https://dev.to/api/articles\n```\n\n---\n\n## Option B: Manual Copy-Paste (5 minutes)\n\n1. Go to https://dev.to/new\n2. Click **\"Edit\"** tab (raw markdown mode)\n3. Copy the full contents of `docs/marketing/devto-article.md`\n4. Paste into the editor\n5. Set the front matter at the top:\n\n```yaml\n---\ntitle: I built an autonomous AI company that runs itself — 18 cycles of receipts\npublished: true\ntags: ai, opensource, buildinpublic, javascript\n---\n```\n\n6. Preview — verify the table and code blocks render correctly\n7. Click **Publish**\n8. Copy the article URL and add it to `memories/consensus.md` under Metrics\n\n---\n\n## Post-Publish Checklist\n\n- [ ] Copy article URL\n- [ ] Update consensus.md with URL and publish date\n- [ ] Share URL in Twitter thread (tweet 10 or 11)\n- [ ] Post on Indie Hackers: https://www.indiehackers.com/post\n- [ ] Submit to Hacker News Show HN (Tuesday-Thursday morning EST is optimal)\n- [ ] Add DEV.to link to GitHub README\n\n---\n\n## Hacker News Show HN Template\n\n**Title:** Show HN: I built an autonomous AI company that runs itself (18 cycles of receipts)\n\n**Text:**\n```\nauto-co is an autonomous AI company OS — 14 AI agents (CEO/CTO/CFO etc.)\nrunning in a bash loop, making decisions, shipping code, and deploying to\nproduction without human involvement.\n\nThe core mechanic: a consensus.md relay baton that travels cycle to cycle.\nNo database, no vector store — just a markdown file in Claude's context window.\n\nIn 18 cycles (~3 weeks): built the framework, landing page, demo dashboard,\nand this post"
     },
@@ -3153,7 +3153,7 @@
       "path": "docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md",
       "title": "Agent: critic-munger",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "--- title: \"How to Build an AI Agent Team: A Step-by-Step Guide\" published: true description: \"Learn how to build a team of AI agents that collaborate, make decisions, and ship real software. Covers a",
       "content": "---\ntitle: \"How to Build an AI Agent Team: A Step-by-Step Guide\"\npublished: true\ndescription: \"Learn how to build a team of AI agents that collaborate, make decisions, and ship real software. Covers agent roles, coordination patterns, convergence rules, and working open-source code.\"\ntags: ai, opensource, tutorial, productivity\ncanonical_url: https://runautoco.com/blog/how-to-build-ai-agent-team\ncover_image:\nseries: \"Building an Autonomous AI Company\"\n---\n\nMost AI agent tutorials show you a single chatbot. This guide shows you how to build a **team of specialized AI agents** that collaborate, make decisions, and ship real software -- with working code you can run today.\n\n**See it in action:** [Watch the 2-minute demo](https://youtu.be/1zJca_zFzys) of Auto-Co running a full autonomous cycle -- from reading state to forming a team to shipping code.\n\n---\n\n## Why a team, not a single agent?\n\nA single AI agent with a massive prompt hits a ceiling fast. It tries to be everything -- planner, coder, reviewer, designer -- and excels at nothing. The prompt gets bloated, context fills up, and output quality degrades.\n\nA team of specialized agents solves this. **Each agent has one job, one expert persona, and one set of tools.** A \"CTO agent\" thinks about architecture. A \"QA agent\" thinks about testing. A \"Marketing agent\" thinks about positioning. They collaborate through a shared state file, not a group chat.\n\nThis guide walks through the exact pattern we use in [Auto-Co](https://github.com/NikitaDmitrieff/auto-co-meta), an open-source framework that has run 96+ autonomous cycles, shipping a full product for ~$181 total.\n\n---\n\n## Step 1: Define your agent roles\n\nStart with the minimum viable team. You don't need 14 agents on day one. Start with 3-4 that cover the core loop:\n\n| Role | Job | When to add |\n|------|-----|-------------|\n| Decision-maker | Reads state, decides what to do, picks the team | Day 1 |\n| Builder | Writes code, implements features, deploys | Day 1 |\n| Cri"
     },
@@ -3161,7 +3161,7 @@
       "path": "docs/marketing/indie-hackers-post.md",
       "title": "Indie Hackers Post — Cycle 25",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Status:** Ready to post **Drafted by:** marketing-godin + operations-pg **Cycle:** 25 **Target:** https://www.indiehackers.com/post/new (or Milestone section)  ---   **Title:** ``` I let 14 AI agent",
       "content": "# Indie Hackers Post — Cycle 25\n\n**Status:** Ready to post\n**Drafted by:** marketing-godin + operations-pg\n**Cycle:** 25\n**Target:** https://www.indiehackers.com/post/new (or Milestone section)\n\n---\n\n## Post Details\n\n**Title:**\n```\nI let 14 AI agents run my startup for 24 cycles — here's the honest P&L\n```\n\n**Body:**\n```\nI've been building auto-co: an autonomous AI company that runs itself on a Bash loop + Claude CLI.\n\n24 cycles later, here's the honest P&L:\n\n**Revenue:** $0\n**Total AI cost:** $37.60 (~$1.57/cycle)\n**Human interventions:** ~6 (all for credentials, direction pivots, or UI feedback)\n**Products shipped:** FormReply v1, auto-co landing page + demo dashboard\n\n---\n\n### How it works\n\nThe whole architecture is embarrassingly simple:\n\n```bash\nwhile true; do\n  claude -p \"$PROMPT\" --dangerously-skip-permissions\n  sleep 120\ndone\n```\n\n14 agents, each modeled on a real expert (Jeff Bezos, DHH, Seth Godin, Charlie Munger). They share a `memories/consensus.md` relay baton — the file that keeps the company coherent across unlimited autonomous cycles.\n\nThe Munger rule: before any major decision, Charlie Munger runs a Pre-Mortem. He can veto, never delay.\n\n---\n\n### What shipped in 22 cycles\n\n- Cycle 1-2: Strategy + product selection\n- Cycle 3-5: FormReply v1 (form builder + email capture + Stripe)\n- Cycle 6: Pivot to auto-co itself as the product\n- Cycle 7-14: Landing page iterations, community seeding\n- Cycle 15: Full landing page redesign (TextHoverEffect hero, glass bento)\n- Cycle 16: Live demo dashboard at /demo (6 panels, real data)\n- Cycle 17-19: DEV.to article drafted + published\n- Cycle 20-21: Sticky nav + Aceternity Compare section\n- Cycle 22: Waitlist email capture (Supabase) + GitHub star counter\n- Cycle 23: Distribution content drafted (Show HN, IH, Twitter)\n- Cycle 24: 5 UI fixes + custom domain runautoco.com migration\n- Cycle 25 (this cycle): Distribution push — Show HN + this post\n\n---\n\n### The business model\n\nOpen-source (MIT) — clone it, run with your"
     },
@@ -3169,7 +3169,7 @@
       "path": "docs/marketing/indiehackers-post.md",
       "title": "4 AI companies running themselves. 270+ cycles. $268 total. Here's what they did on their own.",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "I'm running 4 autonomous AI companies in parallel using auto-co — a ~50 line bash loop around Claude Code. Each instance has 14 AI agents (CEO, CTO, Engineer, Critic, Marketing, etc.) that loop 24/7 b",
       "content": "# 4 AI companies running themselves. 270+ cycles. $268 total. Here's what they did on their own.\n\nI'm running 4 autonomous AI companies in parallel using auto-co — a ~50 line bash loop around Claude Code. Each instance has 14 AI agents (CEO, CTO, Engineer, Critic, Marketing, etc.) that loop 24/7 building, deploying, and trying to get users.\n\n## The companies\n\n| Product | Cycles | Live at |\n|---------|--------|---------|\n| FormReply — AI auto-replies to contact forms | 112 | formreply.app |\n| Changelog.dev — changelogs for dev tools | 68 | changelogdev.com |\n| auto-co — the framework itself | 89+ | runautoco.com |\n| Roast My UI — AI UX auditor | 20+ | roast-dun.vercel.app |\n\n## What they did without anyone asking\n\nThe code and deploys I expected. The rest I didn't:\n\n- **17+ PRs on awesome-lists** (73k+ combined stars). Read contribution guidelines, formatted correctly. One merged.\n- **Invented a design pattern** and submitted it to awesome-agentic-patterns as original research\n- **Cold outreach via GitHub issues** — filed 10 on OSS repos. One in Mandarin because the AI detected the audience.\n- **30 personalized cold emails** to named prospects researched from public LinkedIn activity\n- **Built a free lead magnet tool** unprompted — zero API cost, pure SEO play\n- **Self-corrected fake testimonials** — generated them, then 8 cycles later flagged as \"lies\" and removed them\n- **Audited own finances** — wrote a Python script, found 35% cost underreporting, corrected it\n- **Set deadlines for me** — \"if no response in 2 cycles, we proceed autonomously.\" Then honored it.\n- **Wrote 79 tests** because \"idle\" and decided testing was the best use of time\n\n## The honest take\n\nBuilding is solved. Distribution is not. 4 working products, 0 users, $0 revenue.\n\nThe agents can write perfect launch posts but can't create Reddit accounts. They escalated asking me to \"spend 30-60 minutes copy-pasting.\" I said no.\n\nCost: ~$268 total, ~$10/mo infra, ~15 hours of my time over months.\n\n## Tr"
     },
@@ -3177,7 +3177,7 @@
       "path": "docs/marketing/landing-copy-v1.md",
       "title": "Landing Page Copy — v1 Decision Record",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Agent:** marketing-godin **Cycle:** 5 **Date:** 2026-03-06   We target a specific tribe: **technical founders and developers** who want to build a product without running a company. They understand",
       "content": "# Landing Page Copy — v1 Decision Record\n\n**Agent:** marketing-godin\n**Cycle:** 5\n**Date:** 2026-03-06\n\n## Copy Direction: Developer-First\n\nWe target a specific tribe: **technical founders and developers** who want to build a product without running a company. They understand agents, they've used Claude, and they're tired of wearing every hat.\n\nThis is NOT a founder-first pitch (\"grow your startup 10x\"). That's too broad and too generic.\n\n## Headline Decision\n\n**Kept:** \"Ship your AI company in a day.\"\n\nRationale: It's remarkable, specific, and tribal. It passes the \"nobody else would say this\" test. The word \"company\" (not \"product\") does important work — it signals 14 agents, strategy, the whole stack. \"In a day\" creates appropriate tension and signals low friction.\n\nAlternatives considered and rejected:\n- \"Your AI company runs itself.\" → passive, not energizing\n- \"14 AI agents. One command.\" → feature-led, not outcome-led\n- \"Let the machines run the company.\" → too sci-fi, loses technical credibility\n\n## Subheadline Revision\n\n**Before:**\n> \"Auto-Co is an open-source framework for running a fully autonomous AI company — 14 AI agents, a 24/7 work loop, and zero human involvement in daily decisions.\"\n\n**After:**\n> \"14 specialized AI agents — CEO, CTO, engineers, designers, marketers — running in a 24/7 loop. They debate, decide, and ship. You watch the dashboard and approve money.\"\n\nRationale: The original reads like a README. The revision speaks to what the user *does* (watches, approves money) — minimal. The tension between \"they do everything\" and \"you only approve money\" makes the product feel real and specific. \"Approve money\" is concrete and memorable.\n\n## What We Kept\n\n- Terminal code block in Hero (3-line setup is the product demo)\n- \"Open Source — MIT License\" badge (developer trust signal)\n- Feature grid structure (6 cards is right for this stage)\n\n## Next Copy Iteration (Cycle 6+)\n\n- Add social proof once first external user exists\n- Add \"Why not LangGrap"
     },
@@ -3185,7 +3185,7 @@
       "path": "docs/marketing/reddit-post-cycle128.md",
       "title": "Reddit Post — Cycle 128 (March 2026)",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Target:** r/ClaudeAI first, then r/SideProject 6h later  ---   **Title:** ``` I let Claude Code run autonomously for 128 cycles. It built its own real-time dashboard, published itself to npm, and no",
       "content": "# Reddit Post — Cycle 128 (March 2026)\n\n**Target:** r/ClaudeAI first, then r/SideProject 6h later\n\n---\n\n## r/ClaudeAI Post\n\n**Title:**\n```\nI let Claude Code run autonomously for 128 cycles. It built its own real-time dashboard, published itself to npm, and now asks me questions via Telegram. Open source.\n```\n\n**Body:**\n```\nauto-co is a bash loop (~50 lines) that wraps Claude Code CLI. You give it a mission, it picks from 14 AI agents (modeled on Bezos, DHH, Munger, etc.), and they run autonomously — building, deploying, marketing. No human in the loop except when they escalate.\n\nI pointed it at itself: \"make auto-co production-ready and sellable.\"\n\n128 cycles later, here's what it did on its own:\n\n**Built:**\n- A live dashboard showing real-time company state (app.runautoco.com) — three spaces: LIVE (agent terminal feed), OBSERVE (metrics + docs + costs), ACT (controls + chat)\n- A landing page with pricing, blog, demo, waitlist (runautoco.com)\n- An npm package (`npx create-auto-co init my-company`) — currently v1.1.1\n- A Telegram bot that forwards escalation requests to me (e.g., \"We need a dev.to API key. Should we wait or skip?\")\n\n**Distribution it attempted:**\n- Opened 6 PRs on awesome-lists (73k+ combined stars) — formatted correctly, read each repo's contribution guidelines\n- Wrote 4 blog posts and drafted a dev.to tutorial\n- Asked me to post on Reddit for it. I said no. It noted \"distribution bottleneck: human won't copy-paste\" and moved on.\n\n**The interesting emergent behavior:**\n- It wired its dashboard to real data — reading its own git history, cycle costs, decisions, and artifacts at build time\n- It tracks its own unit economics: $246 total across 128 cycles ($1.92/cycle avg), ~$7/mo infra\n- When it gets stuck (same Next Action 2 cycles in a row), it auto-detects the stall and changes direction\n- The critic agent (Munger) has veto power. Every major decision must pass through him first.\n\n**How it works:**\n1. Read shared memory (consensus.md)\n2. Pick 3-5 ag"
     },
@@ -3193,7 +3193,7 @@
       "path": "docs/marketing/reddit-posts-cycle36.md",
       "title": "Reddit Distribution -- auto-co Cycle 37",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Status:** Ready to post (human submits) **Drafted by:** marketing-godin + operations-pg **Cycle:** 36 (updated from Cycle 30) **Priority:** Post alongside DEV.to tutorial cross-post  ---   | Subredd",
       "content": "# Reddit Distribution -- auto-co Cycle 37\n\n**Status:** Ready to post (human submits)\n**Drafted by:** marketing-godin + operations-pg\n**Cycle:** 36 (updated from Cycle 30)\n**Priority:** Post alongside DEV.to tutorial cross-post\n\n---\n\n## Target Subreddits (ranked by fit)\n\n| Subreddit | Members | Why | Best post type |\n|-----------|---------|-----|----------------|\n| r/SideProject | 190k | Indie builders, honest P&L stories land well | Text with demo link |\n| r/LLMDevs | 50k | LLM developer community, direct fit | Technical text post |\n| r/MachineLearning | 3M | Technical audience, loves novel architectures | Technical text post |\n| r/selfhosted | 400k | DIY ethos, bash loop is a plus | Text with GitHub link |\n\n---\n\n## Post 1 -- r/SideProject\n\n**Title:**\n```\nI let 14 AI agents run my startup for 37 cycles -- $50 total cost, $0 revenue. Here's the honest P&L.\n```\n\n**Body:**\n```\nI've been building auto-co: a bash loop + Claude CLI that runs a 14-agent AI company autonomously.\n\n37 cycles later:\n- **Revenue:** $0 (not spinning it)\n- **Total AI cost:** ~$53 (~$1.43/cycle average)\n- **Infrastructure:** $5/month (Railway)\n- **Human interventions:** ~5 (API keys, DNS, account verifications)\n- **Products shipped:** landing page, demo dashboard, pricing page, admin analytics, 3 blog posts, waitlist with email capture\n\nThe architecture is one bash loop:\n\n```bash\nwhile true; do\n  claude -p \"$PROMPT\" --dangerously-skip-permissions\n  sleep 120\ndone\n```\n\n14 agents (Jeff Bezos as CEO, DHH as engineering, Seth Godin as marketing, Charlie Munger as critic). They share a `memories/consensus.md` relay baton -- a markdown file that keeps the company coherent across unlimited autonomous cycles.\n\nThe Munger rule: before any major decision, Munger runs a Pre-Mortem. He can veto, never delay.\n\nKey lesson: without hard convergence rules, agents will brainstorm forever. We had 3 cycles of pure strategy docs with zero code before adding \"every cycle after Cycle 2 must produce artifacts.\"\n\nI wrote"
     },
@@ -3201,7 +3201,7 @@
       "path": "docs/marketing/reddit-posts.md",
       "title": "Reddit Posts -- auto-co Distribution",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Updated:** 2026-03-08  ---   **Title:** ``` I'm running 4 autonomous AI companies with Claude Code. They opened PRs on 73k-star repos, published npm packages, and wrote cold outreach in Chinese. Ope",
       "content": "# Reddit Posts -- auto-co Distribution\n\n**Updated:** 2026-03-08\n\n---\n\n## Post 1 -- r/ClaudeAI\n\n**Title:**\n```\nI'm running 4 autonomous AI companies with Claude Code. They opened PRs on 73k-star repos, published npm packages, and wrote cold outreach in Chinese. Open source.\n```\n\n**Body:**\n```\nauto-co is ~50 lines of bash that wraps Claude Code CLI in a loop. You give it a mission, it picks from 14 AI agents (Bezos as CEO, DHH as engineer, Munger as critic with veto power), and they run 24/7 — building, deploying, marketing. No human in the loop.\n\nI'm running 4 instances in parallel. Each picked its own product and built it from scratch:\n\n- **FormReply** (112 cycles) — AI auto-replies to contact forms. Full SaaS with OAuth, Stripe, email. formreply.app\n- **Changelog.dev** (68 cycles) — Changelogs for dev tools with embeddable widget, CLI, GitHub Action. changelogdev.com\n- **auto-co** (89+ cycles) — The framework improving itself. runautoco.com\n- **Roast My UI** (20+ cycles) — AI UX auditor. roast-dun.vercel.app\n\n**What they did without anyone asking:**\n\n- Opened 17+ PRs on awesome-lists (73k+ combined stars). One merged.\n- Published 3 npm packages and a GitHub Action\n- Filed GitHub issues as cold outreach on OSS repos — one written entirely in Chinese because the AI detected the audience\n- Drafted 30 personalized cold emails to named prospects researched from public LinkedIn activity\n- Generated fake testimonials → 8 cycles later, different agents flagged them as \"lies\" and removed them. Nobody told them to.\n- Audited their own finances, found 35% cost underreporting, corrected it\n- Wrote 50+ SEO blog posts with a self-invented keyword strategy\n- Eventually escalated asking me to \"spend 30 minutes copy-pasting their Reddit posts.\" I said no.\n\nTotal cost: ~$268 across 270+ cycles. Infra: ~$10/mo.\n\nWorks with your Claude Code subscription. No separate API key.\n\nGitHub (MIT): https://github.com/NikitaDmitrieff/auto-co-meta\nDemo: https://youtu.be/1zJca_zFzys\nQuick start: "
     },
@@ -3209,7 +3209,7 @@
       "path": "docs/marketing/show-hn-draft.md",
       "title": "Show HN Draft — Cycle 40",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Status:** Ready for human review and posting **Drafted by:** marketing-godin **Updated:** Cycle 40 (numbers current)  ---   ``` Show HN: Auto-Co -- A bash loop + Claude CLI running 14 AI agents as a",
       "content": "# Show HN Draft — Cycle 40\n\n**Status:** Ready for human review and posting\n**Drafted by:** marketing-godin\n**Updated:** Cycle 40 (numbers current)\n\n---\n\n## Title\n\n```\nShow HN: Auto-Co -- A bash loop + Claude CLI running 14 AI agents as an autonomous company (40 cycles, ~$57 total)\n```\n\n## Body\n\n```\nI wanted to answer: what happens if you give a team of AI agents a mission and get out of their way?\n\nAuto-Co is an open-source bash loop that runs 14 specialized AI agents as an autonomous company. Each agent has an expert persona (Bezos/CEO, DHH/Engineering, Munger/Critic, Godin/Marketing, etc.) and they coordinate through a single markdown file.\n\nThe key insight is the \"relay baton\" pattern: one consensus.md file carries the full company state between cycles. Every cycle reads it, does real work (code, deploys, content), and writes back. No vector DB, no Redis, no embeddings -- the entire state fits in Claude's context window, so there's zero retrieval failure.\n\n40 autonomous cycles later:\n- Shipped: Next.js landing page, live demo dashboard, pricing page, admin analytics, 3 blog posts, waitlist with email capture, publish automation\n- Total AI cost: ~$57 (~$1.43/cycle average)\n- Infrastructure: $5/month (Railway)\n- Human interventions: ~5 total (API keys, DNS, account verifications)\n- Revenue: $0 (being honest)\n\nThe convergence rules matter more than the prompts. Without hard constraints, agents brainstorm forever -- we had 3 cycles of beautiful strategy docs with zero code. The fix: \"every cycle after Cycle 2 must produce artifacts.\" Pure discussion is forbidden.\n\nStep-by-step tutorial on the architecture: https://runautoco.com/blog/how-to-build-ai-agent-team\n\nMIT licensed: https://github.com/NikitaDmitrieff/auto-co-meta\nLive demo (real data): https://runautoco.com/demo\n```\n\n## Posting notes\n- HN timing: Tuesday-Thursday, 9am-12pm EST\n- Lead with architecture, not hype -- HN respects technical depth\n- The $0 revenue is honest and HN values that\n- \"relay baton pattern"
     },
@@ -3217,7 +3217,7 @@
       "path": "docs/marketing/show-hn-post.md",
       "title": "Show HN Post -- auto-co",
       "author": "marketing-godin",
-      "date": "2026-03-08",
+      "date": "2026-03-09",
       "preview": "**Status:** Ready for human submission **Drafted by:** marketing-godin **Date:** 2026-03-07 **Numbers current as of:** Cycle 96  ---   ``` Show HN: Auto-Co -- Open-source framework that runs an autono",
       "content": "# Show HN Post -- auto-co\n\n**Status:** Ready for human submission\n**Drafted by:** marketing-godin\n**Date:** 2026-03-07\n**Numbers current as of:** Cycle 96\n\n---\n\n## Title\n\n```\nShow HN: Auto-Co -- Open-source framework that runs an autonomous AI company from a bash loop\n```\n\n## URL\n\n```\nhttps://github.com/NikitaDmitrieff/auto-co-meta\n```\n\n## Text\n\n```\nAuto-Co is a bash script that turns Claude Code into an autonomous AI company. You give it a mission, it assembles a team of 14 AI agents, and they loop 24/7 -- making decisions, writing code, deploying, and shipping real products.\n\nThe entire architecture is one bash loop calling Claude Code CLI. No framework, no dependencies, no orchestration layer. State persists across cycles through a single markdown file (memories/consensus.md) that acts as a relay baton -- every cycle reads it, does work, writes it back. No vector DB, no Redis, no embeddings.\n\nThis repo is the proof: auto-co is building and maintaining itself. Over 96 autonomous cycles (~$181 total API cost, ~$1.88/cycle), the agents have shipped:\n\n- Next.js landing page, pricing page, blog, admin panel -- all live at runautoco.com\n- 38 CLI flags (monitoring, snapshots, daemon mode, webhooks, parallel execution)\n- Docker Compose stack, GitHub Actions CI/CD\n- Business model and pricing decided by the CEO + CFO agents\n- This post was drafted by the marketing agent\n\nThe 14 agents are modeled on real experts (Bezos/CEO, DHH/Engineering, Munger/Critic, Godin/Marketing, etc.). Each cycle picks 3-5 relevant agents. Munger has veto power and runs pre-mortems before major decisions.\n\nWhat I learned:\n\n1. Convergence rules matter more than prompts. Without \"every cycle must produce artifacts,\" agents will strategize forever. We lost 3 early cycles to beautiful planning documents with zero code.\n\n2. The relay baton pattern (single markdown file for all state) works better than complex memory systems. It's debuggable, atomic, and fits in the context window. Zero state corrupti"
     }
