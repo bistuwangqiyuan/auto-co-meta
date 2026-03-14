@@ -26,6 +26,13 @@ const TYPE_ICONS: Record<TerminalEntry["type"], string> = {
 // ── Filter tabs ───────────────────────────────────────────────────
 
 const FILTER_LABELS: FilterLayer[] = ["ALL", "CEO", "ENGINEERING", "MARKETING", "CRITIC"];
+const FILTER_LABEL_MAP: Record<FilterLayer, string> = {
+  ALL: "全部",
+  CEO: "CEO",
+  ENGINEERING: "工程",
+  MARKETING: "营销",
+  CRITIC: "审视者",
+};
 
 function FilterTabs({
   active,
@@ -46,7 +53,7 @@ function FilterTabs({
               : "text-slate-500 hover:text-slate-300 border-b-2 border-transparent"
           }`}
         >
-          {label}
+          {FILTER_LABEL_MAP[label]}
         </button>
       ))}
     </div>
@@ -57,7 +64,7 @@ function FilterTabs({
 
 function formatTime(iso: string): string {
   const d = new Date(iso);
-  return d.toLocaleTimeString("en-GB", {
+  return d.toLocaleTimeString("zh-CN", {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
@@ -226,7 +233,7 @@ function ContextPanel({ entry }: { entry: TerminalEntry | null }) {
   if (!entry || !entry.context) {
     return (
       <div className="h-full flex items-center justify-center text-slate-400 text-sm font-mono px-6 text-center">
-        Click a terminal entry to view details
+        点击左侧日志可查看详情
       </div>
     );
   }
@@ -274,19 +281,19 @@ function StatusBar() {
     <div className="bg-zinc-900 border-t border-zinc-800 px-4 py-1.5 flex items-center justify-between text-xs font-mono text-slate-500 shrink-0">
       <div className="flex items-center gap-6">
         <span>
-          Cycle{" "}
+          周期{" "}
           <span className="text-slate-300">#{dashboardMetrics.cycle}</span>
         </span>
         <span>
-          Duration: <span className="text-slate-300">25m 30s</span>
+          耗时: <span className="text-slate-300">25m 30s</span>
         </span>
       </div>
       <div className="flex items-center gap-6">
         <span>
-          Cost: <span className="text-slate-300">${dashboardMetrics.avgCostPerCycle.toFixed(2)}</span>
+          成本: <span className="text-slate-300">${dashboardMetrics.avgCostPerCycle.toFixed(2)}</span>
         </span>
         <span>
-          Active agents: <span className="text-slate-300">8/14</span>
+          活跃代理: <span className="text-slate-300">8/14</span>
         </span>
       </div>
     </div>

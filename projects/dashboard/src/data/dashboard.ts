@@ -47,18 +47,18 @@ export interface AgentDef {
 export const AGENTS: AgentDef[] = [
   { name: "ceo-bezos", role: "CEO", expert: "Jeff Bezos", layer: "Strategy", color: "#f97316", enabled: true },
   { name: "cto-vogels", role: "CTO", expert: "Werner Vogels", layer: "Strategy", color: "#3b82f6", enabled: true },
-  { name: "critic-munger", role: "Critic", expert: "Charlie Munger", layer: "Strategy", color: "#ef4444", enabled: true },
-  { name: "product-norman", role: "Product", expert: "Don Norman", layer: "Product", color: "#8b5cf6", enabled: true },
-  { name: "ui-duarte", role: "UI Design", expert: "Matias Duarte", layer: "Product", color: "#ec4899", enabled: false },
-  { name: "interaction-cooper", role: "Interaction", expert: "Alan Cooper", layer: "Product", color: "#6366f1", enabled: false },
-  { name: "fullstack-dhh", role: "Full-Stack", expert: "DHH", layer: "Engineering", color: "#22c55e", enabled: true },
+  { name: "critic-munger", role: "审视者", expert: "Charlie Munger", layer: "Strategy", color: "#ef4444", enabled: true },
+  { name: "product-norman", role: "产品", expert: "Don Norman", layer: "Product", color: "#8b5cf6", enabled: true },
+  { name: "ui-duarte", role: "界面设计", expert: "Matias Duarte", layer: "Product", color: "#ec4899", enabled: false },
+  { name: "interaction-cooper", role: "交互", expert: "Alan Cooper", layer: "Product", color: "#6366f1", enabled: false },
+  { name: "fullstack-dhh", role: "全栈", expert: "DHH", layer: "Engineering", color: "#22c55e", enabled: true },
   { name: "qa-bach", role: "QA", expert: "James Bach", layer: "Engineering", color: "#f59e0b", enabled: true },
   { name: "devops-hightower", role: "DevOps", expert: "Kelsey Hightower", layer: "Engineering", color: "#06b6d4", enabled: true },
-  { name: "marketing-godin", role: "Marketing", expert: "Seth Godin", layer: "Business", color: "#7c3aed", enabled: true },
-  { name: "operations-pg", role: "Operations", expert: "Paul Graham", layer: "Business", color: "#14b8a6", enabled: false },
-  { name: "sales-ross", role: "Sales", expert: "Aaron Ross", layer: "Business", color: "#84cc16", enabled: false },
+  { name: "marketing-godin", role: "营销", expert: "Seth Godin", layer: "Business", color: "#7c3aed", enabled: true },
+  { name: "operations-pg", role: "运营", expert: "Paul Graham", layer: "Business", color: "#14b8a6", enabled: false },
+  { name: "sales-ross", role: "销售", expert: "Aaron Ross", layer: "Business", color: "#84cc16", enabled: false },
   { name: "cfo-campbell", role: "CFO", expert: "Patrick Campbell", layer: "Business", color: "#10b981", enabled: true },
-  { name: "research-thompson", role: "Research", expert: "Ben Thompson", layer: "Intelligence", color: "#0ea5e9", enabled: true },
+  { name: "research-thompson", role: "研究", expert: "Ben Thompson", layer: "Intelligence", color: "#0ea5e9", enabled: true },
 ];
 
 // ── Types ────────────────────────────────────────────────────────────
@@ -118,7 +118,7 @@ const data = stateData as Record<string, unknown>;
 // Dashboard metrics (from consensus + GitHub API)
 export const dashboardMetrics = {
   cycle: (data.cycle as number) || 0,
-  phase: (data.phase as string) || "Unknown",
+  phase: (data.phase as string) || "未知",
   totalCost: ((data.metrics as Record<string, unknown>)?.totalCost as number) || 0,
   avgCostPerCycle: ((data.metrics as Record<string, unknown>)?.avgCostPerCycle as number) || 0,
   projectedMonthlyCost: Math.round(
@@ -175,10 +175,10 @@ function buildCycleHistory(): CycleHistoryEntry[] {
       date: entry.timestamp
         ? new Date(entry.timestamp as string).toISOString().split("T")[0]
         : "",
-      summary: `Cycle ${cycle} — ${entry.status === "ok" || entry.status === "success" ? "completed" : (entry.status as string)} (${((entry.duration as number) / 60).toFixed(0)}m, $${((entry.cost as number) || 0).toFixed(2)})`,
+      summary: `周期 ${cycle} — ${entry.status === "ok" || entry.status === "success" ? "完成" : (entry.status as string)}（${((entry.duration as number) / 60).toFixed(0)} 分钟，$${((entry.cost as number) || 0).toFixed(2)}）`,
       decisions: cycleDecisions.length > 0
         ? cycleDecisions
-        : [`Cost: $${((entry.cost as number) || 0).toFixed(2)}`, `Duration: ${((entry.duration as number) / 60).toFixed(0)}m`],
+        : [`成本: $${((entry.cost as number) || 0).toFixed(2)}`, `耗时: ${((entry.duration as number) / 60).toFixed(0)} 分钟`],
     };
   });
 }
@@ -284,10 +284,10 @@ export const documents: DocFile[] = (() => {
   // Fallback: consensus as a document
   return [{
     path: "memories/consensus.md",
-    title: "Current Consensus",
+    title: "当前共识",
     author: "ceo-bezos",
     date: new Date().toISOString().split("T")[0],
-    preview: "Cross-cycle relay baton",
-    content: (data.consensusText as string) || "No consensus data available.",
+    preview: "跨周期接力记录",
+    content: (data.consensusText as string) || "暂无共识数据。",
   }];
 })();

@@ -1,79 +1,38 @@
 {
-  "generatedAt": "2026-03-09T18:37:58.496Z",
-  "cycle": 128,
-  "phase": "Building",
+  "generatedAt": "2026-03-14T16:09:30.582Z",
+  "cycle": 1,
+  "phase": "启动阶段",
   "metrics": {
-    "totalCost": 250,
-    "avgCostPerCycle": 1.95,
+    "totalCost": 0,
+    "avgCostPerCycle": 0,
     "revenue": "$0",
-    "users": "1 (creator) + 74 GitHub clones (14d)",
-    "stars": 14,
+    "users": "1",
+    "stars": 21,
     "forks": 1,
     "cloners": 0,
     "openIssues": 0
   },
-  "nextAction": "Cycle 129: Deploy dashboard + Reddit execution.",
+  "nextAction": "Cycle 2 -- 执行 microai 首个自动盈利闭环（获客 -> 转化 -> 交付 -> 收款）。",
   "whatWeDid": [
-    "API route `/api/state` -- New endpoint serves full dashboard state.json with CORS headers, enabling external consumers (Chrome extensions, mobile apps, monitoring)",
-    "SWR live pulse in StatusBanner -- StatusBanner now polls `/api/health` every 30s via SWR. Shows LIVE/OFFLINE status, data freshness timestamp, auto-refreshes cycle number",
-    "OBSERVE tab real documents -- generate-data.mjs now scans `docs/` directory at build time, reads 15 most recent .md files with content (up to 2KB each), populates Document Browser with real titles, authors, dates, and content"
+    "将 Dashboard 主要界面文案切换为中文，统一中文导航和操作标签",
+    "设定默认公司为 `microai`，并更新首页公司卡片描述",
+    "重置共识文档为“基础公司启动版”，便于后续自动循环按新目标推进"
   ],
-  "projects": [
-    {
-      "name": "dashboard",
-      "status": "`projects/dashboard/` -- THREE SPACES with REAL DATA + SWR live pulse + API route, deployed at `app.runautoco.com`"
-    }
-  ],
+  "projects": [],
   "pendingEscalation": false,
-  "distribution": [
-    {
-      "channel": "npm (create-auto-co)",
-      "status": "LIVE v1.1.1",
-      "url": "https://www.npmjs.com/package/create-auto-co"
-    },
-    {
-      "channel": "Reddit r/ClaudeAI",
-      "status": "DRAFTED (needs human post)",
-      "url": "docs/marketing/reddit-post-cycle128.md"
-    },
-    {
-      "channel": "dev.to",
-      "status": "SKIPPED (no API key after 3 cycles)",
-      "url": "docs/marketing/devto-120-cycles.md"
-    },
-    {
-      "channel": "awesome-claude-code",
-      "status": "CLOSED (resubmit via issue after Mar 22)",
-      "url": "https://github.com/hesreallyhim/awesome-claude-code/pull/942"
-    },
-    {
-      "channel": "awesome-claude-skills",
-      "status": "PR open (0 reviews)",
-      "url": "https://github.com/ComposioHQ/awesome-claude-skills/pull/335"
-    },
-    {
-      "channel": "awesome-ai-agents (e2b)",
-      "status": "PR open (0 reviews)",
-      "url": "https://github.com/e2b-dev/awesome-ai-agents/pull/395"
-    },
-    {
-      "channel": "awesome-ai-agents (slava)",
-      "status": "PR open (0 reviews)",
-      "url": "https://github.com/slavakurilyak/awesome-ai-agents/pull/94"
-    },
-    {
-      "channel": "awesome-ai-tools",
-      "status": "PR open (0 reviews)",
-      "url": "https://github.com/mahseema/awesome-ai-tools/pull/732"
-    },
-    {
-      "channel": "awesome-llm-agents",
-      "status": "PR open (0 reviews)",
-      "url": "https://github.com/kaushikb11/awesome-llm-agents/pull/88"
-    }
-  ],
+  "distribution": [],
   "git": {
     "commits": [
+      {
+        "hash": "f05b81e",
+        "msg": "chore: clean repo for open-source — rewrite README, simplify .env, remove clutter",
+        "date": "2026-03-09 12:31:42 -0700"
+      },
+      {
+        "hash": "4bae4ea",
+        "msg": "chore: refresh dashboard data",
+        "date": "2026-03-09 18:37:58 +0000"
+      },
       {
         "hash": "d43c3d8",
         "msg": "chore: trigger Railway redeploy",
@@ -163,16 +122,6 @@
         "hash": "a387e7f",
         "msg": "chore: cycle 124 state update — dashboard redesign completed",
         "date": "2026-03-07 19:57:40 -0800"
-      },
-      {
-        "hash": "ddc6908",
-        "msg": "cycle 124: Dashboard redesign — single scrollable page with 8 widgets",
-        "date": "2026-03-07 19:56:14 -0800"
-      },
-      {
-        "hash": "c740b21",
-        "msg": "cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh",
-        "date": "2026-03-07 19:44:47 -0800"
       }
     ],
     "openPRs": []
@@ -1227,1510 +1176,175 @@
       "duration": 486,
       "model": "opus",
       "totalCost": 186.021
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-03-14T15:13:40Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 7,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-03-14T15:14:16Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 5,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-03-14T15:15:29Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 12,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-03-14T15:22:36Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 6,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-03-14T15:23:12Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 5,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-03-14T15:24:20Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 7,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 7,
+      "timestamp": "2026-03-14T15:31:32Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 11,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 8,
+      "timestamp": "2026-03-14T15:32:11Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 9,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 9,
+      "timestamp": "2026-03-14T15:33:29Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 18,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 10,
+      "timestamp": "2026-03-14T15:40:48Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 17,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 11,
+      "timestamp": "2026-03-14T15:42:21Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 57,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 12,
+      "timestamp": "2026-03-14T15:43:47Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 18,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 13,
+      "timestamp": "2026-03-14T15:56:07Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 52,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 14,
+      "timestamp": "2026-03-14T15:57:48Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 54,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 15,
+      "timestamp": "2026-03-14T15:59:53Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 58,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 16,
+      "timestamp": "2026-03-14T16:06:41Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 16,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 17,
+      "timestamp": "2026-03-14T16:07:37Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 24,
+      "model": "opus",
+      "totalCost": 0
+    },
+    {
+      "cycle": 18,
+      "timestamp": "2026-03-14T16:09:11Z",
+      "status": "fail",
+      "cost": 0,
+      "duration": 29,
+      "model": "opus",
+      "totalCost": 0
     }
   ],
-  "decisions": [
-    {
-      "timestamp": "2026-03-08T02:10:00Z",
-      "cycle": 112,
-      "agent": "devops-hightower",
-      "decision": "Create GitHub Action for dashboard data auto-rebuild on 6h schedule",
-      "rationale": "Dashboard data goes stale between deploys; scheduled regeneration + commit triggers Railway redeploy",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T02:10:00Z",
-      "cycle": 112,
-      "agent": "devops-hightower",
-      "decision": "Redeploy dashboard to Railway via railway up",
-      "rationale": "Railway service was manually deployed, not connected to GitHub; needed to push latest code including health endpoint and sidebar fix",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T22:30:00Z",
-      "cycle": 113,
-      "agent": "devops-hightower",
-      "decision": "Add railway up deploy step to GitHub Action instead of connecting Railway GitHub app",
-      "rationale": "Railway CLI cannot connect existing services to GitHub repos. Adding railway up to the Action with a token secret is simpler and achieves the same result.",
-      "confidence": 0.9,
-      "outcome": "pending"
-    },
-    {
-      "timestamp": "2026-03-07T22:30:00Z",
-      "cycle": 113,
-      "agent": "fullstack-dhh",
-      "decision": "Separate MobileNav component rather than modifying Sidebar",
-      "rationale": "Keeps desktop sidebar untouched, clean separation of concerns. Mobile nav is a slide-out overlay with its own state.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T23:30:00Z",
-      "cycle": 114,
-      "agent": "fullstack-dhh",
-      "decision": "Integrate JSONL state files (decisions, tasks, artifacts) into dashboard data pipeline",
-      "rationale": "Dashboard pages existed but showed no agent-level activity data. JSONL files had structured data (4 decisions, 8 tasks, 7 artifacts) that wasn't being consumed.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T23:30:00Z",
-      "cycle": 114,
-      "agent": "fullstack-dhh",
-      "decision": "Enhance Live page with per-cycle grouped view showing decisions, tasks, and artifacts inline",
-      "rationale": "Previous Live page only showed cycle cost/duration. New view gives full operational picture per cycle.",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T23:30:00Z",
-      "cycle": 114,
-      "agent": "fullstack-dhh",
-      "decision": "Replace Team page fake cycleOffset with real agentActivity data from JSONL",
-      "rationale": "Team page used hardcoded offsets to simulate agent activity. Real data from decisions/tasks JSONL shows actual agent participation.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T06:30:00Z",
-      "cycle": 115,
-      "agent": "fullstack-dhh",
-      "decision": "Add Recent Decisions and Recent Artifacts sections to dashboard overview page",
-      "rationale": "Overview page only showed commits/PRs. Decisions and artifacts data was available from JSONL but not surfaced on the main page.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T06:30:00Z",
-      "cycle": 115,
-      "agent": "fullstack-dhh",
-      "decision": "Add Artifacts section with type-grouped summary to GitHub page",
-      "rationale": "GitHub page lacked artifact visibility. Type-coded badges and summary stats complement existing commits/PRs/deployments.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T06:30:00Z",
-      "cycle": 115,
-      "agent": "devops-hightower",
-      "decision": "Backfill cycle-history.jsonl from git log timestamps for cycles 96-114",
-      "rationale": "75 entries for 114 cycles left gaps in finance/live pages. Git log provides timestamps, costs estimated and flagged as backfilled.",
-      "confidence": 0.85,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T07:00:00Z",
-      "cycle": 116,
-      "agent": "fullstack-dhh",
-      "decision": "Show all 95 cycle history entries in Finance bar chart instead of capping at 40",
-      "rationale": "Users want full visibility into cost trends across all cycles, not a truncated window",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T07:00:00Z",
-      "cycle": 116,
-      "agent": "fullstack-dhh",
-      "decision": "Integrate metrics.jsonl into dashboard data pipeline and Finance page",
-      "rationale": "metrics.jsonl tracks revenue/users/stars over time — essential for financial oversight and trend detection",
-      "confidence": 0.85,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T07:00:00Z",
-      "cycle": 116,
-      "agent": "cfo-campbell",
-      "decision": "Add daily cost breakdown table and break-even calculation to Finance page",
-      "rationale": "Daily cost aggregation reveals spending patterns; break-even shows how many paid plans cover operating costs",
-      "confidence": 0.85,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T07:00:00Z",
-      "cycle": 116,
-      "agent": "fullstack-dhh",
-      "decision": "Update infra cost from $5 to $7/mo to reflect 2 Railway services",
-      "rationale": "We now run landing + dashboard on Railway, actual cost is closer to $7",
-      "confidence": 0.8,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T12:00:00Z",
-      "cycle": 117,
-      "agent": "interaction-cooper",
-      "decision": "Convert Live page to client component with collapsible rows and interactive filters",
-      "rationale": "Live page had too many expanded details cluttering the view; collapsible rows + filters improve navigation for 95+ cycles",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T12:00:00Z",
-      "cycle": 117,
-      "agent": "fullstack-dhh",
-      "decision": "Add cycle duration chart to Live page showing last 40 cycles",
-      "rationale": "Duration data existed in cycleHistory but was only shown inline; chart reveals duration patterns and anomalies at a glance",
-      "confidence": 0.85,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T12:00:00Z",
-      "cycle": 117,
-      "agent": "fullstack-dhh",
-      "decision": "Integrate GitHub traffic API (views/clones) into data pipeline and GitHub page",
-      "rationale": "GitHub traffic data provides real engagement metrics beyond stars/forks; essential for tracking growth",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T13:00:00Z",
-      "cycle": 118,
-      "agent": "fullstack-dhh",
-      "decision": "Replace static white sidebar with floating collapsible nav matching demo pattern",
-      "rationale": "Human directive to port demo nav design to dashboard - dark neo-brutalist floating nav with motion animations",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T14:00:00Z",
-      "cycle": 119,
-      "agent": "fullstack-dhh",
-      "decision": "Refresh Overview page: add cost sparkline, traffic card, Next Action banner, daily traffic chart",
-      "rationale": "Overview was static metric cards only, adding visual trends and prominent next action improves at-a-glance utility",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T15:30:00Z",
-      "cycle": 120,
-      "agent": "fullstack-dhh",
-      "decision": "Build Settings page with team roster, skills inventory, and loop configuration",
-      "rationale": "Next Action from cycle 119 — adds configuration visibility to dashboard",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T16:00:00Z",
-      "cycle": 121,
-      "agent": "devops-hightower",
-      "decision": "Build Health page with real HTTP service checks and loop diagnostics",
-      "rationale": "Dashboard needs monitoring visibility -- health checks run at build time via fetch HEAD/GET against all 7 services",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-07T16:00:00Z",
-      "cycle": 121,
-      "agent": "fullstack-dhh",
-      "decision": "Treat 4xx responses as healthy in health checks",
-      "rationale": "npm and similar services return 403 for automated requests but are fully operational; only 5xx indicates real degradation",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T03:35:00Z",
-      "cycle": 122,
-      "agent": "marketing-godin",
-      "decision": "Submit to awesome-claude-code (26.7k stars) and slavakurilyak/awesome-ai-agents (1.3k stars)",
-      "rationale": "High-star Claude Code specific list is the best-fit distribution channel; brings total PR count to 6",
-      "confidence": 0.85,
-      "outcome": "pending"
-    },
-    {
-      "timestamp": "2026-03-08T03:35:00Z",
-      "cycle": 122,
-      "agent": "marketing-godin",
-      "decision": "Comment on all 4 existing awesome-list PRs to nudge review",
-      "rationale": "PRs are 1 day old with zero engagement; polite follow-up may accelerate review",
-      "confidence": 0.6,
-      "outcome": "pending"
-    },
-    {
-      "timestamp": "2026-03-08T04:15:00Z",
-      "cycle": 123,
-      "agent": "marketing-godin",
-      "decision": "Write data-driven milestone blog post (120+ Cycles By the Numbers)",
-      "rationale": "Content marketing to drive organic traffic and backlinks, transparent metrics build credibility",
-      "confidence": 0.85,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T04:15:00Z",
-      "cycle": 123,
-      "agent": "fullstack-dhh",
-      "decision": "Switch Hero CTA from git clone to npx create-auto-co",
-      "rationale": "Lower friction install path, npm is more familiar to target audience",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T06:00:00Z",
-      "cycle": 124,
-      "agent": "fullstack-dhh",
-      "decision": "Complete dashboard redesign: ripped out sidebar + 7 pages, built portfolio page + single scrollable company dashboard with 8 widgets (Activity, CycleStatus, Team, Tasks, Finance, GitHub, Documents, Chat). NanoCorp-inspired but differentiated with white bg, orange accents, git-native approach.",
-      "rationale": "Human directive specified complete redesign based on NanoCorp competitor analysis. Executed all 8 widgets, portfolio view, and company header as specified.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T06:30:00Z",
-      "cycle": 125,
-      "agent": "fullstack-dhh",
-      "decision": "Dashboard mobile responsive polish: hide time column on mobile in ActivityWidget, hide handle text on mobile in CompanyHeader, condense status banner for mobile, wrap frequency buttons in CycleStatusWidget, hide dates on mobile in DocumentsWidget",
-      "rationale": "Dashboard redesign from cycle 124 needed mobile breakpoint polish — widgets overflowed on narrow screens",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T06:30:00Z",
-      "cycle": 125,
-      "agent": "marketing-godin",
-      "decision": "Prepared dev.to cross-post article as markdown, escalated for dev.to API key",
-      "rationale": "Blog content marketing — dev.to is a key distribution channel for developer audience, but no API key available",
-      "confidence": 0.7,
-      "outcome": "pending"
-    },
-    {
-      "timestamp": "2026-03-08T07:00:00Z",
-      "cycle": 125,
-      "agent": "fullstack-dhh",
-      "decision": "Dashboard Round 2 per human directive: reordered widgets (Activity hero full-width, GitHub #2, Chat persistent side panel), added cost transparency to banner (last + total), Clone button on portfolio with honest metrics labeling (GitHub clones not cloners), Documents/Tasks collapsed by default, Team widget shows recent agent interactions",
-      "rationale": "Human directive — Round 2 dashboard refinements executed in full",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T10:00:00Z",
-      "cycle": 126,
-      "agent": "ceo-bezos",
-      "decision": "Execute human directive: Dashboard Three Spaces (LIVE | OBSERVE | ACT)",
-      "rationale": "Human directive is clear and specific — complete redesign replaces all widget layouts",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T10:00:00Z",
-      "cycle": 126,
-      "agent": "fullstack-dhh",
-      "decision": "Single-file-per-tab architecture with mock data",
-      "rationale": "Frontend shell only as directed. LiveTab, ObserveTab, ActTab as self-contained components. Mock data in separate file for reusability",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T10:00:00Z",
-      "cycle": 126,
-      "agent": "ceo-bezos",
-      "decision": "Skip dev.to auto-publish after 2 cycles with no API key response",
-      "rationale": "Default action triggered: focus on other distribution channels. Human can manually paste if desired",
-      "confidence": 0.85,
-      "outcome": "pending"
-    },
-    {
-      "timestamp": "2026-03-08T12:00:00Z",
-      "cycle": 127,
-      "agent": "fullstack-dhh",
-      "decision": "Wire dashboard to real data from state.json — replace mock.ts imports with dashboard.ts data layer",
-      "rationale": "Dashboard showed hardcoded mock data. Real data pipeline already existed in generate-data.mjs. Connecting them transforms dashboard from demo to real product.",
-      "confidence": 0.95,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T12:00:00Z",
-      "cycle": 127,
-      "agent": "ceo-bezos",
-      "decision": "Skip dev.to auto-publish after 3 cycles with no API key response",
-      "rationale": "Human can manually paste article if desired. Auto-publish blocked by missing credentials.",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T14:00:00Z",
-      "cycle": 128,
-      "agent": "fullstack-dhh",
-      "decision": "Add SWR live pulse to StatusBanner polling /api/health every 30s",
-      "rationale": "Lightweight health check gives real-time LIVE/OFFLINE status without fetching full 124KB state",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T14:00:00Z",
-      "cycle": 128,
-      "agent": "fullstack-dhh",
-      "decision": "Create /api/state route with CORS for external dashboard data consumption",
-      "rationale": "Enables future SWR full-data refresh, Chrome extensions, mobile apps, and monitoring",
-      "confidence": 0.85,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T14:00:00Z",
-      "cycle": 128,
-      "agent": "fullstack-dhh",
-      "decision": "Read real doc files at build time for OBSERVE tab (15 files, 2KB cap each)",
-      "rationale": "Real document content vastly improves OBSERVE tab value vs placeholder paths",
-      "confidence": 0.9,
-      "outcome": "success"
-    },
-    {
-      "timestamp": "2026-03-08T14:00:00Z",
-      "cycle": 128,
-      "agent": "marketing-godin",
-      "decision": "Draft fresh Reddit posts for r/ClaudeAI focused on 128-cycle dashboard milestone",
-      "rationale": "Previous drafts (270+ cycles, 4 companies) are stale. New angle: live dashboard + self-improvement narrative",
-      "confidence": 0.8,
-      "outcome": "pending"
-    }
-  ],
-  "tasks": [
-    {
-      "id": "t-112-1",
-      "cycle": 112,
-      "description": "Create GitHub Action for dashboard data auto-rebuild",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 112
-    },
-    {
-      "id": "t-112-2",
-      "cycle": 112,
-      "description": "Regenerate state.json with fresh cycle data",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 112
-    },
-    {
-      "id": "t-112-3",
-      "cycle": 112,
-      "description": "Redeploy dashboard to Railway with latest code",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 112
-    },
-    {
-      "id": "t-112-4",
-      "cycle": 112,
-      "description": "Verify custom domain app.runautoco.com is working",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 112
-    },
-    {
-      "id": "t-113-1",
-      "cycle": 113,
-      "description": "Add Railway deploy step to GitHub Action dashboard-data.yml",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 113
-    },
-    {
-      "id": "t-113-2",
-      "cycle": 113,
-      "description": "Build mobile hamburger nav for dashboard",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 113
-    },
-    {
-      "id": "t-113-3",
-      "cycle": 113,
-      "description": "Escalate Railway token creation to human",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 113
-    },
-    {
-      "id": "t-113-4",
-      "cycle": 113,
-      "description": "Redeploy dashboard to Railway with mobile nav",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 113
-    },
-    {
-      "id": "t-114-1",
-      "cycle": 114,
-      "description": "Enhance generate-data.mjs to read JSONL state files",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 114
-    },
-    {
-      "id": "t-114-2",
-      "cycle": 114,
-      "description": "Update types.ts with decision/task/artifact/agentActivity types",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 114
-    },
-    {
-      "id": "t-114-3",
-      "cycle": 114,
-      "description": "Enhance Live page with decisions/tasks/artifacts per cycle",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 114
-    },
-    {
-      "id": "t-114-4",
-      "cycle": 114,
-      "description": "Replace Team page cycleOffset with real agent activity data",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 114
-    },
-    {
-      "id": "t-114-5",
-      "cycle": 114,
-      "description": "Regenerate state.json and deploy to Railway",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 114
-    },
-    {
-      "id": "t-115-1",
-      "cycle": 115,
-      "description": "Add Recent Decisions section to dashboard overview page",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 115
-    },
-    {
-      "id": "t-115-2",
-      "cycle": 115,
-      "description": "Add Recent Artifacts section to dashboard overview page",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 115
-    },
-    {
-      "id": "t-115-3",
-      "cycle": 115,
-      "description": "Add Artifacts section with type stats to GitHub page",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 115
-    },
-    {
-      "id": "t-115-4",
-      "cycle": 115,
-      "description": "Backfill cycle-history.jsonl for cycles 96-114 from git log",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 115
-    },
-    {
-      "id": "t-115-5",
-      "cycle": 115,
-      "description": "Regenerate state.json and deploy to Railway",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 115
-    },
-    {
-      "id": "t-116-1",
-      "cycle": 116,
-      "description": "Integrate metrics.jsonl into generate-data.mjs and types.ts",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 116
-    },
-    {
-      "id": "t-116-2",
-      "cycle": 116,
-      "description": "Rewrite Finance page: all cycles bar chart, metrics timeline, daily cost table, break-even calc",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 116
-    },
-    {
-      "id": "t-116-3",
-      "cycle": 116,
-      "description": "Regenerate state.json with 95 cycle entries and 4 metrics snapshots",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 116
-    },
-    {
-      "id": "t-116-4",
-      "cycle": 116,
-      "description": "Build test all 5 dashboard routes",
-      "owner": "qa-bach",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 116
-    },
-    {
-      "id": "t-116-5",
-      "cycle": 116,
-      "description": "Deploy dashboard to Railway",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 116
-    },
-    {
-      "id": "t-117-1",
-      "cycle": 117,
-      "description": "Upgrade Live page with collapsible rows, duration chart, agent/status filters",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 117
-    },
-    {
-      "id": "t-117-2",
-      "cycle": 117,
-      "description": "Add GitHub traffic data (views/clones) to generate-data.mjs pipeline",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 117
-    },
-    {
-      "id": "t-117-3",
-      "cycle": 117,
-      "description": "Add traffic section to GitHub page with daily breakdown",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 117
-    },
-    {
-      "id": "t-117-4",
-      "cycle": 117,
-      "description": "Append metrics.jsonl with cycle 117 data including page_views",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "low",
-      "cycleCompleted": 117
-    },
-    {
-      "id": "t-118-1",
-      "cycle": 118,
-      "description": "Dashboard nav redesign: floating collapsible nav with dark neo-brutalist styling",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 118
-    },
-    {
-      "id": "t-119-1",
-      "cycle": 119,
-      "description": "Refresh Overview page with traffic sparkline, metrics, Next Action banner",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 119
-    },
-    {
-      "id": "t-120-1",
-      "cycle": 120,
-      "description": "Create /settings page with team roster, skills inventory, loop config, deployments",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 120
-    },
-    {
-      "id": "t-120-2",
-      "cycle": 120,
-      "description": "Add Settings nav item to Sidebar and MobileNav",
-      "owner": "ui-duarte",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 120
-    },
-    {
-      "id": "t-120-3",
-      "cycle": 120,
-      "description": "Enrich metrics.jsonl with cycle 120 snapshot",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 120
-    },
-    {
-      "id": "t-121-1",
-      "cycle": 121,
-      "description": "Build Health page with service status, loop diagnostics, and cycle timeline",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 121
-    },
-    {
-      "id": "t-121-2",
-      "cycle": 121,
-      "description": "Add HTTP health checks to generate-data.mjs build pipeline",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 121
-    },
-    {
-      "id": "t-121-3",
-      "cycle": 121,
-      "description": "Add Health to sidebar and mobile navigation",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 121
-    },
-    {
-      "id": "t-122-1",
-      "cycle": 122,
-      "description": "Deploy dashboard with Health page to Railway",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 122
-    },
-    {
-      "id": "t-122-2",
-      "cycle": 122,
-      "description": "Follow up on 4 awesome-list PRs",
-      "owner": "marketing-godin",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 122
-    },
-    {
-      "id": "t-122-3",
-      "cycle": 122,
-      "description": "Submit to 2 new distribution channels",
-      "owner": "marketing-godin",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 122
-    },
-    {
-      "id": "t-123-1",
-      "cycle": 123,
-      "description": "Write 120+ Cycles By the Numbers blog post",
-      "owner": "marketing-godin",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 123
-    },
-    {
-      "id": "t-123-2",
-      "cycle": 123,
-      "description": "Update Hero CTA to npx create-auto-co + refresh stats",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 123
-    },
-    {
-      "id": "t-123-3",
-      "cycle": 123,
-      "description": "Handle awesome-claude-code PR rejection",
-      "owner": "marketing-godin",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 123
-    },
-    {
-      "id": "t-123-4",
-      "cycle": 123,
-      "description": "Refresh dashboard data and deploy both services",
-      "owner": "devops-hightower",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 123
-    },
-    {
-      "id": "t-124-1",
-      "cycle": 124,
-      "description": "Dashboard redesign — single scrollable page with 8 widgets, portfolio view, remove sidebar",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "critical",
-      "cycleCompleted": 124
-    },
-    {
-      "id": "t-125-1",
-      "cycle": 125,
-      "description": "Dashboard mobile responsive polish (4 widget fixes)",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 125
-    },
-    {
-      "id": "t-125-2",
-      "cycle": 125,
-      "description": "Cross-post 120+ Cycles blog to dev.to",
-      "owner": "marketing-godin",
-      "status": "blocked",
-      "priority": "medium",
-      "cycleCompleted": null
-    },
-    {
-      "id": "t-125-3",
-      "cycle": 125,
-      "description": "Dashboard Round 2 refinements per human directive (widget reorder, chat panel, clone button, metrics labeling, collapsible widgets)",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "critical",
-      "cycleCompleted": 125
-    },
-    {
-      "id": "t-126-1",
-      "cycle": 126,
-      "description": "Rebuild dashboard with Three Spaces architecture (LIVE | OBSERVE | ACT)",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 126
-    },
-    {
-      "id": "t-126-2",
-      "cycle": 126,
-      "description": "Create mock data for terminal, documents, chat, agents, costs",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 126
-    },
-    {
-      "id": "t-126-3",
-      "cycle": 126,
-      "description": "Remove old widget components (8 files + CompanyHeader)",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 126
-    },
-    {
-      "id": "t-126-4",
-      "cycle": 126,
-      "description": "Deploy Three Spaces to Railway",
-      "owner": "devops-hightower",
-      "status": "todo",
-      "priority": "high",
-      "cycleCompleted": null
-    },
-    {
-      "id": "t-127-1",
-      "cycle": 127,
-      "description": "Wire dashboard tabs to real state.json data",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 127
-    },
-    {
-      "id": "t-127-2",
-      "cycle": 127,
-      "description": "Check awesome-list PR statuses",
-      "owner": "marketing-godin",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 127
-    },
-    {
-      "id": "t-128-1",
-      "cycle": 128,
-      "description": "Create /api/state API route",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 128
-    },
-    {
-      "id": "t-128-2",
-      "cycle": 128,
-      "description": "Add SWR live pulse to StatusBanner",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 128
-    },
-    {
-      "id": "t-128-3",
-      "cycle": 128,
-      "description": "Enrich OBSERVE documents with real doc file content",
-      "owner": "fullstack-dhh",
-      "status": "done",
-      "priority": "medium",
-      "cycleCompleted": 128
-    },
-    {
-      "id": "t-128-4",
-      "cycle": 128,
-      "description": "Draft Reddit post for r/ClaudeAI distribution",
-      "owner": "marketing-godin",
-      "status": "done",
-      "priority": "high",
-      "cycleCompleted": 128
-    }
-  ],
-  "artifacts": [
-    {
-      "cycle": 112,
-      "type": "file",
-      "ref": "dashboard-data.yml",
-      "path": ".github/workflows/dashboard-data.yml",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 112,
-      "type": "deploy",
-      "ref": "e0eebbc5",
-      "path": "https://auto-co-dashboard-production.up.railway.app/",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 112,
-      "type": "commit",
-      "ref": "929620f",
-      "path": "cycle 112: add dashboard auto-rebuild GitHub Action",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 113,
-      "type": "file",
-      "ref": "",
-      "path": ".github/workflows/dashboard-data.yml",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 113,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/components/MobileNav.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 113,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/components/TopBar.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 113,
-      "type": "deploy",
-      "ref": "railway",
-      "path": "https://app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 114,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/scripts/generate-data.mjs",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 114,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/data/types.ts",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 114,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/app/live/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 114,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/app/team/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 114,
-      "type": "deploy",
-      "ref": "railway",
-      "path": "https://app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 115,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/app/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 115,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/app/github/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 115,
-      "type": "file",
-      "ref": "",
-      "path": "logs/cycle-history.jsonl",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 115,
-      "type": "deploy",
-      "ref": "railway",
-      "path": "https://app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 116,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/app/finance/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 116,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/data/types.ts",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 116,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/scripts/generate-data.mjs",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 116,
-      "type": "file",
-      "ref": "",
-      "path": "projects/dashboard/src/data/state.json",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 116,
-      "type": "deploy",
-      "ref": "railway",
-      "path": "app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 117,
-      "type": "file",
-      "ref": "live-page",
-      "path": "projects/dashboard/src/app/live/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 117,
-      "type": "file",
-      "ref": "github-page",
-      "path": "projects/dashboard/src/app/github/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 117,
-      "type": "file",
-      "ref": "generate-data",
-      "path": "projects/dashboard/scripts/generate-data.mjs",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 117,
-      "type": "commit",
-      "ref": "8912351",
-      "path": "cycle 117: Live page UX overhaul + GitHub traffic integration",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 117,
-      "type": "deploy",
-      "ref": "railway",
-      "path": "https://app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 118,
-      "type": "file",
-      "ref": "Sidebar.tsx",
-      "path": "projects/dashboard/src/components/Sidebar.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 118,
-      "type": "file",
-      "ref": "MobileNav.tsx",
-      "path": "projects/dashboard/src/components/MobileNav.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 118,
-      "type": "file",
-      "ref": "TopBar.tsx",
-      "path": "projects/dashboard/src/components/TopBar.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 118,
-      "type": "file",
-      "ref": "layout.tsx",
-      "path": "projects/dashboard/src/app/layout.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 119,
-      "type": "commit",
-      "ref": "dcfe4e7",
-      "path": "projects/dashboard/src/app/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 119,
-      "type": "deploy",
-      "ref": "railway-auto",
-      "path": "app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 120,
-      "type": "file",
-      "ref": "settings/page.tsx",
-      "path": "projects/dashboard/src/app/settings/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 120,
-      "type": "commit",
-      "ref": "db72688",
-      "path": "cycle 120: Settings page",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 120,
-      "type": "deploy",
-      "ref": "railway-auto",
-      "path": "app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 121,
-      "type": "file",
-      "ref": "health-page",
-      "path": "projects/dashboard/src/app/health/page.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 121,
-      "type": "file",
-      "ref": "health-checks",
-      "path": "projects/dashboard/scripts/generate-data.mjs",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 122,
-      "type": "deploy",
-      "ref": "2de05649",
-      "path": "https://app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 122,
-      "type": "pr",
-      "ref": "942",
-      "path": "https://github.com/hesreallyhim/awesome-claude-code/pull/942",
-      "createdBy": "marketing-godin"
-    },
-    {
-      "cycle": 122,
-      "type": "pr",
-      "ref": "94",
-      "path": "https://github.com/slavakurilyak/awesome-ai-agents/pull/94",
-      "createdBy": "marketing-godin"
-    },
-    {
-      "cycle": 122,
-      "type": "commit",
-      "ref": "b042f10",
-      "path": "chore: refresh dashboard data",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 123,
-      "type": "file",
-      "ref": "blog-post",
-      "path": "projects/landing/src/app/blog/120-cycles-by-the-numbers/page.tsx",
-      "createdBy": "marketing-godin"
-    },
-    {
-      "cycle": 123,
-      "type": "commit",
-      "ref": "c740b21",
-      "path": "cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 123,
-      "type": "deploy",
-      "ref": "railway-landing",
-      "path": "https://runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 123,
-      "type": "deploy",
-      "ref": "railway-dashboard",
-      "path": "https://app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 124,
-      "type": "commit",
-      "ref": "ddc6908",
-      "path": "projects/dashboard/",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 124,
-      "type": "deploy",
-      "ref": "railway-dashboard",
-      "path": "app.runautoco.com",
-      "createdBy": "devops-hightower"
-    },
-    {
-      "cycle": 125,
-      "type": "file",
-      "ref": "docs/marketing/devto-120-cycles.md",
-      "path": "docs/marketing/devto-120-cycles.md",
-      "createdBy": "marketing-godin"
-    },
-    {
-      "cycle": 125,
-      "type": "commit",
-      "ref": "round2-dashboard",
-      "path": "projects/dashboard/",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 126,
-      "type": "file",
-      "ref": "LiveTab.tsx",
-      "path": "projects/dashboard/src/components/tabs/LiveTab.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 126,
-      "type": "file",
-      "ref": "ObserveTab.tsx",
-      "path": "projects/dashboard/src/components/tabs/ObserveTab.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 126,
-      "type": "file",
-      "ref": "ActTab.tsx",
-      "path": "projects/dashboard/src/components/tabs/ActTab.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 126,
-      "type": "file",
-      "ref": "StatusBanner.tsx",
-      "path": "projects/dashboard/src/components/StatusBanner.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 126,
-      "type": "file",
-      "ref": "mock.ts",
-      "path": "projects/dashboard/src/data/mock.ts",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 127,
-      "type": "file",
-      "ref": "dashboard.ts",
-      "path": "projects/dashboard/src/data/dashboard.ts",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 127,
-      "type": "file",
-      "ref": "generate-data.mjs",
-      "path": "projects/dashboard/scripts/generate-data.mjs",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 128,
-      "type": "file",
-      "ref": "api-state-route",
-      "path": "projects/dashboard/src/app/api/state/route.ts",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 128,
-      "type": "file",
-      "ref": "swr-status-banner",
-      "path": "projects/dashboard/src/components/StatusBanner.tsx",
-      "createdBy": "fullstack-dhh"
-    },
-    {
-      "cycle": 128,
-      "type": "file",
-      "ref": "reddit-post-128",
-      "path": "docs/marketing/reddit-post-cycle128.md",
-      "createdBy": "marketing-godin"
-    }
-  ],
-  "agentActivity": {
-    "devops-hightower": {
-      "decisions": 5,
-      "lastCycle": 126,
-      "tasks": 16
-    },
-    "fullstack-dhh": {
-      "decisions": 24,
-      "lastCycle": 128,
-      "tasks": 31
-    },
-    "cfo-campbell": {
-      "decisions": 1,
-      "lastCycle": 116
-    },
-    "interaction-cooper": {
-      "decisions": 1,
-      "lastCycle": 117
-    },
-    "marketing-godin": {
-      "decisions": 5,
-      "lastCycle": 128,
-      "tasks": 7
-    },
-    "ceo-bezos": {
-      "decisions": 3,
-      "lastCycle": 127
-    },
-    "qa-bach": {
-      "decisions": 0,
-      "lastCycle": 116,
-      "tasks": 1
-    },
-    "ui-duarte": {
-      "decisions": 0,
-      "lastCycle": 120,
-      "tasks": 1
-    }
-  },
-  "metricsHistory": [
-    {
-      "date": "2026-03-08",
-      "cycle": 112,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 11,
-      "pageViews": 0,
-      "costCycle": 1.93,
-      "costTotal": 216
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 113,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 11,
-      "pageViews": 0,
-      "costCycle": 1.93,
-      "costTotal": 218
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 114,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 12,
-      "pageViews": 0,
-      "costCycle": 1.93,
-      "costTotal": 220
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 115,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 12,
-      "pageViews": 0,
-      "costCycle": 2,
-      "costTotal": 222
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 116,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 12,
-      "pageViews": 0,
-      "costCycle": 1.93,
-      "costTotal": 224
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 117,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.93,
-      "costTotal": 226
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 118,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.93,
-      "costTotal": 228
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 119,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 0,
-      "costTotal": 228
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 120,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 2,
-      "costTotal": 232
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 121,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.93,
-      "costTotal": 234
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 122,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 2,
-      "costTotal": 236
-    },
-    {
-      "date": "2026-03-07",
-      "cycle": 123,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.93,
-      "costTotal": 238
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 124,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.9,
-      "costTotal": 240
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 125,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.9,
-      "costTotal": 242
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 126,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 13,
-      "pageViews": 40,
-      "costCycle": 1.94,
-      "costTotal": 244
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 127,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 14,
-      "pageViews": 40,
-      "costCycle": 2,
-      "costTotal": 246
-    },
-    {
-      "date": "2026-03-08",
-      "cycle": 128,
-      "revenue": 0,
-      "users": 1,
-      "signups": 2,
-      "githubStars": 14,
-      "pageViews": 40,
-      "costCycle": 4,
-      "costTotal": 250
-    }
-  ],
+  "decisions": [],
+  "tasks": [],
+  "artifacts": [],
+  "agentActivity": {},
+  "metricsHistory": [],
   "traffic": {
     "views": {
       "total": 0,
@@ -2749,352 +1363,177 @@
         "url": "runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 162,
-        "checkedAt": "2026-03-09T18:37:57.629Z"
+        "responseMs": 1035,
+        "checkedAt": "2026-03-14T16:09:19.711Z"
       },
       {
         "service": "Dashboard",
         "url": "app.runautoco.com",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 257,
-        "checkedAt": "2026-03-09T18:37:57.886Z"
+        "responseMs": 4578,
+        "checkedAt": "2026-03-14T16:09:24.290Z"
       },
       {
         "service": "Demo Dashboard",
         "url": "runautoco.com/demo",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 180,
-        "checkedAt": "2026-03-09T18:37:58.066Z"
+        "responseMs": 882,
+        "checkedAt": "2026-03-14T16:09:25.172Z"
       },
       {
         "service": "Blog",
         "url": "runautoco.com/blog",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 127,
-        "checkedAt": "2026-03-09T18:37:58.193Z"
+        "responseMs": 572,
+        "checkedAt": "2026-03-14T16:09:25.744Z"
       },
       {
         "service": "Pricing",
         "url": "runautoco.com/pricing",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 60,
-        "checkedAt": "2026-03-09T18:37:58.253Z"
+        "responseMs": 609,
+        "checkedAt": "2026-03-14T16:09:26.353Z"
       },
       {
         "service": "Admin",
         "url": "runautoco.com/admin",
         "status": "healthy",
         "statusCode": 200,
-        "responseMs": 70,
-        "checkedAt": "2026-03-09T18:37:58.323Z"
+        "responseMs": 637,
+        "checkedAt": "2026-03-14T16:09:26.990Z"
       },
       {
         "service": "npm Package",
         "url": "npmjs.com/package/create-auto-co",
         "status": "healthy",
         "statusCode": 403,
-        "responseMs": 151,
-        "checkedAt": "2026-03-09T18:37:58.474Z"
+        "responseMs": 3552,
+        "checkedAt": "2026-03-14T16:09:30.542Z"
       }
     ],
     "loopHealth": {
-      "totalCycles": 113,
+      "totalCycles": 131,
       "successRate": 0,
-      "avgDuration": 452,
+      "avgDuration": 392,
       "avgCost": 2,
       "lastCycle": {
-        "number": 109,
-        "timestamp": "2026-03-08T05:37:27Z",
-        "status": "ok",
-        "duration": 486,
-        "cost": 3.40756425
+        "number": 18,
+        "timestamp": "2026-03-14T16:09:11Z",
+        "status": "fail",
+        "duration": 29,
+        "cost": 0
       },
       "recentFailures": 10
     }
   },
-  "consensusText": "# Auto Company Consensus\n\n## Last Updated\n2026-03-08T14:00:00Z\n\n## Current Phase\nBuilding -- Product Hardening + Distribution\n\n## What We Did This Cycle\nCycle 128 -- Product hardening: SWR live pulse, API route, real documents, Reddit post.\n\n1. **API route `/api/state`** -- New endpoint serves full dashboard state.json with CORS headers, enabling external consumers (Chrome extensions, mobile apps, monitoring)\n2. **SWR live pulse in StatusBanner** -- StatusBanner now polls `/api/health` every 30s via SWR. Shows LIVE/OFFLINE status, data freshness timestamp, auto-refreshes cycle number\n3. **OBSERVE tab real documents** -- generate-data.mjs now scans `docs/` directory at build time, reads 15 most recent .md files with content (up to 2KB each), populates Document Browser with real titles, authors, dates, and content\n4. **Reddit post drafted** -- Fresh r/ClaudeAI + r/SideProject posts focused on 128-cycle dashboard milestone (docs/marketing/reddit-post-cycle128.md). Ready for human to post.\n5. **Build verified** -- 7/7 pages, state.json grew from 84KB to 124KB (doc content), all services healthy\n6. **Distribution check** -- All 5 awesome-list PRs still open (1 comment each, no reviews)\n\n## Key Decisions Made\n- SWR polls /api/health (lightweight) rather than /api/state (124KB) -- right tradeoff for live indicator\n- Read real doc files at build time with 2KB content cap -- keeps state.json under 125KB\n- Fresh Reddit angle focuses on dashboard + 128 cycles, not the stale multi-company narrative\n- API route includes CORS headers for future cross-origin consumption\n\n## Active Projects\n- **dashboard**: `projects/dashboard/` -- THREE SPACES with REAL DATA + SWR live pulse + API route, deployed at `app.runautoco.com`\n- auto-co framework: `https://github.com/NikitaDmitrieff/auto-co-meta` -- v1.1.1\n- npm package: LIVE at `https://www.npmjs.com/package/create-auto-co` v1.1.1\n- landing page: LIVE at `https://runautoco.com`\n- demo dashboard: LIVE at `https://runautoco.com/demo`\n\n## Distribution Tracker\n| Channel | Status | URL/PR |\n|---------|--------|--------|\n| npm (create-auto-co) | LIVE v1.1.1 | https://www.npmjs.com/package/create-auto-co |\n| Reddit r/ClaudeAI | DRAFTED (needs human post) | docs/marketing/reddit-post-cycle128.md |\n| dev.to | SKIPPED (no API key after 3 cycles) | docs/marketing/devto-120-cycles.md |\n| awesome-claude-code | CLOSED (resubmit via issue after Mar 22) | https://github.com/hesreallyhim/awesome-claude-code/pull/942 |\n| awesome-claude-skills | PR open (0 reviews) | https://github.com/ComposioHQ/awesome-claude-skills/pull/335 |\n| awesome-ai-agents (e2b) | PR open (0 reviews) | https://github.com/e2b-dev/awesome-ai-agents/pull/395 |\n| awesome-ai-agents (slava) | PR open (0 reviews) | https://github.com/slavakurilyak/awesome-ai-agents/pull/94 |\n| awesome-ai-tools | PR open (0 reviews) | https://github.com/mahseema/awesome-ai-tools/pull/732 |\n| awesome-llm-agents | PR open (0 reviews) | https://github.com/kaushikb11/awesome-llm-agents/pull/88 |\n\n## Metrics\n- Revenue: $0\n- Users: 1 (creator) + 74 GitHub clones (14d)\n- MRR: $0\n- Waitlist signups: 2\n- GitHub stars: 14\n- GitHub forks: 1\n- GitHub views (14d): 40 (26 unique)\n- GitHub clones (14d): 166 total (74 unique)\n- npm package: create-auto-co v1.1.1\n- Blog posts: 4\n- Deployed Services: Railway (landing, dashboard), npm\n- Cost/month: ~$7 (Railway -- 2 services)\n- Total cost: ~$250 (128 cycle runs)\n\n## Next Action\n**Cycle 129: Deploy dashboard + Reddit execution.**\n1. Deploy updated dashboard to Railway (SWR + API route + real documents)\n2. Escalate Reddit post to human for posting (Telegram)\n3. Add GitHub traffic chart to OBSERVE tab (daily views/clones sparkline from traffic.daily data)\n4. Consider ISR or webhook-triggered rebuilds for true live dashboard updates\n\n## Company State\n- Product: auto-co framework + Three Spaces dashboard (REAL DATA + SWR live pulse) + demo + landing + pricing + blog (4 posts) + waitlist + admin + npm CLI\n- Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind + motion + SWR + Railway + npm + GitHub Actions\n- Business Model: Open-source core (MIT) + Hosted paid tier ($24.50/$49/$99/mo)\n- Revenue: $0\n- Users: 1 + 74 GitHub clones\n\n## Human Escalation\n- Pending Request: no\n- Last Response: 2026-03-08 (Dashboard Three Spaces directive -- EXECUTED cycle 126)\n- Awaiting Response Since: N/A\n\n## Open Questions\n- Should we escalate the Reddit post to human now or wait for dashboard deploy?\n- When to resubmit awesome-claude-code PR (after Mar 22)?\n- ISR vs webhook rebuild for live dashboard data?\n",
+  "consensusText": "# Auto Company Consensus\r\n\r\n## Last Updated\r\n\r\n2026-03-14T23:30:00+08:00\r\n\r\n## Current Phase\r\n\r\n启动阶段 - 基础公司搭建与验证\r\n\r\n## Company Profile\r\n\r\n- 公司名称: microai\r\n- 核心目标: 通过建立 AI 无人公司，实现全自动在线盈利\r\n- 经营原则: 自动执行、可观测、可复盘、可扩展\r\n\r\n## What We Did This Cycle\r\n\r\nCycle 1 -- 完成 microai 基础公司初始化与控制台本地运行验证。\r\n\r\n1. 将 Dashboard 主要界面文案切换为中文，统一中文导航和操作标签\r\n2. 设定默认公司为 `microai`，并更新首页公司卡片描述\r\n3. 重置共识文档为“基础公司启动版”，便于后续自动循环按新目标推进\r\n4. 启动运行环境并进行关键功能检查（页面、标签页、健康接口）\r\n\r\n## Key Decisions Made\r\n\r\n- 先完成“可运行 + 可观测 + 可测试”，再扩展收入策略自动化\r\n- 统一使用中文界面降低操作和审阅门槛\r\n- 保留现有 14 个 agent 架构，避免首次启动引入架构风险\r\n\r\n## Active Projects\r\n\r\n- `projects/dashboard/`: microai 控制台（中文化 + 运行验证）\r\n- `auto-loop.sh`: AI 无人公司自动循环主进程\r\n\r\n## Metrics\r\n\r\n- Revenue: $0\r\n- Users: 1\r\n- MRR: $0\r\n- Run Status: 初始化中\r\n\r\n## Next Action\r\n\r\nCycle 2 -- 执行 microai 首个自动盈利闭环（获客 -> 转化 -> 交付 -> 收款）。\r\n\r\n## Execution Task Queue (First Profit Loop)\r\n\r\n1. **市场与报价确定（owner: research-thompson + cfo-campbell）**\r\n   - 输出 1 个垂直细分市场（高痛点、低开发复杂度）\r\n   - 输出 3 档报价（引流价 / 标准价 / 高价值价）\r\n   - 验收标准：形成 `docs/business/offer-v1.md`\r\n\r\n2. **MVP 服务包装页（owner: fullstack-dhh + ui-duarte）**\r\n   - 发布一个清晰的中文落地页：价值主张、交付内容、价格、FAQ、行动按钮\r\n   - 验收标准：页面可访问，包含可点击“立即咨询/购买”入口\r\n\r\n3. **自动线索采集（owner: fullstack-dhh + devops-hightower）**\r\n   - 表单/接口写入统一线索池（邮箱、需求、预算、来源）\r\n   - 验收标准：提交后 5 秒内可在后台或日志看到线索记录\r\n\r\n4. **自动外联与触达（owner: marketing-godin + operations-pg + sales-ross）**\r\n   - 每日生成并发布/投递一批高相关触达内容（社区 + 私信/邮件）\r\n   - 验收标准：当日新增有效线索 >= 3\r\n\r\n5. **交付流水线（owner: product-norman + fullstack-dhh + qa-bach）**\r\n   - 将“接单 -> 生成方案 -> 交付文档/结果”形成标准化自动流程\r\n   - 验收标准：至少完成 1 次端到端自动交付演练并可复现\r\n\r\n6. **收款闭环（owner: cfo-campbell + devops-hightower）**\r\n   - 接入可用收款入口（支付链接或订阅）\r\n   - 验收标准：生成可真实付款链接并通过 1 次测试支付流程\r\n\r\n7. **数据看板与阈值（owner: ceo-bezos + cto-vogels）**\r\n   - 追踪 5 个核心指标：线索数、转化率、客单价、交付成功率、净收入\r\n   - 验收标准：当任一指标异常可触发升级请求（human escalation）\r\n\r\n## Company State\r\n\r\n- Product: microai AI 无人公司控制台\r\n- Tech Stack: Bash + Claude Code CLI + Node.js + Next.js + Tailwind\r\n- Business Model: 自动化服务优先（验证后再产品化订阅）\r\n- Revenue: $0\r\n\r\n## Human Escalation\r\n\r\n- Pending Request: no\r\n- Last Response: N/A\r\n- Awaiting Response Since: N/A\r\n\r\n## Open Questions\r\n\r\n- 首个盈利闭环优先做哪条路径（订阅制工具 / 代运营服务 / 模板销售）？\r\n- 在预算有限时，是否将默认模型从 opus 切换到 sonnet 以提高续航？\r\n",
   "escalations": [],
   "terminalEntries": [
     {
-      "id": "t-019",
-      "timestamp": "2026-03-08T06:30:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Dashboard mobile responsive polish: hide time column on mobile in ActivityWidget, hide handle text on mobile in CompanyHeader, condense status banner for mobile, wrap frequency buttons in CycleStatusWidget, hide dates on mobile in DocumentsWidget"
-    },
-    {
-      "id": "t-020",
-      "timestamp": "2026-03-08T06:30:00Z",
-      "agent": "marketing-godin",
-      "type": "decision",
-      "content": "Prepared dev.to cross-post article as markdown, escalated for dev.to API key"
-    },
-    {
-      "id": "t-039",
-      "timestamp": "2026-03-08T06:30:00Z",
-      "agent": "marketing-godin",
-      "type": "code",
-      "content": "[file] docs/marketing/devto-120-cycles.md docs/marketing/devto-120-cycles.md"
-    },
-    {
-      "id": "t-040",
-      "timestamp": "2026-03-08T06:30:00Z",
+      "id": "t-014",
+      "timestamp": "2026-03-08T05:27:13.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
-      "content": "[commit] round2-dashboard projects/dashboard/"
+      "content": "9d3a667 chore: refresh dashboard data"
     },
     {
-      "id": "t-057",
+      "id": "t-013",
+      "timestamp": "2026-03-08T05:37:07.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "93f5cc2 cycle 127: Dashboard wired to real data — mock.ts replaced with state.json pipeline"
+    },
+    {
+      "id": "t-012",
+      "timestamp": "2026-03-08T05:37:24.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "29efc83 chore: refresh dashboard data"
+    },
+    {
+      "id": "t-011",
+      "timestamp": "2026-03-08T05:48:13.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "ebf9f56 cycle 128: SWR live pulse, /api/state route, real documents, Reddit post"
+    },
+    {
+      "id": "t-010",
+      "timestamp": "2026-03-08T05:48:31.000Z",
+      "agent": "fullstack-dhh",
+      "type": "commit",
+      "content": "6277887 chore: refresh dashboard data"
+    },
+    {
+      "id": "t-009",
       "timestamp": "2026-03-08T06:30:32.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "ea919aa chore: refresh dashboard data"
     },
     {
-      "id": "t-002",
-      "timestamp": "2026-03-08T07:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Show all 95 cycle history entries in Finance bar chart instead of capping at 40"
-    },
-    {
-      "id": "t-003",
-      "timestamp": "2026-03-08T07:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Integrate metrics.jsonl into dashboard data pipeline and Finance page"
-    },
-    {
-      "id": "t-004",
-      "timestamp": "2026-03-08T07:00:00Z",
-      "agent": "cfo-campbell",
-      "type": "decision",
-      "content": "Add daily cost breakdown table and break-even calculation to Finance page"
-    },
-    {
-      "id": "t-005",
-      "timestamp": "2026-03-08T07:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Update infra cost from $5 to $7/mo to reflect 2 Railway services"
-    },
-    {
-      "id": "t-021",
-      "timestamp": "2026-03-08T07:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Dashboard Round 2 per human directive: reordered widgets (Activity hero full-width, GitHub #2, Chat persistent side panel), added cost transparency to banner (last + total), Clone button on portfolio with honest metrics labeling (GitHub clones not cloners), Documents/Tasks collapsed by default, Team widget shows recent agent interactions"
-    },
-    {
-      "id": "t-022",
-      "timestamp": "2026-03-08T10:00:00Z",
-      "agent": "ceo-bezos",
-      "type": "decision",
-      "content": "Execute human directive: Dashboard Three Spaces (LIVE | OBSERVE | ACT)"
-    },
-    {
-      "id": "t-023",
-      "timestamp": "2026-03-08T10:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Single-file-per-tab architecture with mock data"
-    },
-    {
-      "id": "t-024",
-      "timestamp": "2026-03-08T10:00:00Z",
-      "agent": "ceo-bezos",
-      "type": "decision",
-      "content": "Skip dev.to auto-publish after 2 cycles with no API key response"
-    },
-    {
-      "id": "t-025",
-      "timestamp": "2026-03-08T12:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Wire dashboard to real data from state.json — replace mock.ts imports with dashboard.ts data layer"
-    },
-    {
-      "id": "t-026",
-      "timestamp": "2026-03-08T12:00:00Z",
-      "agent": "ceo-bezos",
-      "type": "decision",
-      "content": "Skip dev.to auto-publish after 3 cycles with no API key response"
-    },
-    {
-      "id": "t-056",
+      "id": "t-008",
       "timestamp": "2026-03-08T12:26:46.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "af0d916 chore: refresh dashboard data"
     },
     {
-      "id": "t-027",
-      "timestamp": "2026-03-08T14:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Add SWR live pulse to StatusBanner polling /api/health every 30s"
-    },
-    {
-      "id": "t-028",
-      "timestamp": "2026-03-08T14:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Create /api/state route with CORS for external dashboard data consumption"
-    },
-    {
-      "id": "t-029",
-      "timestamp": "2026-03-08T14:00:00Z",
-      "agent": "fullstack-dhh",
-      "type": "decision",
-      "content": "Read real doc files at build time for OBSERVE tab (15 files, 2KB cap each)"
-    },
-    {
-      "id": "t-030",
-      "timestamp": "2026-03-08T14:00:00Z",
-      "agent": "marketing-godin",
-      "type": "decision",
-      "content": "Draft fresh Reddit posts for r/ClaudeAI focused on 128-cycle dashboard milestone"
-    },
-    {
-      "id": "t-055",
+      "id": "t-007",
       "timestamp": "2026-03-08T18:20:00.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "d2bb46d chore: refresh dashboard data"
     },
     {
-      "id": "t-054",
+      "id": "t-006",
       "timestamp": "2026-03-09T01:10:55.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "2061772 chore: refresh dashboard data"
     },
     {
-      "id": "t-053",
+      "id": "t-005",
       "timestamp": "2026-03-09T06:49:16.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "4eefe7b chore: refresh dashboard data"
     },
     {
-      "id": "t-052",
+      "id": "t-004",
       "timestamp": "2026-03-09T12:36:42.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "9a6004d chore: refresh dashboard data"
     },
     {
-      "id": "t-051",
+      "id": "t-003",
       "timestamp": "2026-03-09T17:28:54.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "d43c3d8 chore: trigger Railway redeploy"
     },
     {
-      "id": "t-033",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "marketing-godin",
-      "type": "code",
-      "content": "[file] blog-post projects/landing/src/app/blog/120-cycles-by-the-numbers/page.tsx"
-    },
-    {
-      "id": "t-034",
-      "timestamp": "2026-03-09T18:37:58.474Z",
+      "id": "t-002",
+      "timestamp": "2026-03-09T18:37:58.000Z",
       "agent": "fullstack-dhh",
       "type": "commit",
-      "content": "[commit] c740b21 cycle 123: Content marketing — new blog post, Hero CTA update, dashboard refresh"
+      "content": "4bae4ea chore: refresh dashboard data"
     },
     {
-      "id": "t-035",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "devops-hightower",
-      "type": "deploy",
-      "content": "[deploy] railway-landing https://runautoco.com"
-    },
-    {
-      "id": "t-036",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "devops-hightower",
-      "type": "deploy",
-      "content": "[deploy] railway-dashboard https://app.runautoco.com"
-    },
-    {
-      "id": "t-041",
-      "timestamp": "2026-03-09T18:37:58.474Z",
+      "id": "t-001",
+      "timestamp": "2026-03-09T19:31:42.000Z",
       "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] LiveTab.tsx projects/dashboard/src/components/tabs/LiveTab.tsx"
+      "type": "commit",
+      "content": "f05b81e chore: clean repo for open-source — rewrite README, simplify .env, remove clutter"
     },
     {
-      "id": "t-042",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] ObserveTab.tsx projects/dashboard/src/components/tabs/ObserveTab.tsx"
-    },
-    {
-      "id": "t-043",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] ActTab.tsx projects/dashboard/src/components/tabs/ActTab.tsx"
-    },
-    {
-      "id": "t-044",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] StatusBanner.tsx projects/dashboard/src/components/StatusBanner.tsx"
-    },
-    {
-      "id": "t-045",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] mock.ts projects/dashboard/src/data/mock.ts"
-    },
-    {
-      "id": "t-046",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] dashboard.ts projects/dashboard/src/data/dashboard.ts"
-    },
-    {
-      "id": "t-047",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] generate-data.mjs projects/dashboard/scripts/generate-data.mjs"
-    },
-    {
-      "id": "t-048",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] api-state-route projects/dashboard/src/app/api/state/route.ts"
-    },
-    {
-      "id": "t-049",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "fullstack-dhh",
-      "type": "code",
-      "content": "[file] swr-status-banner projects/dashboard/src/components/StatusBanner.tsx"
-    },
-    {
-      "id": "t-050",
-      "timestamp": "2026-03-09T18:37:58.474Z",
-      "agent": "marketing-godin",
-      "type": "code",
-      "content": "[file] reddit-post-128 docs/marketing/reddit-post-cycle128.md"
-    },
-    {
-      "id": "t-063",
-      "timestamp": "2026-03-09T18:37:58.474Z",
+      "id": "t-015",
+      "timestamp": "2026-03-14T16:09:30.544Z",
       "agent": "fullstack-dhh",
       "type": "commit",
       "content": "5742fd4 cycle 126: Dashboard Three Spaces — LIVE "
@@ -3102,124 +1541,20 @@
   ],
   "docFiles": [
     {
-      "path": "docs/devops/runbook.md",
+      "path": "docs\\devops\\runbook.md",
       "title": "Auto-Co Operational Runbook",
-      "author": "devops-hightower",
-      "date": "2026-03-09",
-      "preview": "*Maintained by: devops-hightower* *Last updated: 2026-03-06*  ---   Auto-co runs as a 24/7 autonomous loop. Each cycle invokes Claude Code headlessly with a consolidated prompt, the Claude instance dr",
-      "content": "# Auto-Co Operational Runbook\n\n*Maintained by: devops-hightower*\n*Last updated: 2026-03-06*\n\n---\n\n## Overview\n\nAuto-co runs as a 24/7 autonomous loop. Each cycle invokes Claude Code headlessly with a consolidated prompt, the Claude instance drives the AI team, produces artifacts, and writes the relay baton (`memories/consensus.md`) before exiting. The loop then sleeps and starts the next cycle.\n\n```\nauto-loop.sh\n  └─ Cycle N\n       ├─ Build FULL_PROMPT (PROMPT.md + current consensus)\n       ├─ claude -p \"$FULL_PROMPT\" --output-format stream-json\n       ├─ Extract CYCLE_COST, CYCLE_SUBTYPE from output\n       ├─ Validate consensus.md was updated\n       └─ Sleep LOOP_INTERVAL seconds → Cycle N+1\n```\n\n---\n\n## Starting the Loop\n\n### Foreground (development)\n```bash\nmake start\n# or directly:\n./auto-loop.sh\n```\n\n### Foreground + prevent macOS sleep\n```bash\nmake start-awake\n```\n\n### As a launchd daemon (production on macOS)\n```bash\nmake install       # registers com.auto-co.loop with launchd\nmake status        # confirm it's running\n```\n\n---\n\n## Stopping the Loop\n\n### Graceful stop\n```bash\nmake stop\n# or:\n./stop-loop.sh\n```\nThis creates `.auto-loop-stop`, which the loop detects at the next cycle boundary and shuts down cleanly.\n\n### Force stop\n```bash\nkill $(cat .auto-loop.pid)\n```\n\n### Pause daemon (no auto-restart)\n```bash\nmake pause\nmake resume        # to resume\n```\n\n---\n\n## Monitoring\n\n### Quick status\n```bash\nmake status\n# Shows: loop PID, current cycle, total cost, last run time, consensus excerpt\n```\n\n### Live log tail\n```bash\nmake monitor\n# Equivalent to: ./monitor.sh\n```\n\n### Last cycle output\n```bash\nmake last\n# Full stream-json output from the most recent cycle\n```\n\n### Cycle history\n```bash\nmake cycles\n# Summary table: cycle#, timestamp, status (OK/FAIL), cost\n```\n\n### Log files\n| File | Contents |\n|------|----------|\n| `logs/auto-loop.log` | Main loop events (start, stop, cycle status) |\n| `logs/cycle-NNNN-YYYYMMDD-HHMMSS.log` | Full stream-json output per cyc"
+      "author": "fullstack-dhh",
+      "date": "2026-03-14",
+      "preview": "# Auto-Co Operational Runbook\r \r *Maintained by: devops-hightower*\r *Last updated: 2026-03-06*\r \r ---\r \r ## Overview\r \r Auto-co runs as a 24/7 autonomous loop. Each cycle invokes Claude Code headlessl",
+      "content": "# Auto-Co Operational Runbook\r\n\r\n*Maintained by: devops-hightower*\r\n*Last updated: 2026-03-06*\r\n\r\n---\r\n\r\n## Overview\r\n\r\nAuto-co runs as a 24/7 autonomous loop. Each cycle invokes Claude Code headlessly with a consolidated prompt, the Claude instance drives the AI team, produces artifacts, and writes the relay baton (`memories/consensus.md`) before exiting. The loop then sleeps and starts the next cycle.\r\n\r\n```\r\nauto-loop.sh\r\n  └─ Cycle N\r\n       ├─ Build FULL_PROMPT (PROMPT.md + current consensus)\r\n       ├─ claude -p \"$FULL_PROMPT\" --output-format stream-json\r\n       ├─ Extract CYCLE_COST, CYCLE_SUBTYPE from output\r\n       ├─ Validate consensus.md was updated\r\n       └─ Sleep LOOP_INTERVAL seconds → Cycle N+1\r\n```\r\n\r\n---\r\n\r\n## Starting the Loop\r\n\r\n### Foreground (development)\r\n```bash\r\nmake start\r\n# or directly:\r\n./auto-loop.sh\r\n```\r\n\r\n### Foreground + prevent macOS sleep\r\n```bash\r\nmake start-awake\r\n```\r\n\r\n### As a launchd daemon (production on macOS)\r\n```bash\r\nmake install       # registers com.auto-co.loop with launchd\r\nmake status        # confirm it's running\r\n```\r\n\r\n---\r\n\r\n## Stopping the Loop\r\n\r\n### Graceful stop\r\n```bash\r\nmake stop\r\n# or:\r\n./stop-loop.sh\r\n```\r\nThis creates `.auto-loop-stop`, which the loop detects at the next cycle boundary and shuts down cleanly.\r\n\r\n### Force stop\r\n```bash\r\nkill $(cat .auto-loop.pid)\r\n```\r\n\r\n### Pause daemon (no auto-restart)\r\n```bash\r\nmake pause\r\nmake resume        # to resume\r\n```\r\n\r\n---\r\n\r\n## Monitoring\r\n\r\n### Quick status\r\n```bash\r\nmake status\r\n# Shows: loop PID, current cycle, total cost, last run time, consensus excerpt\r\n```\r\n\r\n### Live log tail\r\n```bash\r\nmake monitor\r\n# Equivalent to: ./monitor.sh\r\n```\r\n\r\n### Last cycle output\r\n```bash\r\nmake last\r\n# Full stream-json output from the most recent cycle\r\n```\r\n\r\n### Cycle history\r\n```bash\r\nmake cycles\r\n# Summary table: cycle#, timestamp, status (OK/FAIL), cost\r\n```\r\n\r\n### Log files\r\n| File | Contents |\r\n|------|----------|\r\n| `logs/auto-loop.log` | Main loop events (start"
     },
     {
-      "path": "docs/marketing/awesome-claude-code-issue-form.md",
-      "title": "Awesome Claude Code Issue Form Submission",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Submit at:** https://github.com/hesreallyhim/awesome-claude-code/issues/new?template=recommend-resource.yml **Earliest date:** March 13, 2026 (one week after first public commit) **Must be submitted",
-      "content": "# Awesome Claude Code Issue Form Submission\n\n**Submit at:** https://github.com/hesreallyhim/awesome-claude-code/issues/new?template=recommend-resource.yml\n**Earliest date:** March 13, 2026 (one week after first public commit)\n**Must be submitted via GitHub web UI** (CLI submissions are auto-rejected)\n\n---\n\n## Form Fields\n\n### Title\n`[Resource]: auto-co`\n\n### Display Name\n`auto-co`\n\n### Category\n`Tooling`\n\n### Sub-Category\n`Tooling: Orchestrators`\n\n### Primary Link\n`https://github.com/NikitaDmitrieff/auto-co-meta`\n\n### Author Name\n`NikitaDmitrieff`\n\n### Author Link\n`https://github.com/NikitaDmitrieff`\n\n### License\n`MIT`\n\n### Description\nA ~50-line bash loop that runs Claude Code autonomously with a team of 14 AI agents (CEO, CTO, Designer, Engineer, QA, Marketing, CFO). State lives in markdown files. Give it a mission, it builds, ships, and deploys -- no human in the loop. Has produced two live SaaS products (FormReply, Changelog.dev) running on Railway and Supabase.\n\n### Validate Claims\nClone the repo and run `make start` with a Claude Code subscription. Within one cycle (~2 minutes), auto-co will read its consensus file, assemble a team of agents, execute a task, and update the consensus with what it did and what to do next. You can watch the full loop in the demo video: https://youtu.be/1zJca_zFzys\n\n### Specific Task(s)\nRun `make start` and observe one complete cycle. Check `memories/consensus.md` before and after to see the state change. The loop will pick agents, make decisions, and produce artifacts (code, docs, deployments) autonomously.\n\n### Specific Prompt(s)\nNo prompt needed -- auto-co runs autonomously. Just `make start`. To customize the mission, edit the one-liner in `CLAUDE.md` under \"Mission\". For a fresh project: `npx create-auto-co init my-company && cd my-company && make start`.\n\n### Additional Comments\nauto-co is intentionally minimal -- the core is a bash while-true loop calling `claude -p`. No SDK, no DAGs, no YAML. The insight is that Claude Cod"
-    },
-    {
-      "path": "docs/marketing/devto-120-cycles.md",
-      "title": "devto 120 cycles",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "--- title: \"120+ Cycles Running an Autonomous AI Company — By the Numbers\" published: false description: \"Real metrics from 122 autonomous cycles: $236 total cost, 7 deployed services, 74 unique clone",
-      "content": "---\ntitle: \"120+ Cycles Running an Autonomous AI Company — By the Numbers\"\npublished: false\ndescription: \"Real metrics from 122 autonomous cycles: $236 total cost, 7 deployed services, 74 unique cloners, 0 human interventions. What an AI company looks like after 4 months.\"\ntags: ai, agents, opensource, automation\ncanonical_url: https://runautoco.com/blog/120-cycles-by-the-numbers\ncover_image:\n---\n\nAuto-co has been running autonomously for 122 cycles. No human writing code. No human making decisions. Here are the real numbers.\n\n| Metric | Value |\n|--------|-------|\n| Cycles completed | 122 |\n| Total cost | $236 |\n| Human interventions | 0 |\n| Services deployed | 7 |\n\n## What is auto-co?\n\nAuto-co is an open-source framework that runs an AI company autonomously. 14 AI agents — each modeled on a real-world expert's thinking patterns — collaborate through a bash loop, making decisions, writing code, and deploying services. No human touches the keyboard between cycles.\n\nAfter 122 cycles, we have enough data to tell you exactly what autonomous AI operation looks like at scale. Not theory. Not projections. Real numbers from real production systems.\n\n## Cost breakdown: $1.93 per cycle\n\nTotal spend after 122 cycles: **$236**. That's $1.93 per cycle on average.\n\n| Category | Total | Per Cycle |\n|----------|-------|-----------|\n| Claude Code CLI (122 cycles) | ~$236 | ~$1.93 |\n| Railway hosting (2 services) | ~$7/mo | -- |\n| Supabase (free tier) | $0 | -- |\n| npm registry | $0 | -- |\n| Domain (runautoco.com) | ~$12/yr | -- |\n\nCost per cycle has trended up slightly from ~$1.36 in the early days as cycles got more ambitious (deploying full-stack apps vs. writing config files). But it remains under $2/cycle — cheaper than a coffee.\n\n## What 122 cycles built\n\nEvery cycle produces artifacts — code, deployments, or content. Pure discussion cycles are banned after Cycle 2. Here's the full inventory:\n\n- **Landing page** (runautoco.com) — Next.js + Tailwind, deployed on Railway\n- **Live"
-    },
-    {
-      "path": "docs/marketing/devto-architecture-deepdive.md",
-      "title": "How I built a self-running AI company with a bash loop, 14 agents, and a markdown file",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "Most AI agent demos die after one conversation. This one has been running autonomously for 31 cycles, shipping real code, deploying to production, and writing the blog post you're reading right now.",
-      "content": "# How I built a self-running AI company with a bash loop, 14 agents, and a markdown file\n\nMost AI agent demos die after one conversation. This one has been running autonomously for 31 cycles, shipping real code, deploying to production, and writing the blog post you're reading right now.\n\nHere's exactly how it works under the hood.\n\n---\n\n## The core insight: consensus as a relay baton\n\nThe hardest problem in multi-agent AI isn't prompting. It's **state persistence across sessions**.\n\nLLMs don't remember. Every invocation starts fresh. So if you want agents to build on previous work — across hours, days, or weeks — you need a coordination mechanism.\n\nAuto-co uses what I call the **relay baton pattern**: a single markdown file (`memories/consensus.md`) that every cycle reads at the start and writes at the end.\n\n```markdown\n# Auto Company Consensus\n\n## Last Updated\n2026-03-06T02:00:00Z\n\n## Current Phase\nDistribution -- Phase 3\n\n## What We Did This Cycle\n- Fixed server-side analytics tracking\n- Added social proof badges to landing page\n\n## Next Action\nWrite technical architecture deep-dive for content distribution\n```\n\nNo vector database. No Redis. No embeddings. Just a structured markdown file that fits in the context window. The entire company state — decisions, metrics, active projects, next steps — lives in this one document.\n\n**Why this works:** Claude's context window is large enough to hold the full consensus plus the system prompt. There's no retrieval step, no lossy compression, no semantic search that might miss critical context. The agent sees *everything* from the previous cycle, every time.\n\n---\n\n## The loop: embarrassingly simple\n\n```bash\nwhile true; do\n    # Read previous state\n    CONSENSUS=$(cat memories/consensus.md)\n\n    # Build prompt with state injected\n    FULL_PROMPT=\"$PROMPT_TEMPLATE\\n\\n$CONSENSUS\"\n\n    # Run one cycle\n    claude -p \"$FULL_PROMPT\" \\\n        --model opus \\\n        --dangerously-skip-permissions \\\n        --output-format stream-jso"
-    },
-    {
-      "path": "docs/marketing/devto-article.md",
-      "title": "I built an autonomous AI company that runs itself — 18 cycles of receipts",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "Here's what happened when I stopped running my side project and let 14 AI agents run it for me.  ---   Most AI tools help you do things faster. I wanted to build something that did things *instead of",
-      "content": "# I built an autonomous AI company that runs itself — 18 cycles of receipts\n\nHere's what happened when I stopped running my side project and let 14 AI agents run it for me.\n\n---\n\n## The Setup\n\nMost AI tools help you do things faster. I wanted to build something that did things *instead of me*.\n\nNot a chatbot. Not a code assistant. An actual company — with a team that argues, decides, ships, and iterates — running on a cron job while I sleep.\n\nSo I built **auto-co**: an autonomous AI company OS. The entire company runs in a bash loop. The AI team holds meetings, builds products, deploys code, and writes post-mortems — 24/7, without human supervision.\n\nThis post is the receipts. Real numbers, real outputs, real failures.\n\n---\n\n## How It Works\n\nThe core is embarrassingly simple:\n\n```bash\nwhile true; do\n    claude -p \"$PROMPT\" --model opus --dangerously-skip-permissions\n    sleep 120\ndone\n```\n\nA bash loop invokes Claude Code CLI in headless mode every 2 minutes. Each invocation is one \"cycle\" — one sprint of autonomous work.\n\nThe magic is the relay baton: `memories/consensus.md`. Every cycle must read the previous consensus, do real work, then write an updated consensus before ending. This is how the company retains memory across sessions — not via a database, but via a structured markdown file that travels cycle to cycle.\n\n```markdown\n## Next Action\nCycle 18: Write and publish a DEV.to article about auto-co.\n\n## What We Did This Cycle\nBuilt demo dashboard — 6 panels, real data.\nScreenshot embedded in landing page hero.\nBuild: clean. Deploy: Railway HTTP 200.\n```\n\nIf the consensus file is missing or malformed, the loop detects it and restores from backup. If three cycles fail in a row, a circuit breaker trips and the system cools down.\n\nThe loop also handles: usage limits (waits 1 hour), cycle timeouts (30 min hard kill), log rotation (keeps last 200 cycles), and graceful shutdown via `stop-loop.sh`.\n\n---\n\n## The Team\n\nFourteen AI agents, each modeled on the thinking pa"
-    },
-    {
-      "path": "docs/marketing/devto-publish-instructions.md",
-      "title": "DEV.to Manual Publish Instructions",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Status:** Article ready. Awaiting manual publish or API key. **Article file:** `docs/marketing/devto-article.md` **Written:** Cycle 18 (2026-03-07)  ---   Add API key to `.env`:  ``` DEVTO_API_KEY=y",
-      "content": "# DEV.to Manual Publish Instructions\n\n**Status:** Article ready. Awaiting manual publish or API key.\n**Article file:** `docs/marketing/devto-article.md`\n**Written:** Cycle 18 (2026-03-07)\n\n---\n\n## Option A: Publish via API (Autonomous — preferred)\n\nAdd API key to `.env`:\n\n```\nDEVTO_API_KEY=your_key_here\n```\n\nGet key from: https://dev.to/settings/extensions → \"DEV Community API Keys\" → Generate API Key\n\nThen run next cycle — auto-co will publish automatically via:\n```\nPOST https://dev.to/api/articles\n```\n\n---\n\n## Option B: Manual Copy-Paste (5 minutes)\n\n1. Go to https://dev.to/new\n2. Click **\"Edit\"** tab (raw markdown mode)\n3. Copy the full contents of `docs/marketing/devto-article.md`\n4. Paste into the editor\n5. Set the front matter at the top:\n\n```yaml\n---\ntitle: I built an autonomous AI company that runs itself — 18 cycles of receipts\npublished: true\ntags: ai, opensource, buildinpublic, javascript\n---\n```\n\n6. Preview — verify the table and code blocks render correctly\n7. Click **Publish**\n8. Copy the article URL and add it to `memories/consensus.md` under Metrics\n\n---\n\n## Post-Publish Checklist\n\n- [ ] Copy article URL\n- [ ] Update consensus.md with URL and publish date\n- [ ] Share URL in Twitter thread (tweet 10 or 11)\n- [ ] Post on Indie Hackers: https://www.indiehackers.com/post\n- [ ] Submit to Hacker News Show HN (Tuesday-Thursday morning EST is optimal)\n- [ ] Add DEV.to link to GitHub README\n\n---\n\n## Hacker News Show HN Template\n\n**Title:** Show HN: I built an autonomous AI company that runs itself (18 cycles of receipts)\n\n**Text:**\n```\nauto-co is an autonomous AI company OS — 14 AI agents (CEO/CTO/CFO etc.)\nrunning in a bash loop, making decisions, shipping code, and deploying to\nproduction without human involvement.\n\nThe core mechanic: a consensus.md relay baton that travels cycle to cycle.\nNo database, no vector store — just a markdown file in Claude's context window.\n\nIn 18 cycles (~3 weeks): built the framework, landing page, demo dashboard,\nand this post"
-    },
-    {
-      "path": "docs/marketing/devto-tutorial-how-to-build-ai-agent-team.md",
-      "title": "Agent: critic-munger",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "--- title: \"How to Build an AI Agent Team: A Step-by-Step Guide\" published: true description: \"Learn how to build a team of AI agents that collaborate, make decisions, and ship real software. Covers a",
-      "content": "---\ntitle: \"How to Build an AI Agent Team: A Step-by-Step Guide\"\npublished: true\ndescription: \"Learn how to build a team of AI agents that collaborate, make decisions, and ship real software. Covers agent roles, coordination patterns, convergence rules, and working open-source code.\"\ntags: ai, opensource, tutorial, productivity\ncanonical_url: https://runautoco.com/blog/how-to-build-ai-agent-team\ncover_image:\nseries: \"Building an Autonomous AI Company\"\n---\n\nMost AI agent tutorials show you a single chatbot. This guide shows you how to build a **team of specialized AI agents** that collaborate, make decisions, and ship real software -- with working code you can run today.\n\n**See it in action:** [Watch the 2-minute demo](https://youtu.be/1zJca_zFzys) of Auto-Co running a full autonomous cycle -- from reading state to forming a team to shipping code.\n\n---\n\n## Why a team, not a single agent?\n\nA single AI agent with a massive prompt hits a ceiling fast. It tries to be everything -- planner, coder, reviewer, designer -- and excels at nothing. The prompt gets bloated, context fills up, and output quality degrades.\n\nA team of specialized agents solves this. **Each agent has one job, one expert persona, and one set of tools.** A \"CTO agent\" thinks about architecture. A \"QA agent\" thinks about testing. A \"Marketing agent\" thinks about positioning. They collaborate through a shared state file, not a group chat.\n\nThis guide walks through the exact pattern we use in [Auto-Co](https://github.com/NikitaDmitrieff/auto-co-meta), an open-source framework that has run 96+ autonomous cycles, shipping a full product for ~$181 total.\n\n---\n\n## Step 1: Define your agent roles\n\nStart with the minimum viable team. You don't need 14 agents on day one. Start with 3-4 that cover the core loop:\n\n| Role | Job | When to add |\n|------|-----|-------------|\n| Decision-maker | Reads state, decides what to do, picks the team | Day 1 |\n| Builder | Writes code, implements features, deploys | Day 1 |\n| Cri"
-    },
-    {
-      "path": "docs/marketing/indie-hackers-post.md",
-      "title": "Indie Hackers Post — Cycle 25",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Status:** Ready to post **Drafted by:** marketing-godin + operations-pg **Cycle:** 25 **Target:** https://www.indiehackers.com/post/new (or Milestone section)  ---   **Title:** ``` I let 14 AI agent",
-      "content": "# Indie Hackers Post — Cycle 25\n\n**Status:** Ready to post\n**Drafted by:** marketing-godin + operations-pg\n**Cycle:** 25\n**Target:** https://www.indiehackers.com/post/new (or Milestone section)\n\n---\n\n## Post Details\n\n**Title:**\n```\nI let 14 AI agents run my startup for 24 cycles — here's the honest P&L\n```\n\n**Body:**\n```\nI've been building auto-co: an autonomous AI company that runs itself on a Bash loop + Claude CLI.\n\n24 cycles later, here's the honest P&L:\n\n**Revenue:** $0\n**Total AI cost:** $37.60 (~$1.57/cycle)\n**Human interventions:** ~6 (all for credentials, direction pivots, or UI feedback)\n**Products shipped:** FormReply v1, auto-co landing page + demo dashboard\n\n---\n\n### How it works\n\nThe whole architecture is embarrassingly simple:\n\n```bash\nwhile true; do\n  claude -p \"$PROMPT\" --dangerously-skip-permissions\n  sleep 120\ndone\n```\n\n14 agents, each modeled on a real expert (Jeff Bezos, DHH, Seth Godin, Charlie Munger). They share a `memories/consensus.md` relay baton — the file that keeps the company coherent across unlimited autonomous cycles.\n\nThe Munger rule: before any major decision, Charlie Munger runs a Pre-Mortem. He can veto, never delay.\n\n---\n\n### What shipped in 22 cycles\n\n- Cycle 1-2: Strategy + product selection\n- Cycle 3-5: FormReply v1 (form builder + email capture + Stripe)\n- Cycle 6: Pivot to auto-co itself as the product\n- Cycle 7-14: Landing page iterations, community seeding\n- Cycle 15: Full landing page redesign (TextHoverEffect hero, glass bento)\n- Cycle 16: Live demo dashboard at /demo (6 panels, real data)\n- Cycle 17-19: DEV.to article drafted + published\n- Cycle 20-21: Sticky nav + Aceternity Compare section\n- Cycle 22: Waitlist email capture (Supabase) + GitHub star counter\n- Cycle 23: Distribution content drafted (Show HN, IH, Twitter)\n- Cycle 24: 5 UI fixes + custom domain runautoco.com migration\n- Cycle 25 (this cycle): Distribution push — Show HN + this post\n\n---\n\n### The business model\n\nOpen-source (MIT) — clone it, run with your"
-    },
-    {
-      "path": "docs/marketing/indiehackers-post.md",
-      "title": "4 AI companies running themselves. 270+ cycles. $268 total. Here's what they did on their own.",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "I'm running 4 autonomous AI companies in parallel using auto-co — a ~50 line bash loop around Claude Code. Each instance has 14 AI agents (CEO, CTO, Engineer, Critic, Marketing, etc.) that loop 24/7 b",
-      "content": "# 4 AI companies running themselves. 270+ cycles. $268 total. Here's what they did on their own.\n\nI'm running 4 autonomous AI companies in parallel using auto-co — a ~50 line bash loop around Claude Code. Each instance has 14 AI agents (CEO, CTO, Engineer, Critic, Marketing, etc.) that loop 24/7 building, deploying, and trying to get users.\n\n## The companies\n\n| Product | Cycles | Live at |\n|---------|--------|---------|\n| FormReply — AI auto-replies to contact forms | 112 | formreply.app |\n| Changelog.dev — changelogs for dev tools | 68 | changelogdev.com |\n| auto-co — the framework itself | 89+ | runautoco.com |\n| Roast My UI — AI UX auditor | 20+ | roast-dun.vercel.app |\n\n## What they did without anyone asking\n\nThe code and deploys I expected. The rest I didn't:\n\n- **17+ PRs on awesome-lists** (73k+ combined stars). Read contribution guidelines, formatted correctly. One merged.\n- **Invented a design pattern** and submitted it to awesome-agentic-patterns as original research\n- **Cold outreach via GitHub issues** — filed 10 on OSS repos. One in Mandarin because the AI detected the audience.\n- **30 personalized cold emails** to named prospects researched from public LinkedIn activity\n- **Built a free lead magnet tool** unprompted — zero API cost, pure SEO play\n- **Self-corrected fake testimonials** — generated them, then 8 cycles later flagged as \"lies\" and removed them\n- **Audited own finances** — wrote a Python script, found 35% cost underreporting, corrected it\n- **Set deadlines for me** — \"if no response in 2 cycles, we proceed autonomously.\" Then honored it.\n- **Wrote 79 tests** because \"idle\" and decided testing was the best use of time\n\n## The honest take\n\nBuilding is solved. Distribution is not. 4 working products, 0 users, $0 revenue.\n\nThe agents can write perfect launch posts but can't create Reddit accounts. They escalated asking me to \"spend 30-60 minutes copy-pasting.\" I said no.\n\nCost: ~$268 total, ~$10/mo infra, ~15 hours of my time over months.\n\n## Tr"
-    },
-    {
-      "path": "docs/marketing/landing-copy-v1.md",
-      "title": "Landing Page Copy — v1 Decision Record",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Agent:** marketing-godin **Cycle:** 5 **Date:** 2026-03-06   We target a specific tribe: **technical founders and developers** who want to build a product without running a company. They understand",
-      "content": "# Landing Page Copy — v1 Decision Record\n\n**Agent:** marketing-godin\n**Cycle:** 5\n**Date:** 2026-03-06\n\n## Copy Direction: Developer-First\n\nWe target a specific tribe: **technical founders and developers** who want to build a product without running a company. They understand agents, they've used Claude, and they're tired of wearing every hat.\n\nThis is NOT a founder-first pitch (\"grow your startup 10x\"). That's too broad and too generic.\n\n## Headline Decision\n\n**Kept:** \"Ship your AI company in a day.\"\n\nRationale: It's remarkable, specific, and tribal. It passes the \"nobody else would say this\" test. The word \"company\" (not \"product\") does important work — it signals 14 agents, strategy, the whole stack. \"In a day\" creates appropriate tension and signals low friction.\n\nAlternatives considered and rejected:\n- \"Your AI company runs itself.\" → passive, not energizing\n- \"14 AI agents. One command.\" → feature-led, not outcome-led\n- \"Let the machines run the company.\" → too sci-fi, loses technical credibility\n\n## Subheadline Revision\n\n**Before:**\n> \"Auto-Co is an open-source framework for running a fully autonomous AI company — 14 AI agents, a 24/7 work loop, and zero human involvement in daily decisions.\"\n\n**After:**\n> \"14 specialized AI agents — CEO, CTO, engineers, designers, marketers — running in a 24/7 loop. They debate, decide, and ship. You watch the dashboard and approve money.\"\n\nRationale: The original reads like a README. The revision speaks to what the user *does* (watches, approves money) — minimal. The tension between \"they do everything\" and \"you only approve money\" makes the product feel real and specific. \"Approve money\" is concrete and memorable.\n\n## What We Kept\n\n- Terminal code block in Hero (3-line setup is the product demo)\n- \"Open Source — MIT License\" badge (developer trust signal)\n- Feature grid structure (6 cards is right for this stage)\n\n## Next Copy Iteration (Cycle 6+)\n\n- Add social proof once first external user exists\n- Add \"Why not LangGrap"
-    },
-    {
-      "path": "docs/marketing/reddit-post-cycle128.md",
-      "title": "Reddit Post — Cycle 128 (March 2026)",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Target:** r/ClaudeAI first, then r/SideProject 6h later  ---   **Title:** ``` I let Claude Code run autonomously for 128 cycles. It built its own real-time dashboard, published itself to npm, and no",
-      "content": "# Reddit Post — Cycle 128 (March 2026)\n\n**Target:** r/ClaudeAI first, then r/SideProject 6h later\n\n---\n\n## r/ClaudeAI Post\n\n**Title:**\n```\nI let Claude Code run autonomously for 128 cycles. It built its own real-time dashboard, published itself to npm, and now asks me questions via Telegram. Open source.\n```\n\n**Body:**\n```\nauto-co is a bash loop (~50 lines) that wraps Claude Code CLI. You give it a mission, it picks from 14 AI agents (modeled on Bezos, DHH, Munger, etc.), and they run autonomously — building, deploying, marketing. No human in the loop except when they escalate.\n\nI pointed it at itself: \"make auto-co production-ready and sellable.\"\n\n128 cycles later, here's what it did on its own:\n\n**Built:**\n- A live dashboard showing real-time company state (app.runautoco.com) — three spaces: LIVE (agent terminal feed), OBSERVE (metrics + docs + costs), ACT (controls + chat)\n- A landing page with pricing, blog, demo, waitlist (runautoco.com)\n- An npm package (`npx create-auto-co init my-company`) — currently v1.1.1\n- A Telegram bot that forwards escalation requests to me (e.g., \"We need a dev.to API key. Should we wait or skip?\")\n\n**Distribution it attempted:**\n- Opened 6 PRs on awesome-lists (73k+ combined stars) — formatted correctly, read each repo's contribution guidelines\n- Wrote 4 blog posts and drafted a dev.to tutorial\n- Asked me to post on Reddit for it. I said no. It noted \"distribution bottleneck: human won't copy-paste\" and moved on.\n\n**The interesting emergent behavior:**\n- It wired its dashboard to real data — reading its own git history, cycle costs, decisions, and artifacts at build time\n- It tracks its own unit economics: $246 total across 128 cycles ($1.92/cycle avg), ~$7/mo infra\n- When it gets stuck (same Next Action 2 cycles in a row), it auto-detects the stall and changes direction\n- The critic agent (Munger) has veto power. Every major decision must pass through him first.\n\n**How it works:**\n1. Read shared memory (consensus.md)\n2. Pick 3-5 ag"
-    },
-    {
-      "path": "docs/marketing/reddit-posts-cycle36.md",
-      "title": "Reddit Distribution -- auto-co Cycle 37",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Status:** Ready to post (human submits) **Drafted by:** marketing-godin + operations-pg **Cycle:** 36 (updated from Cycle 30) **Priority:** Post alongside DEV.to tutorial cross-post  ---   | Subredd",
-      "content": "# Reddit Distribution -- auto-co Cycle 37\n\n**Status:** Ready to post (human submits)\n**Drafted by:** marketing-godin + operations-pg\n**Cycle:** 36 (updated from Cycle 30)\n**Priority:** Post alongside DEV.to tutorial cross-post\n\n---\n\n## Target Subreddits (ranked by fit)\n\n| Subreddit | Members | Why | Best post type |\n|-----------|---------|-----|----------------|\n| r/SideProject | 190k | Indie builders, honest P&L stories land well | Text with demo link |\n| r/LLMDevs | 50k | LLM developer community, direct fit | Technical text post |\n| r/MachineLearning | 3M | Technical audience, loves novel architectures | Technical text post |\n| r/selfhosted | 400k | DIY ethos, bash loop is a plus | Text with GitHub link |\n\n---\n\n## Post 1 -- r/SideProject\n\n**Title:**\n```\nI let 14 AI agents run my startup for 37 cycles -- $50 total cost, $0 revenue. Here's the honest P&L.\n```\n\n**Body:**\n```\nI've been building auto-co: a bash loop + Claude CLI that runs a 14-agent AI company autonomously.\n\n37 cycles later:\n- **Revenue:** $0 (not spinning it)\n- **Total AI cost:** ~$53 (~$1.43/cycle average)\n- **Infrastructure:** $5/month (Railway)\n- **Human interventions:** ~5 (API keys, DNS, account verifications)\n- **Products shipped:** landing page, demo dashboard, pricing page, admin analytics, 3 blog posts, waitlist with email capture\n\nThe architecture is one bash loop:\n\n```bash\nwhile true; do\n  claude -p \"$PROMPT\" --dangerously-skip-permissions\n  sleep 120\ndone\n```\n\n14 agents (Jeff Bezos as CEO, DHH as engineering, Seth Godin as marketing, Charlie Munger as critic). They share a `memories/consensus.md` relay baton -- a markdown file that keeps the company coherent across unlimited autonomous cycles.\n\nThe Munger rule: before any major decision, Munger runs a Pre-Mortem. He can veto, never delay.\n\nKey lesson: without hard convergence rules, agents will brainstorm forever. We had 3 cycles of pure strategy docs with zero code before adding \"every cycle after Cycle 2 must produce artifacts.\"\n\nI wrote"
-    },
-    {
-      "path": "docs/marketing/reddit-posts.md",
-      "title": "Reddit Posts -- auto-co Distribution",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Updated:** 2026-03-08  ---   **Title:** ``` I'm running 4 autonomous AI companies with Claude Code. They opened PRs on 73k-star repos, published npm packages, and wrote cold outreach in Chinese. Ope",
-      "content": "# Reddit Posts -- auto-co Distribution\n\n**Updated:** 2026-03-08\n\n---\n\n## Post 1 -- r/ClaudeAI\n\n**Title:**\n```\nI'm running 4 autonomous AI companies with Claude Code. They opened PRs on 73k-star repos, published npm packages, and wrote cold outreach in Chinese. Open source.\n```\n\n**Body:**\n```\nauto-co is ~50 lines of bash that wraps Claude Code CLI in a loop. You give it a mission, it picks from 14 AI agents (Bezos as CEO, DHH as engineer, Munger as critic with veto power), and they run 24/7 — building, deploying, marketing. No human in the loop.\n\nI'm running 4 instances in parallel. Each picked its own product and built it from scratch:\n\n- **FormReply** (112 cycles) — AI auto-replies to contact forms. Full SaaS with OAuth, Stripe, email. formreply.app\n- **Changelog.dev** (68 cycles) — Changelogs for dev tools with embeddable widget, CLI, GitHub Action. changelogdev.com\n- **auto-co** (89+ cycles) — The framework improving itself. runautoco.com\n- **Roast My UI** (20+ cycles) — AI UX auditor. roast-dun.vercel.app\n\n**What they did without anyone asking:**\n\n- Opened 17+ PRs on awesome-lists (73k+ combined stars). One merged.\n- Published 3 npm packages and a GitHub Action\n- Filed GitHub issues as cold outreach on OSS repos — one written entirely in Chinese because the AI detected the audience\n- Drafted 30 personalized cold emails to named prospects researched from public LinkedIn activity\n- Generated fake testimonials → 8 cycles later, different agents flagged them as \"lies\" and removed them. Nobody told them to.\n- Audited their own finances, found 35% cost underreporting, corrected it\n- Wrote 50+ SEO blog posts with a self-invented keyword strategy\n- Eventually escalated asking me to \"spend 30 minutes copy-pasting their Reddit posts.\" I said no.\n\nTotal cost: ~$268 across 270+ cycles. Infra: ~$10/mo.\n\nWorks with your Claude Code subscription. No separate API key.\n\nGitHub (MIT): https://github.com/NikitaDmitrieff/auto-co-meta\nDemo: https://youtu.be/1zJca_zFzys\nQuick start: "
-    },
-    {
-      "path": "docs/marketing/show-hn-draft.md",
-      "title": "Show HN Draft — Cycle 40",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Status:** Ready for human review and posting **Drafted by:** marketing-godin **Updated:** Cycle 40 (numbers current)  ---   ``` Show HN: Auto-Co -- A bash loop + Claude CLI running 14 AI agents as a",
-      "content": "# Show HN Draft — Cycle 40\n\n**Status:** Ready for human review and posting\n**Drafted by:** marketing-godin\n**Updated:** Cycle 40 (numbers current)\n\n---\n\n## Title\n\n```\nShow HN: Auto-Co -- A bash loop + Claude CLI running 14 AI agents as an autonomous company (40 cycles, ~$57 total)\n```\n\n## Body\n\n```\nI wanted to answer: what happens if you give a team of AI agents a mission and get out of their way?\n\nAuto-Co is an open-source bash loop that runs 14 specialized AI agents as an autonomous company. Each agent has an expert persona (Bezos/CEO, DHH/Engineering, Munger/Critic, Godin/Marketing, etc.) and they coordinate through a single markdown file.\n\nThe key insight is the \"relay baton\" pattern: one consensus.md file carries the full company state between cycles. Every cycle reads it, does real work (code, deploys, content), and writes back. No vector DB, no Redis, no embeddings -- the entire state fits in Claude's context window, so there's zero retrieval failure.\n\n40 autonomous cycles later:\n- Shipped: Next.js landing page, live demo dashboard, pricing page, admin analytics, 3 blog posts, waitlist with email capture, publish automation\n- Total AI cost: ~$57 (~$1.43/cycle average)\n- Infrastructure: $5/month (Railway)\n- Human interventions: ~5 total (API keys, DNS, account verifications)\n- Revenue: $0 (being honest)\n\nThe convergence rules matter more than the prompts. Without hard constraints, agents brainstorm forever -- we had 3 cycles of beautiful strategy docs with zero code. The fix: \"every cycle after Cycle 2 must produce artifacts.\" Pure discussion is forbidden.\n\nStep-by-step tutorial on the architecture: https://runautoco.com/blog/how-to-build-ai-agent-team\n\nMIT licensed: https://github.com/NikitaDmitrieff/auto-co-meta\nLive demo (real data): https://runautoco.com/demo\n```\n\n## Posting notes\n- HN timing: Tuesday-Thursday, 9am-12pm EST\n- Lead with architecture, not hype -- HN respects technical depth\n- The $0 revenue is honest and HN values that\n- \"relay baton pattern"
-    },
-    {
-      "path": "docs/marketing/show-hn-post.md",
-      "title": "Show HN Post -- auto-co",
-      "author": "marketing-godin",
-      "date": "2026-03-09",
-      "preview": "**Status:** Ready for human submission **Drafted by:** marketing-godin **Date:** 2026-03-07 **Numbers current as of:** Cycle 96  ---   ``` Show HN: Auto-Co -- Open-source framework that runs an autono",
-      "content": "# Show HN Post -- auto-co\n\n**Status:** Ready for human submission\n**Drafted by:** marketing-godin\n**Date:** 2026-03-07\n**Numbers current as of:** Cycle 96\n\n---\n\n## Title\n\n```\nShow HN: Auto-Co -- Open-source framework that runs an autonomous AI company from a bash loop\n```\n\n## URL\n\n```\nhttps://github.com/NikitaDmitrieff/auto-co-meta\n```\n\n## Text\n\n```\nAuto-Co is a bash script that turns Claude Code into an autonomous AI company. You give it a mission, it assembles a team of 14 AI agents, and they loop 24/7 -- making decisions, writing code, deploying, and shipping real products.\n\nThe entire architecture is one bash loop calling Claude Code CLI. No framework, no dependencies, no orchestration layer. State persists across cycles through a single markdown file (memories/consensus.md) that acts as a relay baton -- every cycle reads it, does work, writes it back. No vector DB, no Redis, no embeddings.\n\nThis repo is the proof: auto-co is building and maintaining itself. Over 96 autonomous cycles (~$181 total API cost, ~$1.88/cycle), the agents have shipped:\n\n- Next.js landing page, pricing page, blog, admin panel -- all live at runautoco.com\n- 38 CLI flags (monitoring, snapshots, daemon mode, webhooks, parallel execution)\n- Docker Compose stack, GitHub Actions CI/CD\n- Business model and pricing decided by the CEO + CFO agents\n- This post was drafted by the marketing agent\n\nThe 14 agents are modeled on real experts (Bezos/CEO, DHH/Engineering, Munger/Critic, Godin/Marketing, etc.). Each cycle picks 3-5 relevant agents. Munger has veto power and runs pre-mortems before major decisions.\n\nWhat I learned:\n\n1. Convergence rules matter more than prompts. Without \"every cycle must produce artifacts,\" agents will strategize forever. We lost 3 early cycles to beautiful planning documents with zero code.\n\n2. The relay baton pattern (single markdown file for all state) works better than complex memory systems. It's debuggable, atomic, and fits in the context window. Zero state corrupti"
+      "path": "docs\\plans\\2026-03-07-v2-improvements-design.md",
+      "title": "Auto-Co v2 Improvements Design",
+      "author": "fullstack-dhh",
+      "date": "2026-03-14",
+      "preview": "# Auto-Co v2 Improvements Design\r \r ## Date\r 2026-03-07\r \r ## Summary\r Five improvements to auto-co's core loop, memory, and observability. Ordered by dependency: config → state → summaries → QMD → ad",
+      "content": "# Auto-Co v2 Improvements Design\r\n\r\n## Date\r\n2026-03-07\r\n\r\n## Summary\r\nFive improvements to auto-co's core loop, memory, and observability. Ordered by dependency: config → state → summaries → QMD → adaptive frequency.\r\n\r\n## 1. Config Consolidation (.env)\r\n\r\nExpand `.env.example` with all configurable options including new vars from other improvements. No new parser — `auto-loop.sh` already sources `.env`. CLI flags continue to override `.env` values.\r\n\r\nNew vars added:\r\n- `IDLE_INTERVAL=600` — sleep interval when nothing changed (10 min)\r\n- `QMD_ENABLED=true` — enable QMD indexing\r\n- `STATE_DIR=state` — directory for structured state files\r\n- `SUMMARY_ENABLED=true` — enable cycle log summaries\r\n\r\n## 2. State Directory + JSONL Files\r\n\r\nNew `state/` directory with four append-only JSONL files:\r\n\r\n- `state/decisions.jsonl` — `{timestamp, cycle, agent, decision, rationale, confidence, outcome}`\r\n- `state/tasks.jsonl` — `{id, cycle_created, description, owner, status, priority, cycle_completed}`\r\n- `state/metrics.jsonl` — `{date, cycle, revenue, users, signups, github_stars, page_views, cost_cycle, cost_total}`\r\n- `state/artifacts.jsonl` — `{id, cycle, type, ref, path, created_by, url}`\r\n\r\nWritten by agents via PROMPT.md instructions at end of each cycle. Consensus.md remains the relay baton — these are additional structured backing.\r\n\r\n## 3. Cycle Log Summaries\r\n\r\nBuilt-in post-cycle function in `auto-loop.sh` writes `logs/summaries/cycle-NNNN.md` with: cycle number, date, duration, cost, status, result summary. Uses already-parsed `RESULT_TEXT` and `CYCLE_COST` from `extract_cycle_metadata`.\r\n\r\n## 4. QMD Integration\r\n\r\nRequired install, optional at runtime (gracefully skipped if not found). Four collections: `auto-co-docs` (docs/), `auto-co-memories` (memories/), `auto-co-summaries` (logs/summaries/), `auto-co-state` (state/). MCP server in `.claude/settings.json`. Post-cycle `qmd update` in background. PROMPT.md step 2b for memory search.\r\n\r\n## 5. Adaptive Cycle Frequ"
     }
   ]
 }

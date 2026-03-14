@@ -9,6 +9,11 @@ import ActTab from "@/components/tabs/ActTab";
 type Tab = "LIVE" | "OBSERVE" | "ACT";
 
 const TABS: Tab[] = ["LIVE", "OBSERVE", "ACT"];
+const TAB_LABELS: Record<Tab, string> = {
+  LIVE: "实时",
+  OBSERVE: "观察",
+  ACT: "执行",
+};
 
 export default function CompanyDashboardPage() {
   const [activeTab, setActiveTab] = useState<Tab>("LIVE");
@@ -31,7 +36,7 @@ export default function CompanyDashboardPage() {
                   : "text-slate-400 hover:text-slate-600"
               }`}
             >
-              {tab}
+              {TAB_LABELS[tab]}
             </button>
           ))}
         </div>

@@ -7,7 +7,7 @@
  */
 
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import { resolve, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -25,18 +25,18 @@ function parseConsensus() {
   }
 
   const get = (heading) => {
-    const re = new RegExp(`## ${heading}\\n([\\s\\S]*?)(?=\\n## |$)`);
+    const re = new RegExp(`## ${heading}\\r?\\n([\\s\\S]*?)(?=\\r?\\n## |$)`);
     const m = raw.match(re);
     return m ? m[1].trim() : "";
   };
 
   // Extract cycle number from "What We Did This Cycle"
-  const cycleMatch = raw.match(/Cycle (\d+)/);
+  const cycleMatch = raw.match(/(?:Cycle|周期)\s*#?\s*(\d+)/i);
   const cycleNumber = cycleMatch ? parseInt(cycleMatch[1], 10) : 0;
 
   // Extract phase
   const phaseSection = get("Current Phase");
-  const phase = phaseSection.split("--")[0].trim() || "Unknown";
+  const phase = phaseSection.split(/--|-/)[0].trim() || "Unknown";
 
   // Extract metrics
   const metricsSection = get("Metrics");
@@ -122,8 +122,9 @@ function parseConsensus() {
 
 // ── Git data ────────────────────────────────────────────────────────
 function getGitData() {
-  const logRaw = execSync(
-    `git log --format='%h|%s|%ai' -20`,
+  const logRaw = execFileSync(
+    "git",
+    ["log", "--format=%h|%s|%ai", "-20"],
     { cwd: ROOT, encoding: "utf-8" }
   );
 
@@ -139,8 +140,9 @@ function getGitData() {
   // Get open PRs if gh is available
   let openPRs = [];
   try {
-    const prRaw = execSync(
-      `gh pr list --repo NikitaDmitrieff/auto-co-meta --json number,title,state,reviews,comments --limit 10 2>/dev/null`,
+    const prRaw = execFileSync(
+      "gh",
+      ["pr", "list", "--repo", "NikitaDmitrieff/auto-co-meta", "--json", "number,title,state,reviews,comments", "--limit", "10"],
       { cwd: ROOT, encoding: "utf-8", timeout: 10000 }
     );
     openPRs = JSON.parse(prRaw).map((pr) => ({
@@ -157,8 +159,9 @@ function getGitData() {
   // Get repo stats if gh is available
   let repoStats = { stars: 0, forks: 0, openIssues: 0 };
   try {
-    const repoRaw = execSync(
-      `gh api repos/NikitaDmitrieff/auto-co-meta --jq '{stars: .stargazers_count, forks: .forks_count, openIssues: .open_issues_count}' 2>/dev/null`,
+    const repoRaw = execFileSync(
+      "gh",
+      ["api", "repos/NikitaDmitrieff/auto-co-meta", "--jq", "{stars: .stargazers_count, forks: .forks_count, openIssues: .open_issues_count}"],
       { cwd: ROOT, encoding: "utf-8", timeout: 10000 }
     );
     repoStats = JSON.parse(repoRaw);

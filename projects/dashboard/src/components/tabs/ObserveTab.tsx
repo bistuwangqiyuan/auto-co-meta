@@ -23,6 +23,15 @@ const LAYER_COLORS: Record<string, string> = {
   Intelligence: "#0ea5e9",
 };
 
+const LAYER_LABELS: Record<string, string> = {
+  Engineering: "工程",
+  Strategy: "战略",
+  Business: "商业",
+  Product: "产品",
+  Intelligence: "情报",
+  Other: "其他",
+};
+
 // ── Section header ───────────────────────────────────────────────
 function SectionHeader({ children }: { children: React.ReactNode }) {
   return (
@@ -37,16 +46,16 @@ function SectionHeader({ children }: { children: React.ReactNode }) {
 // ── 1. Global Metrics ────────────────────────────────────────────
 function MetricsGrid() {
   const metrics: { label: string; value: string }[] = [
-    { label: "Cycle Count", value: String(dashboardMetrics.cycle) },
-    { label: "Total Cost", value: `$${dashboardMetrics.totalCost.toFixed(2)}` },
-    { label: "Avg Cost/Cycle", value: `$${dashboardMetrics.avgCostPerCycle.toFixed(2)}` },
-    { label: "Projected Monthly", value: `$${dashboardMetrics.projectedMonthlyCost}` },
+    { label: "周期数", value: String(dashboardMetrics.cycle) },
+    { label: "总成本", value: `$${dashboardMetrics.totalCost.toFixed(2)}` },
+    { label: "平均每周期成本", value: `$${dashboardMetrics.avgCostPerCycle.toFixed(2)}` },
+    { label: "预计月成本", value: `$${dashboardMetrics.projectedMonthlyCost}` },
     { label: "GitHub Stars", value: String(dashboardMetrics.githubStars) },
     { label: "GitHub Forks", value: String(dashboardMetrics.githubForks) },
-    { label: "GitHub Clones (14d)", value: String(dashboardMetrics.githubClones14d) },
-    { label: "Waitlist Signups", value: String(dashboardMetrics.waitlistSignups) },
-    { label: "Revenue", value: `$${dashboardMetrics.revenue}` },
-    { label: "Open PRs", value: String(dashboardMetrics.openPRs) },
+    { label: "GitHub 克隆（14天）", value: String(dashboardMetrics.githubClones14d) },
+    { label: "候补名单注册", value: String(dashboardMetrics.waitlistSignups) },
+    { label: "收入", value: `$${dashboardMetrics.revenue}` },
+    { label: "未合并 PR", value: String(dashboardMetrics.openPRs) },
   ];
 
   return (
@@ -119,7 +128,7 @@ function DocumentBrowser() {
           </div>
         ) : (
           <div className="flex items-center justify-center h-full text-sm text-slate-400">
-            Select a document to view
+            请选择文档查看内容
           </div>
         )}
       </div>
@@ -144,15 +153,13 @@ function MemorySection() {
       {/* Cycle History Timeline */}
       <div>
         <div className="text-xs font-mono uppercase tracking-wide text-slate-500 mb-3">
-          Recent Cycles
+          最近周期
         </div>
         <div className="space-y-4">
           {cycleHistory.slice(0, 5).map((entry) => (
             <div key={entry.cycle} className="border-l-2 border-orange-500 pl-4">
               <div className="flex items-baseline gap-3">
-                <span className="text-sm font-bold text-slate-900">
-                  Cycle {entry.cycle}
-                </span>
+                <span className="text-sm font-bold text-slate-900">周期 {entry.cycle}</span>
                 <span className="text-xs text-slate-400">{entry.date}</span>
               </div>
               <p className="text-sm text-slate-600 mt-0.5">{entry.summary}</p>
@@ -172,7 +179,7 @@ function MemorySection() {
       {/* Escalation History */}
       <div>
         <div className="text-xs font-mono uppercase tracking-wide text-slate-500 mb-3">
-          Escalation History
+          升级请求历史
         </div>
         <div className="space-y-3">
           {escalations.map((esc) => (
@@ -194,7 +201,7 @@ function MemorySection() {
                       : "bg-amber-50 text-amber-600"
                   }`}
                 >
-                  {esc.resolved ? "Resolved" : "Pending"}
+                  {esc.resolved ? "已解决" : "待处理"}
                 </span>
               </div>
               <p className="text-sm text-slate-700 mb-1">{esc.question}</p>
@@ -220,7 +227,7 @@ function CostBreakdown() {
       {/* Per-cycle cost bars */}
       <div>
         <div className="text-xs font-mono uppercase tracking-wide text-slate-500 mb-3">
-          Cost per Cycle
+          每周期成本
         </div>
         <div className="space-y-1.5">
           {costPerCycle.map((entry) => (
@@ -245,7 +252,7 @@ function CostBreakdown() {
       {/* Cumulative spend */}
       <div>
         <div className="text-xs font-mono uppercase tracking-wide text-slate-500 mb-3">
-          Cumulative Spend
+          累计支出
         </div>
         <div className="border border-slate-200 p-4">
           <div className="space-y-1">
@@ -254,7 +261,7 @@ function CostBreakdown() {
               const delta = entry.total - prev;
               return (
                 <div key={entry.cycle} className="flex items-center justify-between text-sm">
-                  <span className="font-mono text-slate-500">Cycle {entry.cycle}</span>
+                  <span className="font-mono text-slate-500">周期 {entry.cycle}</span>
                   <div className="flex items-center gap-3">
                     {delta > 0 && (
                       <span className="text-xs text-slate-400">+${delta}</span>
@@ -273,13 +280,13 @@ function CostBreakdown() {
       {/* Cost by layer */}
       <div>
         <div className="text-xs font-mono uppercase tracking-wide text-slate-500 mb-3">
-          Cost by Layer
+          分层成本
         </div>
         <div className="space-y-2">
           {costByLayer.map((layer) => (
             <div key={layer.layer} className="flex items-center gap-3">
               <span className="text-xs font-mono text-slate-600 w-24 flex-shrink-0">
-                {layer.layer}
+                {LAYER_LABELS[layer.layer] || layer.layer}
               </span>
               <div className="flex-1 h-4 bg-slate-100">
                 <div
@@ -300,12 +307,10 @@ function CostBreakdown() {
 
       {/* Projected monthly */}
       <div className="border border-slate-200 p-4 bg-slate-50">
-        <span className="text-xs font-mono uppercase tracking-wide text-slate-500">
-          Projected Monthly
-        </span>
+        <span className="text-xs font-mono uppercase tracking-wide text-slate-500">预计月成本</span>
         <div className="text-xl font-semibold text-slate-900 mt-1">
-          ${dashboardMetrics.projectedMonthlyCost}/mo{" "}
-          <span className="text-sm font-normal text-slate-400">at current rate</span>
+          ${dashboardMetrics.projectedMonthlyCost}/月{" "}
+          <span className="text-sm font-normal text-slate-400">按当前消耗速率</span>
         </div>
       </div>
     </div>
@@ -319,25 +324,25 @@ export default function ObserveTab() {
       <div className="max-w-6xl mx-auto px-6 py-6 space-y-8">
         {/* 1. Global Metrics */}
         <section>
-          <SectionHeader>Global Metrics</SectionHeader>
+          <SectionHeader>全局指标</SectionHeader>
           <MetricsGrid />
         </section>
 
         {/* 2. Documents */}
         <section>
-          <SectionHeader>Documents</SectionHeader>
+          <SectionHeader>文档</SectionHeader>
           <DocumentBrowser />
         </section>
 
         {/* 3. Memory */}
         <section>
-          <SectionHeader>Memory</SectionHeader>
+          <SectionHeader>记忆</SectionHeader>
           <MemorySection />
         </section>
 
         {/* 4. Cost Breakdown */}
         <section>
-          <SectionHeader>Cost Breakdown</SectionHeader>
+          <SectionHeader>成本拆分</SectionHeader>
           <CostBreakdown />
         </section>
       </div>
